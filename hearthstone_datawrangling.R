@@ -4,6 +4,7 @@ library("dplyr")
 json_file = "cards2.txt"
 data <- fromJSON(file = json_file)
 card_category = names(data)
+
 not_empty = which(sapply(1:length(data), function(i){length(data[[i]])})>0)
 
 card_category = card_category[not_empty]
@@ -34,22 +35,13 @@ for(k in 1:length(data2)){
     data2[[k]][[i]] = data.frame(data2[[k]][[i]])
     data2[[k]][[i]] = bind_rows(data2[[k]][[i-1]],data2[[k]][[i]])
   }
-  # assign(card_category[k], tbl_df(data2[[k]][[length(data2[[k]])]]))
+  assign(card_category[k], tbl_df(data2[[k]][[length(data2[[k]])]]))
 }
 
-final_data = card_category[1]
+final_data = get(card_category[1])
 for (i in 2:length(data2)){
-  final_data = bind_rows(get(final_data), get(card_category[i]))
+  final_data = bind_rows(final_data, get(card_category[i]))
 }
-write.csv(final_data, file = "final_data.csv")
-# write.csv(Basic, file = "Basic.csv")
-# write.csv(`Blackrock Mountain`, file = "Blackrock_Mountain.csv")
-# write.csv(Classic, file = "Classic.csv")
-# write.csv(`Goblins vs Gnomes`, file = "Goblins_Gnomes.csv")
-# write.csv(`Hero Skins`, file = "Hero_skins.csv")
-# write.csv(Naxxramas, file = "Naxxramas.csv")
-# write.csv(Promotion, file = "Promotion.csv")
-# write.csv(`The Grand Tournament`, file = "The_grand_tournament.csv")
-# write.csv(`The League of Explorers`, file = "The_league_of_explorers.csv")
-# write.csv(Reward, file = "Reward.csv")
+write.table(final_data, file = "final_data.csv", sep = "\t")
+save(final_data, file = "final_data.RData")
 
