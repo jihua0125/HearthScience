@@ -1,225 +1,225 @@
-cardId	name	type	cost	attack	health	durability	text	mechanics	playerClass	cardSet	rarity	ID	flavor	artist	collectible	howToGet	howToGetGold	img	imgGold	locale	race	faction	elite
-CS2_041	Ancestral Healing	Spell	0	NA	NA	NA	Restore a minion to full Health and give it <b>Taunt</b>.	NA	Shaman	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_072	Backstab	Spell	0	NA	NA	NA	Deal $2 damage to an undamaged minion.	NA	Rogue	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_084	Hunter's Mark	Spell	0	NA	NA	NA	Change a minion's Health to 1.	NA	Hunter	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_169	Innervate	Spell	0	NA	NA	NA	Gain 2 Mana Crystals this turn only.	NA	Druid	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_008	Moonfire	Spell	0	NA	NA	NA	Deal $1 damage.	NA	Druid	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-NEW1_003	Sacrificial Pact	Spell	0	NA	NA	NA	Destroy a Demon. Restore #5 Health to your hero.	NA	Warlock	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_244	Totemic Might	Spell	0	NA	NA	NA	Give your Totems +2 Health.	NA	Shaman	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_277	Arcane Missiles	Spell	1	NA	NA	NA	Deal $3 damage randomly split among all enemies.	ImmuneToSpellpower	Mage	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-DS1_185	Arcane Shot	Spell	1	NA	NA	NA	Deal $2 damage.	NA	Hunter	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_087	Blessing of Might	Spell	1	NA	NA	NA	Give a minion +3 Attack.	NA	Paladin	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_005	Claw	Spell	1	NA	NA	NA	Give your hero +2 Attack this turn and 2 Armor.	NA	Druid	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_063	Corruption	Spell	1	NA	NA	NA	Choose an enemy minion. At the start of your turn, destroy it.	NA	Warlock	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_074	Deadly Poison	Spell	1	NA	NA	NA	Give your weapon +2 Attack.	NA	Rogue	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_108	Execute	Spell	1	NA	NA	NA	Destroy a damaged enemy minion.	NA	Warrior	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_037	Frost Shock	Spell	1	NA	NA	NA	Deal $1 damage to an enemy character and <b>Freeze</b> it.	Freeze	Shaman	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_371	Hand of Protection	Spell	1	NA	NA	NA	Give a minion <b>Divine Shield</b>.	NA	Paladin	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS1_130	Holy Smite	Spell	1	NA	NA	NA	Deal $2 damage.	NA	Priest	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_360	Humility	Spell	1	NA	NA	NA	Change a minion's Attack to 1.	NA	Paladin	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_003	Mind Vision	Spell	1	NA	NA	NA	Put a copy of a random card in your opponent's hand into your hand.	NA	Priest	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_027	Mirror Image	Spell	1	NA	NA	NA	Summon two 0/2 minions with <b>Taunt</b>.	NA	Mage	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_302	Mortal Coil	Spell	1	NA	NA	NA	Deal $1 damage to a minion. If that kills it, draw a card.	NA	Warlock	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_004	Power Word: Shield	Spell	1	NA	NA	NA	Give a minion +2 Health.Draw a card.	NA	Priest	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_045	Rockbiter Weapon	Spell	1	NA	NA	NA	Give a friendly character +3 Attack this turn.	NA	Shaman	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_075	Sinister Strike	Spell	1	NA	NA	NA	Deal $3 damage to the enemy hero.	NA	Rogue	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_308	Soulfire	Spell	1	NA	NA	NA	Deal $4 damage. Discard a random card.	NA	Warlock	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-DS1_184	Tracking	Spell	1	NA	NA	NA	Look at the top three cards of your deck. Draw one and discard the others.	NA	Hunter	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_400	Whirlwind	Spell	1	NA	NA	NA	Deal $1 damage to ALL minions.	NA	Warrior	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_025	Arcane Explosion	Spell	2	NA	NA	NA	Deal $1 damage to all enemy minions.	NA	Mage	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_114	Cleave	Spell	2	NA	NA	NA	Deal $2 damage to two random enemy minions.	NA	Warrior	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_236	Divine Spirit	Spell	2	NA	NA	NA	Double a minion's Health.	NA	Priest	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_024	Frostbolt	Spell	2	NA	NA	NA	Deal $3 damage to a character and <b>Freeze</b> it.	Freeze	Mage	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_105	Heroic Strike	Spell	2	NA	NA	NA	Give your hero +4 Attack this turn.	NA	Warrior	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_089	Holy Light	Spell	2	NA	NA	NA	Restore #6 Health.	NA	Paladin	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_009	Mark of the Wild	Spell	2	NA	NA	NA	Give a minion <b>Taunt</b> and +2/+2.<i> (+2 Attack/+2 Health)</i>	NA	Druid	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-DS1_233	Mind Blast	Spell	2	NA	NA	NA	Deal $5 damage to the enemy hero.	NA	Priest	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_581	Sap	Spell	2	NA	NA	NA	Return an enemy minion to your opponent's hand.	NA	Rogue	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_234	Shadow Word: Pain	Spell	2	NA	NA	NA	Destroy a minion with 3 or less Attack.	NA	Priest	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_278	Shiv	Spell	2	NA	NA	NA	Deal $1 damage. Draw a card.	NA	Rogue	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_013	Wild Growth	Spell	2	NA	NA	NA	Gain an empty Mana Crystal.	NA	Druid	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_039	Windfury	Spell	2	NA	NA	NA	Give a minion <b>Windfury</b>.	NA	Shaman	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-NEW1_031	Animal Companion	Spell	3	NA	NA	NA	Summon a random Beast Companion.	NA	Hunter	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_023	Arcane Intellect	Spell	3	NA	NA	NA	Draw 2 cards.	NA	Mage	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_103	Charge	Spell	3	NA	NA	NA	Give a friendly minion +2 Attack and <b>Charge</b>.	NA	Warrior	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_061	Drain Life	Spell	3	NA	NA	NA	Deal $2 damage. Restore #2 Health to your hero.	NA	Warlock	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_129	Fan of Knives	Spell	3	NA	NA	NA	Deal $1 damage to all enemy minions. Draw a card.	NA	Rogue	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_026	Frost Nova	Spell	3	NA	NA	NA	<b>Freeze</b> all enemy minions.	Freeze	Mage	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_007	Healing Touch	Spell	3	NA	NA	NA	Restore #8 Health.	NA	Druid	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_246	Hex	Spell	3	NA	NA	NA	Transform a minion into a 0/1 Frog with <b>Taunt</b>.	NA	Shaman	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_539	Kill Command	Spell	3	NA	NA	NA	Deal $3 damage. If you have a Beast, deal $5 damage instead.	NA	Hunter	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_011	Savage Roar	Spell	3	NA	NA	NA	Give your characters +2 Attack this turn.	NA	Druid	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_057	Shadow Bolt	Spell	3	NA	NA	NA	Deal $4 damage to a minion.	NA	Warlock	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_622	Shadow Word: Death	Spell	3	NA	NA	NA	Destroy a minion with an Attack of 5 or more.	NA	Priest	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_606	Shield Block	Spell	3	NA	NA	NA	Gain 5 Armor.Draw a card.	NA	Warrior	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_092	Blessing of Kings	Spell	4	NA	NA	NA	Give a minion +4/+4. <i>(+4 Attack/+4 Health)</i>	NA	Paladin	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_093	Consecration	Spell	4	NA	NA	NA	Deal $2 damage to all enemies.	NA	Paladin	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_029	Fireball	Spell	4	NA	NA	NA	Deal $6 damage.	NA	Mage	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_094	Hammer of Wrath	Spell	4	NA	NA	NA	Deal $3 damage.Draw a card.	NA	Paladin	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_062	Hellfire	Spell	4	NA	NA	NA	Deal $3 damage to ALL characters.	NA	Warlock	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-DS1_183	Multi-Shot	Spell	4	NA	NA	NA	Deal $3 damage to two random enemy minions.	NA	Hunter	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_022	Polymorph	Spell	4	NA	NA	NA	Transform a minion into a 1/1 Sheep.	NA	Mage	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_012	Swipe	Spell	4	NA	NA	NA	Deal $4 damage to an enemy and $1 damage to all other enemies.	NA	Druid	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_076	Assassinate	Spell	5	NA	NA	NA	Destroy an enemy minion.	NA	Rogue	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_046	Bloodlust	Spell	5	NA	NA	NA	Give your minions +3 Attack this turn.	NA	Shaman	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS1_112	Holy Nova	Spell	5	NA	NA	NA	Deal $2 damage to all enemies. Restore #2 Health to all friendly characters.	NA	Priest	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_173	Starfire	Spell	6	NA	NA	NA	Deal $5 damage.Draw a card.	NA	Druid	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-NEW1_004	Vanish	Spell	6	NA	NA	NA	Return all minions to their owner's hand.	NA	Rogue	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_032	Flamestrike	Spell	7	NA	NA	NA	Deal $4 damage to all enemy minions.	NA	Mage	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_077	Sprint	Spell	7	NA	NA	NA	Draw 4 cards.	NA	Rogue	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS1_113	Mind Control	Spell	10	NA	NA	NA	Take control of an enemy minion.	NA	Priest	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_621	Circle of Healing	Spell	0	NA	NA	NA	Restore #4 Health to ALL minions.	NA	Priest	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_607	Inner Rage	Spell	0	NA	NA	NA	Deal $1 damage to a minion and give it +2 Attack.	NA	Warrior	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_145	Preparation	Spell	0	NA	NA	NA	The next spell you cast this turn costs (3) less.	NA	Rogue	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_144	Shadowstep	Spell	0	NA	NA	NA	Return a friendly minion to your hand. It costs (2) less.	NA	Rogue	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_332	Silence	Spell	0	NA	NA	NA	<b>Silence</b> a minion.	Silence	Priest	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_549	Bestial Wrath	Spell	1	NA	NA	NA	Give a friendly Beast +2 Attack and <b>Immune</b> this turn.	NA	Hunter	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_363	Blessing of Wisdom	Spell	1	NA	NA	NA	Choose a minion. Whenever it attacks, draw a card.	NA	Paladin	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_073	Cold Blood	Spell	1	NA	NA	NA	Give a minion +2 Attack. <b>Combo:</b> +4 Attack instead.	Combo	Rogue	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_128	Conceal	Spell	1	NA	NA	NA	Give your minions <b>Stealth</b> until your next turn.	NA	Rogue	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_245	Earth Shock	Spell	1	NA	NA	NA	<b>Silence</b> a minion, then deal $1 damage to it.	Silence	Shaman	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_132	Eye for an Eye	Spell	1	NA	NA	NA	<b>Secret:</b> When your hero takes damage, deal that much damage to the enemy hero.	Secret	Paladin	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_251	Forked Lightning	Spell	1	NA	NA	NA	Deal $2 damage to 2 random enemy minions. <b>Overload:</b> (2)	Overload	Shaman	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_031	Ice Lance	Spell	1	NA	NA	NA	<b>Freeze</b> a character. If it was already <b>Frozen</b>, deal $4 damage instead.	Freeze	Mage	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS1_129	Inner Fire	Spell	1	NA	NA	NA	Change a minion's Attack to be equal to its Health.	NA	Priest	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_238	Lightning Bolt	Spell	1	NA	NA	NA	Deal $3 damage. <b>Overload:</b> (1)	Overload	Shaman	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_161	Naturalize	Spell	1	NA	NA	NA	Destroy a minion. Your opponent draws 2 cards.	NA	Druid	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_130	Noble Sacrifice	Spell	1	NA	NA	NA	<b>Secret:</b> When an enemy attacks, summon a 2/1 Defender as the new target.	Secret	Paladin	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_316	Power Overwhelming	Spell	1	NA	NA	NA	Give a friendly minion +4/+4 until end of turn. Then, it dies. Horribly.	NA	Warlock	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_136	Redemption	Spell	1	NA	NA	NA	<b>Secret:</b> When one of your minions dies, return it to life with 1 Health.	Secret	Paladin	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_379	Repentance	Spell	1	NA	NA	NA	<b>Secret:</b> After your opponent plays a minion, reduce its Health to 1.	Secret	Paladin	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_578	Savagery	Spell	1	NA	NA	NA	Deal damage equal to your hero's Attack to a minion.	AffectedBySpellPower	Druid	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_410	Shield Slam	Spell	1	NA	NA	NA	Deal 1 damage to a minion for each Armor you have.	AffectedBySpellPower	Warrior	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_409	Upgrade!	Spell	1	NA	NA	NA	If you have a weapon, give it +1/+1. Otherwise equip a 1/3 weapon.	NA	Warrior	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_038	Ancestral Spirit	Spell	2	NA	NA	NA	Give a minion \<b>Deathrattle:</b> Resummon this minion.\	NA	Shaman	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_392	Battle Rage	Spell	2	NA	NA	NA	Draw a card for each damaged friendly character.	NA	Warrior	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_126	Betrayal	Spell	2	NA	NA	NA	Force an enemy minion to deal its damage to the minions next to it.	NA	Rogue	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_233	Blade Flurry	Spell	2	NA	NA	NA	Destroy your weapon and deal its damage to all enemies.	AffectedBySpellPower	Rogue	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-NEW1_036	Commanding Shout	Spell	2	NA	NA	NA	Your minions can't be reduced below 1 Health this turn. Draw a card.	NA	Warrior	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_596	Demonfire	Spell	2	NA	NA	NA	Deal $2 damage to a minion. If it¡¯s a friendly Demon, give it +2/+2 instead.	NA	Warlock	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_619	Equality	Spell	2	NA	NA	NA	Change the Health of ALL minions to 1.	NA	Paladin	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_124	Eviscerate	Spell	2	NA	NA	NA	Deal $2 damage. <b>Combo:</b> Deal $4 damage instead.	Combo	Rogue	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_610	Explosive Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When your hero is attacked, deal $2 damage to all enemies.	Secret	Hunter	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_544	Flare	Spell	2	NA	NA	NA	All minions lose <b>Stealth</b>. Destroy all enemy <b>Secrets</b>. Draw a card.	NA	Hunter	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_611	Freezing Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When an enemy minion attacks, return it to its owner's hand and it costs (2) more.	Secret	Hunter	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_533	Misdirection	Spell	2	NA	NA	NA	<b>Secret:</b> When a character attacks your hero, instead he attacks another random character.	Secret	Hunter	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_160	Power of the Wild	Spell	2	NA	NA	NA	<b>Choose One</b> - Give your minions +1/+1; or Summon a 3/2 Panther.	NA	Druid	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_104	Rampage	Spell	2	NA	NA	NA	Give a damaged minion +3/+3.	NA	Warrior	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_391	Slam	Spell	2	NA	NA	NA	Deal $2 damage to a minion. If it survives, draw a card.	NA	Warrior	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_554	Snake Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When one of your minions is attacked, summon three 1/1 Snakes.	Secret	Hunter	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_609	Snipe	Spell	2	NA	NA	NA	<b>Secret:</b> After your opponent plays a minion, deal $4 damage to it.	Secret	Hunter	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_154	Wrath	Spell	2	NA	NA	NA	<b>Choose One</b> - Deal $3 damage to a minion; or $1 damage and draw a card.	NA	Druid	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_287	Counterspell	Spell	3	NA	NA	NA	<b>Secret:</b> When your opponent casts a spell, <b>Counter</b> it.	Secret	Mage	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_617	Deadly Shot	Spell	3	NA	NA	NA	Destroy a random enemy minion.	NA	Hunter	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_349	Divine Favor	Spell	3	NA	NA	NA	Draw cards until you have as many in hand as your opponent.	NA	Paladin	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_053	Far Sight	Spell	3	NA	NA	NA	Draw a card. That card costs (3) less.	NA	Shaman	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_248	Feral Spirit	Spell	3	NA	NA	NA	Summon two 2/3 Spirit Wolves with <b>Taunt</b>. <b>Overload:</b> (2)	Overload	Shaman	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_137	Headcrack	Spell	3	NA	NA	NA	Deal $2 damage to the enemy hero. <b>Combo:</b> Return this to your hand next turn.	Combo	Rogue	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_289	Ice Barrier	Spell	3	NA	NA	NA	<b>Secret:</b> When your hero is attacked, gain 8 Armor.	Secret	Mage	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_295	Ice Block	Spell	3	NA	NA	NA	<b>Secret:</b> When your hero takes fatal damage, prevent it and become <b>Immune</b> this turn.	Secret	Mage	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_241	Lava Burst	Spell	3	NA	NA	NA	Deal $5 damage. <b>Overload:</b> (2)	Overload	Shaman	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_259	Lightning Storm	Spell	3	NA	NA	NA	Deal $2-$3 damage to all enemy minions. <b>Overload:</b> (2)	Overload	Shaman	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_155	Mark of Nature	Spell	3	NA	NA	NA	<b>Choose One</b> - Give a minion +4 Attack; or +4 Health and <b>Taunt</b>.	NA	Druid	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_294	Mirror Entity	Spell	3	NA	NA	NA	<b>Secret:</b> After your opponent plays a minion, summon a copy of it.	Secret	Mage	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_317	Sense Demons	Spell	3	NA	NA	NA	Put 2 random Demons from your deck into your hand.	NA	Warlock	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_625	Shadowform	Spell	3	NA	NA	NA	Your Hero Power becomes 'Deal 2 damage'. If already in Shadowform: 3 damage.	NA	Priest	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-tt_010	Spellbender	Spell	3	NA	NA	NA	<b>Secret:</b> When an enemy casts a spell on a minion, summon a 1/3 as the new target.	Secret	Mage	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_339	Thoughtsteal	Spell	3	NA	NA	NA	Copy 2 cards from your opponent's deck and put them into your hand.	NA	Priest	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_538	Unleash the Hounds	Spell	3	NA	NA	NA	For each enemy minion, summon a 1/1 Hound with <b>Charge</b>.	NA	Hunter	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_594	Vaporize	Spell	3	NA	NA	NA	<b>Secret:</b> When a minion attacks your hero, destroy it.	Secret	Mage	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_570	Bite	Spell	4	NA	NA	NA	Give your hero +4 Attack this turn and 4 Armor.	NA	Druid	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_275	Cone of Cold	Spell	4	NA	NA	NA	<b>Freeze</b> a minion and the minions next to it, and deal $1 damage to them.	Freeze	Mage	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_626	Mass Dispel	Spell	4	NA	NA	NA	<b>Silence</b> all enemy minions. Draw a card.	Silence	Priest	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_345	Mindgames	Spell	4	NA	NA	NA	Put a copy of a random minion from your opponent's deck into the battlefield.	NA	Priest	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_408	Mortal Strike	Spell	4	NA	NA	NA	Deal $4 damage. If you have 12 or less Health, deal $6 instead.	NA	Warrior	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_334	Shadow Madness	Spell	4	NA	NA	NA	Gain control of an enemy minion with 3 or less Attack until end of turn.	NA	Priest	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_303	Shadowflame	Spell	4	NA	NA	NA	Destroy a friendly minion and deal its Attack damage to all enemy minions.	AffectedBySpellPower	Warlock	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_158	Soul of the Forest	Spell	4	NA	NA	NA	Give your minions \<b>Deathrattle:</b> Summon a 2/2 Treant.\	NA	Druid	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_320	Bane of Doom	Spell	5	NA	NA	NA	Deal $2 damage to a character. If that kills it, summon a random Demon.	NA	Warlock	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_355	Blessed Champion	Spell	5	NA	NA	NA	Double a minion's Attack.	NA	Paladin	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_407	Brawl	Spell	5	NA	NA	NA	Destroy all minions except one. <i>(chosen randomly)</i>	NA	Warrior	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_537	Explosive Shot	Spell	5	NA	NA	NA	Deal $5 damage to a minion and $2 damage to adjacent ones.	NA	Hunter	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_365	Holy Wrath	Spell	5	NA	NA	NA	Draw a card and deal damage equal to its cost.	AffectedBySpellPower	Paladin	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_164	Nourish	Spell	5	NA	NA	NA	<b>Choose One</b> - Gain 2 Mana Crystals; or Draw 3 cards.	NA	Druid	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-NEW1_007	Starfall	Spell	5	NA	NA	NA	<b>Choose One -</b> Deal $5 damage to a minion; or $2 damage to all enemy minions.	NA	Druid	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_384	Avenging Wrath	Spell	6	NA	NA	NA	Deal $8 damage randomly split among all enemies.	ImmuneToSpellpower	Paladin	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_028	Blizzard	Spell	6	NA	NA	NA	Deal $2 damage to all enemy minions and <b>Freeze</b> them.	Freeze	Mage	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_571	Force of Nature	Spell	6	NA	NA	NA	Summon three 2/2 Treants with <b>Charge</b> that die at the end of the turn.	NA	Druid	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_624	Holy Fire	Spell	6	NA	NA	NA	Deal $5 damage. Restore #5 Health to your hero.	NA	Priest	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_309	Siphon Soul	Spell	6	NA	NA	NA	Destroy a minion. Restore #3 Health to your hero.	NA	Warlock	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_354	Lay on Hands	Spell	8	NA	NA	NA	Restore #8 Health. Draw 3 cards.	NA	Paladin	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_312	Twisting Nether	Spell	8	NA	NA	NA	Destroy all minions.	NA	Warlock	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_279	Pyroblast	Spell	10	NA	NA	NA	Deal $10 damage.	NA	Mage	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-BRM_007	Gang Up	Spell	2	NA	NA	NA	Choose a minion. Shuffle 3 copies of it into your deck.	NA	Rogue	Blackrock Mountain	Common	3	If you are thinking about visiting Moonbrook, you better roll deep.	Jim Nelson	TRUE	Unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	Crafting unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_007.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_007_premium.gif	enUS	NA	NA	NA
-BRM_011	Lava Shock	Spell	2	NA	NA	NA	Deal $2 damage.Unlock your <b>Overloaded</b> Mana Crystals.	NA	Shaman	Blackrock Mountain	Rare	4	Chocolate lava cake is shockingly delicious.	Zoltan Boros	TRUE	Unlocked in Molten Core, in the Blackrock Mountain adventure.	Crafting unlocked in Molten Core, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_011.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_011_premium.gif	enUS	NA	NA	NA
-BRM_013	Quick Shot	Spell	2	NA	NA	NA	Deal $3 damage.If your hand is empty, draw a card.	AffectedBySpellPower	Hunter	Blackrock Mountain	Common	5	Han shot first.	Jonboy Meyers	TRUE	Unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	Crafting unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_013.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_013_premium.gif	enUS	NA	NA	NA
-BRM_017	Resurrect	Spell	2	NA	NA	NA	Summon a random friendly minion that died this game.	NA	Priest	Blackrock Mountain	Rare	6	I walked into the dungeon and noticed a slain adventurer. In his final moments, he had scrawled out a message in the dust on the wall beside him. Two words: \rez plz\	Luke Mancini	TRUE	Unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	Crafting unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_017.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_017_premium.gif	enUS	NA	NA	NA
-BRM_015	Revenge	Spell	2	NA	NA	NA	Deal $1 damage to all minions. If you have 12 or less Health, deal $3 damage instead.	NA	Warrior	Blackrock Mountain	Rare	7	This is better than Arcane Explosion, so I guess warriors are finally getting revenge on mages for Mortal Strike being worse than Fireball.	Ben Olson	TRUE	Unlocked in Blackwing Lair, in the Blackrock Mountain adventure.	Crafting unlocked in Blackwing Lair, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_015.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_015_premium.gif	enUS	NA	NA	NA
-BRM_005	Demonwrath	Spell	3	NA	NA	NA	Deal $2 damage to all non-Demon minions.	AffectedBySpellPower	Warlock	Blackrock Mountain	Rare	9	Demons are not angry most of the time. You have to play this card in order to really bring it out of them.	Raymond Swanland	TRUE	Unlocked in Blackwing Lair, in the Blackrock Mountain adventure.	Crafting unlocked in Blackwing Lair, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_005.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_005_premium.gif	enUS	NA	NA	NA
-BRM_003	Dragon's Breath	Spell	5	NA	NA	NA	Deal $4 damage. Costs (1) less for each minion that died this turn.	NA	Mage	Blackrock Mountain	Common	21	Dragons breathe fire, sure, but did you know they can also breathe Cotton Candy?  It's harder to give them a reason to do that, though.	Mauricio Herrera	TRUE	Unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	Crafting unlocked in Blackrock Depths, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_003.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_003_premium.gif	enUS	NA	NA	NA
-BRM_001	Solemn Vigil	Spell	5	NA	NA	NA	Draw 2 cards. Costs (1) less for each minion that died this turn.	NA	Paladin	Blackrock Mountain	Common	23	Each year, folk gather in front of Blackrock Mountain to mourn those who were mind-controlled into the lava.	Jaime Jones	TRUE	Unlocked in Hidden Laboratory, in the Blackrock Mountain adventure.	Crafting unlocked in Hidden Laboratory, in the Blackrock Mountain adventure.	http://wow.zamimg.com/images/hearthstone/cards/enus/original/BRM_001.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/BRM_001_premium.gif	enUS	NA	NA	NA
-GVG_012	Light of the Naaru	Spell	1	NA	NA	NA	Restore #3 Health. If the target is still damaged, summon a Lightwarden.	NA	Priest	Goblins vs Gnomes	Rare	4	\Light it up!\ - Command given to both Lightwardens and Goblins holding Flamecannons.	Jesper Ejsing	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_012.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_012_premium.gif	enUS	NA	NA	NA
-GVG_017	Call Pet	Spell	2	NA	NA	NA	Draw a card.If it's a Beast, it costs (4) less.	NA	Hunter	Goblins vs Gnomes	Rare	9	Real hunters tame hungry crabs.	E.M. Gist	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_017.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_017_premium.gif	enUS	NA	NA	NA
-GVG_038	Crackle	Spell	2	NA	NA	NA	Deal $3-$6 damage. <b>Overload:</b> (1)	Overload	Shaman	Goblins vs Gnomes	Common	10	Snap! This card! Pop!	Warren Mahy	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_038.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_038_premium.gif	enUS	NA	NA	NA
-GVG_015	Darkbomb	Spell	2	NA	NA	NA	Deal $3 damage.	NA	Warlock	Goblins vs Gnomes	Common	11	If you're looking to make an \Emo\ deck, this card is perfect!	Jeff Haynie	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_015.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_015_premium.gif	enUS	NA	NA	NA
-GVG_026	Feign Death	Spell	2	NA	NA	NA	Trigger all <b>Deathrattles</b> on your minions.	NA	Hunter	Goblins vs Gnomes	Epic	13	The hardest part about doing a \Feign Death\ convincingly is learning how to make the right smell. It takes a lot of commitment.	Luca Zontini	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_026.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_026_premium.gif	enUS	NA	NA	NA
-GVG_001	Flamecannon	Spell	2	NA	NA	NA	Deal $4 damage to a random enemy minion.	NA	Mage	Goblins vs Gnomes	Common	14	Calling something a flamecannon really doesn't do much to distinguish it from other goblin devices.	Mauricio Herrera	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_001.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_001_premium.gif	enUS	NA	NA	NA
-GVG_057	Seal of Light	Spell	2	NA	NA	NA	Restore #4 Health to your hero and gain +2 Attack this turn.	NA	Paladin	Goblins vs Gnomes	Common	24	The walrus of Light restores EIGHT Health.	Jason Chan	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_057.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_057_premium.gif	enUS	NA	NA	NA
-GVG_003	Unstable Portal	Spell	2	NA	NA	NA	Add a random minion to your hand. It costs (3) less.	NA	Mage	Goblins vs Gnomes	Rare	32	The denizens of Azeroth have no idea how much work goes into stabilizing portals.  We spend like 30% of GDP on portal upkeep.	Sean O'Daniels	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_003.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_003_premium.gif	enUS	NA	NA	NA
-GVG_050	Bouncing Blade	Spell	3	NA	NA	NA	Deal $1 damage to a random minion. Repeat until a minion dies.	NA	Warrior	Goblins vs Gnomes	Epic	35	Only goblins would think this was a good idea. Even they are starting to have their doubts.	Andrew Hou	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_050.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_050_premium.gif	enUS	NA	NA	NA
-GVG_061	Muster for Battle	Spell	3	NA	NA	NA	Summon three 1/1 Silver Hand Recruits. Equip a 1/4 Weapon.	NA	Paladin	Goblins vs Gnomes	Rare	48	\I'm bringing the guacamole!\ ¨C One of the most successful (yet rare) Silver Hand rallying cries	Mike Hayes	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_061.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_061_premium.gif	enUS	NA	NA	NA
-GVG_010	Velen's Chosen	Spell	3	NA	NA	NA	Give a minion +2/+4 and <b>Spell Damage +1</b>.	NA	Priest	Goblins vs Gnomes	Common	56	Velen wrote a \Lovely Card\ for Tyrande with a picture of the Deeprun Tram that said \I Choo-Choo-Choose you!\	Alex Horley Orlandelli	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_010.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_010_premium.gif	enUS	NA	NA	NA
-GVG_029	Ancestor's Call	Spell	4	NA	NA	NA	Put a random minion from each player's hand into the battlefield.	NA	Shaman	Goblins vs Gnomes	Epic	57	\Hey! Ancestors!\ - Ancestor's call	Dan Scott	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_029.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_029_premium.gif	enUS	NA	NA	NA
-GVG_005	Echo of Medivh	Spell	4	NA	NA	NA	Put a copy of each friendly minion into your hand.	NA	Mage	Goblins vs Gnomes	Epic	61	Medivh's echo haunts Karazhan, eternally cheating at chess and <i>Hearthstone</i>.	Alex Garner	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_005.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_005_premium.gif	enUS	NA	NA	NA
-GVG_045	Imp-losion	Spell	4	NA	NA	NA	Deal $2-$4 damage to a minion. Summon a 1/1 Imp for each damage dealt.	NA	Warlock	Goblins vs Gnomes	Rare	65	The shrapnel is waaaaay worse than the explosion.	Jaemin Kim	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_045.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_045_premium.gif	enUS	NA	NA	NA
-GVG_047	Sabotage	Spell	4	NA	NA	NA	Destroy a random enemy minion. <b>Combo</b>: And your opponent's weapon.	Combo	Rogue	Goblins vs Gnomes	Epic	72	Rogues can't stand it. They know you planned it! They are going to set you straight!	Dave Allsop	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_047.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_047_premium.gif	enUS	NA	NA	NA
-GVG_022	Tinker's Sharpsword Oil	Spell	4	NA	NA	NA	Give your weapon +3 Attack. <b>Combo:</b> Give a random friendly minion +3 Attack.	Combo	Rogue	Goblins vs Gnomes	Common	75	\Get ready to strike oil!\ - Super-cheesy battle cry	Den	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_022.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_022_premium.gif	enUS	NA	NA	NA
-GVG_073	Cobra Shot	Spell	5	NA	NA	NA	Deal $3 damage to a minion and the enemy hero.	NA	Hunter	Goblins vs Gnomes	Common	82	\Cobra Shot\ hurts way, way, way more than \Cobra Cuddle.\	Howard Lyon	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_073.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_073_premium.gif	enUS	NA	NA	NA
-GVG_019	Demonheart	Spell	5	NA	NA	NA	Deal $5 damage to a minion.  If it's a friendly Demon, give it +5/+5 instead.	NA	Warlock	Goblins vs Gnomes	Epic	83	Virtually every member of the pro demon lobby is a warlock. Weird.	Kerem Beyit	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_019.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_019_premium.gif	enUS	NA	NA	NA
-GVG_041	Dark Wispers	Spell	6	NA	NA	NA	<b>Choose One -</b> Summon 5 Wisps; or Give a minion +5/+5 and <b>Taunt</b>.	NA	Druid	Goblins vs Gnomes	Epic	99	Don't worry; we fired the person who named this card.	Trent Kaniuga	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_041.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_041_premium.gif	enUS	NA	NA	NA
-GVG_008	Lightbomb	Spell	6	NA	NA	NA	Deal damage to each minion equal to its Attack.	AffectedBySpellPower	Priest	Goblins vs Gnomes	Epic	102	This is what happens when you allow goblins to be priests.	Luca Zontini	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_008.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_008_premium.gif	enUS	NA	NA	NA
-GVG_031	Recycle	Spell	6	NA	NA	NA	Shuffle an enemy minion into your opponent's deck.	NA	Druid	Goblins vs Gnomes	Rare	106	Druidic recycling involves putting plastics in one bin and enemy minions in another bin.	Efrem Palacios	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_031.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_031_premium.gif	enUS	NA	NA	NA
-GVG_052	Crush	Spell	7	NA	NA	NA	Destroy a minion. If you have a damaged minion, this costs (4) less.	NA	Warrior	Goblins vs Gnomes	Epic	110	Using this card on your enemies is one of the best things in life, according to some barbarians.	Michael Sutfin	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_052.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_052_premium.gif	enUS	NA	NA	NA
-GVG_033	Tree of Life	Spell	9	NA	NA	NA	Restore all characters to full Health.	NA	Druid	Goblins vs Gnomes	Epic	122	Healing: It grows on trees!	Steve Prescott	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_033.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_033_premium.gif	enUS	NA	NA	NA
-FP1_020	Avenge	Spell	1	NA	NA	NA	<b>Secret:</b> When one of your minions dies, give a random friendly minion +3/+2.	Secret	Paladin	Naxxramas	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-FP1_025	Reincarnate	Spell	2	NA	NA	NA	Destroy a minion, then return it to life with full Health.	NA	Shaman	Naxxramas	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-FP1_018	Duplicate	Spell	3	NA	NA	NA	<b>Secret:</b> When a friendly minion dies, put 2 copies of it into your hand.	Secret	Mage	Naxxramas	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-FP1_019	Poison Seeds	Spell	4	NA	NA	NA	Destroy all minions and summon 2/2 Treants to replace them.	NA	Druid	Naxxramas	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_004	Arcane Blast	Spell	1	NA	NA	NA	Deal $2 damage to a minion. This spell gets double bonus from <b>Spell Damage</b>.	NA	Mage	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_073	Competitive Spirit	Spell	1	NA	NA	NA	<b>Secret:</b> When your turn starts, give your minions +1/+1.	Secret	Paladin	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_055	Flash Heal	Spell	1	NA	NA	NA	Restore #5 Health.	NA	Priest	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_037	Living Roots	Spell	1	NA	NA	NA	<b>Choose One</b> - Deal $2 damage; or Summon two 1/1 Saplings.	NA	Druid	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_013	Power Word: Glory	Spell	1	NA	NA	NA	Choose a minion. Whenever it attacks, restore 4 Health toyour hero.	NA	Priest	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_053	Ancestral Knowledge	Spell	2	NA	NA	NA	Draw 2 cards. <b>Overload: (2)</b>	Overload	Shaman	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_060	Bear Trap	Spell	2	NA	NA	NA	<b>Secret:</b> After your hero is attacked, summon a 3/3 Bear with <b>Taunt</b>.	Secret	Hunter	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_068	Bolster	Spell	2	NA	NA	NA	Give your <b>Taunt</b> minions +2/+2.	NA	Warrior	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_016	Confuse	Spell	2	NA	NA	NA	Swap the Attack and Health of all minions.	NA	Priest	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_015	Convert	Spell	2	NA	NA	NA	Put a copy of an enemy minion into your hand.	NA	Priest	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_024	Demonfuse	Spell	2	NA	NA	NA	Give a Demon +3/+3. Give your opponent a Mana Crystal.	NA	Warlock	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_061	Lock and Load	Spell	2	NA	NA	NA	Each time you cast a spell this turn, add a random Hunter card to your hand.	NA	Hunter	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_064	Bash	Spell	3	NA	NA	NA	Deal $3 damage.Gain 3 Armor.	NA	Warrior	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_035	Beneath the Grounds	Spell	3	NA	NA	NA	Shuffle 3 Ambushes into your opponent's deck. When drawn, you summon a 4/4 Nerubian.	NA	Rogue	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_033	Burgle	Spell	3	NA	NA	NA	Add 2 random class cards to your hand <i>(from your opponent's class)</i>.	NA	Rogue	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_002	Effigy	Spell	3	NA	NA	NA	<b>Secret:</b> When a friendly minion dies, summon a random minion with the same Cost.	Secret	Mage	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_051	Elemental Destruction	Spell	3	NA	NA	NA	Deal $4-$5 damage to all minions. <b>Overload: (5)</b>	Overload	Shaman	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_048	Healing Wave	Spell	3	NA	NA	NA	Restore #7 Health. Reveal a minion in each deck. If yours costs more, Restore #14 instead.	NA	Shaman	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_044	Mulch	Spell	3	NA	NA	NA	Destroy a minion.Add a random minion to your opponent's hand.	NA	Druid	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_005	Polymorph: Boar	Spell	3	NA	NA	NA	Transform a minion into a 4/2 Boar with <b>Charge</b>.	NA	Mage	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_056	Powershot	Spell	3	NA	NA	NA	Deal $2 damage to a minion and the minions next to it.	NA	Hunter	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_074	Seal of Champions	Spell	3	NA	NA	NA	Give a minion+3 Attack and <b>Divine Shield</b>.	NA	Paladin	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_043	Astral Communion	Spell	4	NA	NA	NA	Gain 10 Mana Crystals. Discard your hand.	NA	Druid	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_022	Fist of Jaraxxus	Spell	4	NA	NA	NA	When you play or discard this, deal $4 damage to a random enemy.	InvisibleDeathrattle	Warlock	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_001	Flame Lance	Spell	5	NA	NA	NA	Deal $8 damage to a minion.	NA	Mage	The Grand Tournament	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_062	Ball of Spiders	Spell	6	NA	NA	NA	Summon three 1/1 Webspinners.	NA	Hunter	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_025	Dark Bargain	Spell	6	NA	NA	NA	Destroy 2 random enemy minions. Discard 2 random cards.	NA	Warlock	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_078	Enter the Coliseum	Spell	6	NA	NA	NA	Destroy all minions except each player's highest Attack minion.	NA	Paladin	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_115	Raven Idol	Spell	1	NA	NA	NA	<b>Choose One -</b><b>Discover</b> a minion; or <b>Discover</b> a spell.	NA	Druid	The League of Explorers	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_027	Sacred Trial	Spell	1	NA	NA	NA	<b>Secret:</b> After your opponent has at least 3 minions and plays another, destroy it.	Secret	Paladin	The League of Explorers	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_007	Curse of Rafaam	Spell	2	NA	NA	NA	Give your opponent a 'Cursed!' card.While they hold it, they take 2 damage on their turn.	NA	Warlock	The League of Explorers	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_021	Dart Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When an opposing <b>Hero Power</b> is used, deal $5 damage to a random enemy.	Secret	Hunter	The League of Explorers	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_105	Explorer's Hat	Spell	2	NA	NA	NA	Give a minion +1/+1 and \<b>Deathrattle:</b> Add an Explorer's Hat to your hand.\	NA	Hunter	The League of Explorers	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_002	Forgotten Torch	Spell	3	NA	NA	NA	Deal $3 damage. Shuffle a 'Roaring Torch' into your deck that deals 6 damage.	NA	Mage	The League of Explorers	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_111	Excavated Evil	Spell	5	NA	NA	NA	Deal $3 damage to all minions.Shuffle this card into your opponent's deck.	NA	Priest	The League of Explorers	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_104	Entomb	Spell	6	NA	NA	NA	Choose an enemy minion.Shuffle it into your deck.	NA	Priest	The League of Explorers	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_113	Everyfin is Awesome	Spell	7	NA	NA	NA	Give your minions +2/+2.Costs (1) less for each Murloc you control.	NA	Shaman	The League of Explorers	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_026	Anyfin Can Happen	Spell	10	NA	NA	NA	Summon 7 Murlocs that died this game.	NA	Paladin	The League of Explorers	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+cardId	name	type	cost	attack	health	durability	text	mechanics	playerClass	cardSet	rarity
+CS2_041	Ancestral Healing	Spell	0	NA	NA	NA	Restore a minion to full Health and give it <b>Taunt</b>.	NA	Shaman	Basic	Free
+CS2_072	Backstab	Spell	0	NA	NA	NA	Deal $2 damage to an undamaged minion.	NA	Rogue	Basic	Free
+CS2_084	Hunter's Mark	Spell	0	NA	NA	NA	Change a minion's Health to 1.	NA	Hunter	Basic	Common
+EX1_169	Innervate	Spell	0	NA	NA	NA	Gain 2 Mana Crystals this turn only.	NA	Druid	Basic	Free
+CS2_008	Moonfire	Spell	0	NA	NA	NA	Deal $1 damage.	NA	Druid	Basic	Common
+NEW1_003	Sacrificial Pact	Spell	0	NA	NA	NA	Destroy a Demon. Restore #5 Health to your hero.	NA	Warlock	Basic	Common
+EX1_244	Totemic Might	Spell	0	NA	NA	NA	Give your Totems +2 Health.	NA	Shaman	Basic	Common
+EX1_277	Arcane Missiles	Spell	1	NA	NA	NA	Deal $3 damage randomly split among all enemies.	ImmuneToSpellpower	Mage	Basic	Free
+DS1_185	Arcane Shot	Spell	1	NA	NA	NA	Deal $2 damage.	NA	Hunter	Basic	Free
+CS2_087	Blessing of Might	Spell	1	NA	NA	NA	Give a minion +3 Attack.	NA	Paladin	Basic	Free
+CS2_005	Claw	Spell	1	NA	NA	NA	Give your hero +2 Attack this turn and 2 Armor.	NA	Druid	Basic	Free
+CS2_063	Corruption	Spell	1	NA	NA	NA	Choose an enemy minion. At the start of your turn, destroy it.	NA	Warlock	Basic	Common
+CS2_074	Deadly Poison	Spell	1	NA	NA	NA	Give your weapon +2 Attack.	NA	Rogue	Basic	Free
+CS2_108	Execute	Spell	1	NA	NA	NA	Destroy a damaged enemy minion.	NA	Warrior	Basic	Free
+CS2_037	Frost Shock	Spell	1	NA	NA	NA	Deal $1 damage to an enemy character and <b>Freeze</b> it.	Freeze	Shaman	Basic	Free
+EX1_371	Hand of Protection	Spell	1	NA	NA	NA	Give a minion <b>Divine Shield</b>.	NA	Paladin	Basic	Free
+CS1_130	Holy Smite	Spell	1	NA	NA	NA	Deal $2 damage.	NA	Priest	Basic	Free
+EX1_360	Humility	Spell	1	NA	NA	NA	Change a minion's Attack to 1.	NA	Paladin	Basic	Common
+CS2_003	Mind Vision	Spell	1	NA	NA	NA	Put a copy of a random card in your opponent's hand into your hand.	NA	Priest	Basic	Common
+CS2_027	Mirror Image	Spell	1	NA	NA	NA	Summon two 0/2 minions with <b>Taunt</b>.	NA	Mage	Basic	Common
+EX1_302	Mortal Coil	Spell	1	NA	NA	NA	Deal $1 damage to a minion. If that kills it, draw a card.	NA	Warlock	Basic	Common
+CS2_004	Power Word: Shield	Spell	1	NA	NA	NA	Give a minion +2 Health.Draw a card.	NA	Priest	Basic	Free
+CS2_045	Rockbiter Weapon	Spell	1	NA	NA	NA	Give a friendly character +3 Attack this turn.	NA	Shaman	Basic	Free
+CS2_075	Sinister Strike	Spell	1	NA	NA	NA	Deal $3 damage to the enemy hero.	NA	Rogue	Basic	Free
+EX1_308	Soulfire	Spell	1	NA	NA	NA	Deal $4 damage. Discard a random card.	NA	Warlock	Basic	Common
+DS1_184	Tracking	Spell	1	NA	NA	NA	Look at the top three cards of your deck. Draw one and discard the others.	NA	Hunter	Basic	Free
+EX1_400	Whirlwind	Spell	1	NA	NA	NA	Deal $1 damage to ALL minions.	NA	Warrior	Basic	Common
+CS2_025	Arcane Explosion	Spell	2	NA	NA	NA	Deal $1 damage to all enemy minions.	NA	Mage	Basic	Free
+CS2_114	Cleave	Spell	2	NA	NA	NA	Deal $2 damage to two random enemy minions.	NA	Warrior	Basic	Common
+CS2_236	Divine Spirit	Spell	2	NA	NA	NA	Double a minion's Health.	NA	Priest	Basic	Common
+CS2_024	Frostbolt	Spell	2	NA	NA	NA	Deal $3 damage to a character and <b>Freeze</b> it.	Freeze	Mage	Basic	Common
+CS2_105	Heroic Strike	Spell	2	NA	NA	NA	Give your hero +4 Attack this turn.	NA	Warrior	Basic	Free
+CS2_089	Holy Light	Spell	2	NA	NA	NA	Restore #6 Health.	NA	Paladin	Basic	Free
+CS2_009	Mark of the Wild	Spell	2	NA	NA	NA	Give a minion <b>Taunt</b> and +2/+2.<i> (+2 Attack/+2 Health)</i>	NA	Druid	Basic	Free
+DS1_233	Mind Blast	Spell	2	NA	NA	NA	Deal $5 damage to the enemy hero.	NA	Priest	Basic	Free
+EX1_581	Sap	Spell	2	NA	NA	NA	Return an enemy minion to your opponent's hand.	NA	Rogue	Basic	Free
+CS2_234	Shadow Word: Pain	Spell	2	NA	NA	NA	Destroy a minion with 3 or less Attack.	NA	Priest	Basic	Free
+EX1_278	Shiv	Spell	2	NA	NA	NA	Deal $1 damage. Draw a card.	NA	Rogue	Basic	Common
+CS2_013	Wild Growth	Spell	2	NA	NA	NA	Gain an empty Mana Crystal.	NA	Druid	Basic	Free
+CS2_039	Windfury	Spell	2	NA	NA	NA	Give a minion <b>Windfury</b>.	NA	Shaman	Basic	Free
+NEW1_031	Animal Companion	Spell	3	NA	NA	NA	Summon a random Beast Companion.	NA	Hunter	Basic	Common
+CS2_023	Arcane Intellect	Spell	3	NA	NA	NA	Draw 2 cards.	NA	Mage	Basic	Free
+CS2_103	Charge	Spell	3	NA	NA	NA	Give a friendly minion +2 Attack and <b>Charge</b>.	NA	Warrior	Basic	Free
+CS2_061	Drain Life	Spell	3	NA	NA	NA	Deal $2 damage. Restore #2 Health to your hero.	NA	Warlock	Basic	Free
+EX1_129	Fan of Knives	Spell	3	NA	NA	NA	Deal $1 damage to all enemy minions. Draw a card.	NA	Rogue	Basic	Common
+CS2_026	Frost Nova	Spell	3	NA	NA	NA	<b>Freeze</b> all enemy minions.	Freeze	Mage	Basic	Common
+CS2_007	Healing Touch	Spell	3	NA	NA	NA	Restore #8 Health.	NA	Druid	Basic	Free
+EX1_246	Hex	Spell	3	NA	NA	NA	Transform a minion into a 0/1 Frog with <b>Taunt</b>.	NA	Shaman	Basic	Free
+EX1_539	Kill Command	Spell	3	NA	NA	NA	Deal $3 damage. If you have a Beast, deal $5 damage instead.	NA	Hunter	Basic	Common
+CS2_011	Savage Roar	Spell	3	NA	NA	NA	Give your characters +2 Attack this turn.	NA	Druid	Basic	Common
+CS2_057	Shadow Bolt	Spell	3	NA	NA	NA	Deal $4 damage to a minion.	NA	Warlock	Basic	Free
+EX1_622	Shadow Word: Death	Spell	3	NA	NA	NA	Destroy a minion with an Attack of 5 or more.	NA	Priest	Basic	Common
+EX1_606	Shield Block	Spell	3	NA	NA	NA	Gain 5 Armor.Draw a card.	NA	Warrior	Basic	Common
+CS2_092	Blessing of Kings	Spell	4	NA	NA	NA	Give a minion +4/+4. <i>(+4 Attack/+4 Health)</i>	NA	Paladin	Basic	Common
+CS2_093	Consecration	Spell	4	NA	NA	NA	Deal $2 damage to all enemies.	NA	Paladin	Basic	Common
+CS2_029	Fireball	Spell	4	NA	NA	NA	Deal $6 damage.	NA	Mage	Basic	Free
+CS2_094	Hammer of Wrath	Spell	4	NA	NA	NA	Deal $3 damage.Draw a card.	NA	Paladin	Basic	Free
+CS2_062	Hellfire	Spell	4	NA	NA	NA	Deal $3 damage to ALL characters.	NA	Warlock	Basic	Free
+DS1_183	Multi-Shot	Spell	4	NA	NA	NA	Deal $3 damage to two random enemy minions.	NA	Hunter	Basic	Free
+CS2_022	Polymorph	Spell	4	NA	NA	NA	Transform a minion into a 1/1 Sheep.	NA	Mage	Basic	Free
+CS2_012	Swipe	Spell	4	NA	NA	NA	Deal $4 damage to an enemy and $1 damage to all other enemies.	NA	Druid	Basic	Common
+CS2_076	Assassinate	Spell	5	NA	NA	NA	Destroy an enemy minion.	NA	Rogue	Basic	Free
+CS2_046	Bloodlust	Spell	5	NA	NA	NA	Give your minions +3 Attack this turn.	NA	Shaman	Basic	Common
+CS1_112	Holy Nova	Spell	5	NA	NA	NA	Deal $2 damage to all enemies. Restore #2 Health to all friendly characters.	NA	Priest	Basic	Common
+EX1_173	Starfire	Spell	6	NA	NA	NA	Deal $5 damage.Draw a card.	NA	Druid	Basic	Common
+NEW1_004	Vanish	Spell	6	NA	NA	NA	Return all minions to their owner's hand.	NA	Rogue	Basic	Common
+CS2_032	Flamestrike	Spell	7	NA	NA	NA	Deal $4 damage to all enemy minions.	NA	Mage	Basic	Common
+CS2_077	Sprint	Spell	7	NA	NA	NA	Draw 4 cards.	NA	Rogue	Basic	Common
+CS1_113	Mind Control	Spell	10	NA	NA	NA	Take control of an enemy minion.	NA	Priest	Basic	Common
+EX1_621	Circle of Healing	Spell	0	NA	NA	NA	Restore #4 Health to ALL minions.	NA	Priest	Classic	Common
+EX1_607	Inner Rage	Spell	0	NA	NA	NA	Deal $1 damage to a minion and give it +2 Attack.	NA	Warrior	Classic	Common
+EX1_145	Preparation	Spell	0	NA	NA	NA	The next spell you cast this turn costs (3) less.	NA	Rogue	Classic	Epic
+EX1_144	Shadowstep	Spell	0	NA	NA	NA	Return a friendly minion to your hand. It costs (2) less.	NA	Rogue	Classic	Common
+EX1_332	Silence	Spell	0	NA	NA	NA	<b>Silence</b> a minion.	Silence	Priest	Classic	Common
+EX1_549	Bestial Wrath	Spell	1	NA	NA	NA	Give a friendly Beast +2 Attack and <b>Immune</b> this turn.	NA	Hunter	Classic	Epic
+EX1_363	Blessing of Wisdom	Spell	1	NA	NA	NA	Choose a minion. Whenever it attacks, draw a card.	NA	Paladin	Classic	Common
+CS2_073	Cold Blood	Spell	1	NA	NA	NA	Give a minion +2 Attack. <b>Combo:</b> +4 Attack instead.	Combo	Rogue	Classic	Common
+EX1_128	Conceal	Spell	1	NA	NA	NA	Give your minions <b>Stealth</b> until your next turn.	NA	Rogue	Classic	Common
+EX1_245	Earth Shock	Spell	1	NA	NA	NA	<b>Silence</b> a minion, then deal $1 damage to it.	Silence	Shaman	Classic	Common
+EX1_132	Eye for an Eye	Spell	1	NA	NA	NA	<b>Secret:</b> When your hero takes damage, deal that much damage to the enemy hero.	Secret	Paladin	Classic	Common
+EX1_251	Forked Lightning	Spell	1	NA	NA	NA	Deal $2 damage to 2 random enemy minions. <b>Overload:</b> (2)	Overload	Shaman	Classic	Common
+CS2_031	Ice Lance	Spell	1	NA	NA	NA	<b>Freeze</b> a character. If it was already <b>Frozen</b>, deal $4 damage instead.	Freeze	Mage	Classic	Common
+CS1_129	Inner Fire	Spell	1	NA	NA	NA	Change a minion's Attack to be equal to its Health.	NA	Priest	Classic	Common
+EX1_238	Lightning Bolt	Spell	1	NA	NA	NA	Deal $3 damage. <b>Overload:</b> (1)	Overload	Shaman	Classic	Common
+EX1_161	Naturalize	Spell	1	NA	NA	NA	Destroy a minion. Your opponent draws 2 cards.	NA	Druid	Classic	Common
+EX1_130	Noble Sacrifice	Spell	1	NA	NA	NA	<b>Secret:</b> When an enemy attacks, summon a 2/1 Defender as the new target.	Secret	Paladin	Classic	Common
+EX1_316	Power Overwhelming	Spell	1	NA	NA	NA	Give a friendly minion +4/+4 until end of turn. Then, it dies. Horribly.	NA	Warlock	Classic	Common
+EX1_136	Redemption	Spell	1	NA	NA	NA	<b>Secret:</b> When one of your minions dies, return it to life with 1 Health.	Secret	Paladin	Classic	Common
+EX1_379	Repentance	Spell	1	NA	NA	NA	<b>Secret:</b> After your opponent plays a minion, reduce its Health to 1.	Secret	Paladin	Classic	Common
+EX1_578	Savagery	Spell	1	NA	NA	NA	Deal damage equal to your hero's Attack to a minion.	AffectedBySpellPower	Druid	Classic	Rare
+EX1_410	Shield Slam	Spell	1	NA	NA	NA	Deal 1 damage to a minion for each Armor you have.	AffectedBySpellPower	Warrior	Classic	Epic
+EX1_409	Upgrade!	Spell	1	NA	NA	NA	If you have a weapon, give it +1/+1. Otherwise equip a 1/3 weapon.	NA	Warrior	Classic	Rare
+CS2_038	Ancestral Spirit	Spell	2	NA	NA	NA	Give a minion \<b>Deathrattle:</b> Resummon this minion.\	NA	Shaman	Classic	Rare
+EX1_392	Battle Rage	Spell	2	NA	NA	NA	Draw a card for each damaged friendly character.	NA	Warrior	Classic	Common
+EX1_126	Betrayal	Spell	2	NA	NA	NA	Force an enemy minion to deal its damage to the minions next to it.	NA	Rogue	Classic	Common
+CS2_233	Blade Flurry	Spell	2	NA	NA	NA	Destroy your weapon and deal its damage to all enemies.	AffectedBySpellPower	Rogue	Classic	Rare
+NEW1_036	Commanding Shout	Spell	2	NA	NA	NA	Your minions can't be reduced below 1 Health this turn. Draw a card.	NA	Warrior	Classic	Rare
+EX1_596	Demonfire	Spell	2	NA	NA	NA	Deal $2 damage to a minion. If it¡¯s a friendly Demon, give it +2/+2 instead.	NA	Warlock	Classic	Common
+EX1_619	Equality	Spell	2	NA	NA	NA	Change the Health of ALL minions to 1.	NA	Paladin	Classic	Rare
+EX1_124	Eviscerate	Spell	2	NA	NA	NA	Deal $2 damage. <b>Combo:</b> Deal $4 damage instead.	Combo	Rogue	Classic	Common
+EX1_610	Explosive Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When your hero is attacked, deal $2 damage to all enemies.	Secret	Hunter	Classic	Common
+EX1_544	Flare	Spell	2	NA	NA	NA	All minions lose <b>Stealth</b>. Destroy all enemy <b>Secrets</b>. Draw a card.	NA	Hunter	Classic	Rare
+EX1_611	Freezing Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When an enemy minion attacks, return it to its owner's hand and it costs (2) more.	Secret	Hunter	Classic	Common
+EX1_533	Misdirection	Spell	2	NA	NA	NA	<b>Secret:</b> When a character attacks your hero, instead he attacks another random character.	Secret	Hunter	Classic	Rare
+EX1_160	Power of the Wild	Spell	2	NA	NA	NA	<b>Choose One</b> - Give your minions +1/+1; or Summon a 3/2 Panther.	NA	Druid	Classic	Common
+CS2_104	Rampage	Spell	2	NA	NA	NA	Give a damaged minion +3/+3.	NA	Warrior	Classic	Common
+EX1_391	Slam	Spell	2	NA	NA	NA	Deal $2 damage to a minion. If it survives, draw a card.	NA	Warrior	Classic	Common
+EX1_554	Snake Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When one of your minions is attacked, summon three 1/1 Snakes.	Secret	Hunter	Classic	Epic
+EX1_609	Snipe	Spell	2	NA	NA	NA	<b>Secret:</b> After your opponent plays a minion, deal $4 damage to it.	Secret	Hunter	Classic	Common
+EX1_154	Wrath	Spell	2	NA	NA	NA	<b>Choose One</b> - Deal $3 damage to a minion; or $1 damage and draw a card.	NA	Druid	Classic	Common
+EX1_287	Counterspell	Spell	3	NA	NA	NA	<b>Secret:</b> When your opponent casts a spell, <b>Counter</b> it.	Secret	Mage	Classic	Rare
+EX1_617	Deadly Shot	Spell	3	NA	NA	NA	Destroy a random enemy minion.	NA	Hunter	Classic	Common
+EX1_349	Divine Favor	Spell	3	NA	NA	NA	Draw cards until you have as many in hand as your opponent.	NA	Paladin	Classic	Rare
+CS2_053	Far Sight	Spell	3	NA	NA	NA	Draw a card. That card costs (3) less.	NA	Shaman	Classic	Epic
+EX1_248	Feral Spirit	Spell	3	NA	NA	NA	Summon two 2/3 Spirit Wolves with <b>Taunt</b>. <b>Overload:</b> (2)	Overload	Shaman	Classic	Rare
+EX1_137	Headcrack	Spell	3	NA	NA	NA	Deal $2 damage to the enemy hero. <b>Combo:</b> Return this to your hand next turn.	Combo	Rogue	Classic	Rare
+EX1_289	Ice Barrier	Spell	3	NA	NA	NA	<b>Secret:</b> When your hero is attacked, gain 8 Armor.	Secret	Mage	Classic	Common
+EX1_295	Ice Block	Spell	3	NA	NA	NA	<b>Secret:</b> When your hero takes fatal damage, prevent it and become <b>Immune</b> this turn.	Secret	Mage	Classic	Epic
+EX1_241	Lava Burst	Spell	3	NA	NA	NA	Deal $5 damage. <b>Overload:</b> (2)	Overload	Shaman	Classic	Rare
+EX1_259	Lightning Storm	Spell	3	NA	NA	NA	Deal $2-$3 damage to all enemy minions. <b>Overload:</b> (2)	Overload	Shaman	Classic	Rare
+EX1_155	Mark of Nature	Spell	3	NA	NA	NA	<b>Choose One</b> - Give a minion +4 Attack; or +4 Health and <b>Taunt</b>.	NA	Druid	Classic	Common
+EX1_294	Mirror Entity	Spell	3	NA	NA	NA	<b>Secret:</b> After your opponent plays a minion, summon a copy of it.	Secret	Mage	Classic	Common
+EX1_317	Sense Demons	Spell	3	NA	NA	NA	Put 2 random Demons from your deck into your hand.	NA	Warlock	Classic	Common
+EX1_625	Shadowform	Spell	3	NA	NA	NA	Your Hero Power becomes 'Deal 2 damage'. If already in Shadowform: 3 damage.	NA	Priest	Classic	Epic
+tt_010	Spellbender	Spell	3	NA	NA	NA	<b>Secret:</b> When an enemy casts a spell on a minion, summon a 1/3 as the new target.	Secret	Mage	Classic	Epic
+EX1_339	Thoughtsteal	Spell	3	NA	NA	NA	Copy 2 cards from your opponent's deck and put them into your hand.	NA	Priest	Classic	Common
+EX1_538	Unleash the Hounds	Spell	3	NA	NA	NA	For each enemy minion, summon a 1/1 Hound with <b>Charge</b>.	NA	Hunter	Classic	Common
+EX1_594	Vaporize	Spell	3	NA	NA	NA	<b>Secret:</b> When a minion attacks your hero, destroy it.	Secret	Mage	Classic	Rare
+EX1_570	Bite	Spell	4	NA	NA	NA	Give your hero +4 Attack this turn and 4 Armor.	NA	Druid	Classic	Rare
+EX1_275	Cone of Cold	Spell	4	NA	NA	NA	<b>Freeze</b> a minion and the minions next to it, and deal $1 damage to them.	Freeze	Mage	Classic	Common
+EX1_626	Mass Dispel	Spell	4	NA	NA	NA	<b>Silence</b> all enemy minions. Draw a card.	Silence	Priest	Classic	Rare
+EX1_345	Mindgames	Spell	4	NA	NA	NA	Put a copy of a random minion from your opponent's deck into the battlefield.	NA	Priest	Classic	Epic
+EX1_408	Mortal Strike	Spell	4	NA	NA	NA	Deal $4 damage. If you have 12 or less Health, deal $6 instead.	NA	Warrior	Classic	Rare
+EX1_334	Shadow Madness	Spell	4	NA	NA	NA	Gain control of an enemy minion with 3 or less Attack until end of turn.	NA	Priest	Classic	Rare
+EX1_303	Shadowflame	Spell	4	NA	NA	NA	Destroy a friendly minion and deal its Attack damage to all enemy minions.	AffectedBySpellPower	Warlock	Classic	Rare
+EX1_158	Soul of the Forest	Spell	4	NA	NA	NA	Give your minions \<b>Deathrattle:</b> Summon a 2/2 Treant.\	NA	Druid	Classic	Common
+EX1_320	Bane of Doom	Spell	5	NA	NA	NA	Deal $2 damage to a character. If that kills it, summon a random Demon.	NA	Warlock	Classic	Epic
+EX1_355	Blessed Champion	Spell	5	NA	NA	NA	Double a minion's Attack.	NA	Paladin	Classic	Rare
+EX1_407	Brawl	Spell	5	NA	NA	NA	Destroy all minions except one. <i>(chosen randomly)</i>	NA	Warrior	Classic	Epic
+EX1_537	Explosive Shot	Spell	5	NA	NA	NA	Deal $5 damage to a minion and $2 damage to adjacent ones.	NA	Hunter	Classic	Rare
+EX1_365	Holy Wrath	Spell	5	NA	NA	NA	Draw a card and deal damage equal to its cost.	AffectedBySpellPower	Paladin	Classic	Rare
+EX1_164	Nourish	Spell	5	NA	NA	NA	<b>Choose One</b> - Gain 2 Mana Crystals; or Draw 3 cards.	NA	Druid	Classic	Rare
+NEW1_007	Starfall	Spell	5	NA	NA	NA	<b>Choose One -</b> Deal $5 damage to a minion; or $2 damage to all enemy minions.	NA	Druid	Classic	Rare
+EX1_384	Avenging Wrath	Spell	6	NA	NA	NA	Deal $8 damage randomly split among all enemies.	ImmuneToSpellpower	Paladin	Classic	Epic
+CS2_028	Blizzard	Spell	6	NA	NA	NA	Deal $2 damage to all enemy minions and <b>Freeze</b> them.	Freeze	Mage	Classic	Rare
+EX1_571	Force of Nature	Spell	6	NA	NA	NA	Summon three 2/2 Treants with <b>Charge</b> that die at the end of the turn.	NA	Druid	Classic	Epic
+EX1_624	Holy Fire	Spell	6	NA	NA	NA	Deal $5 damage. Restore #5 Health to your hero.	NA	Priest	Classic	Rare
+EX1_309	Siphon Soul	Spell	6	NA	NA	NA	Destroy a minion. Restore #3 Health to your hero.	NA	Warlock	Classic	Rare
+EX1_354	Lay on Hands	Spell	8	NA	NA	NA	Restore #8 Health. Draw 3 cards.	NA	Paladin	Classic	Epic
+EX1_312	Twisting Nether	Spell	8	NA	NA	NA	Destroy all minions.	NA	Warlock	Classic	Epic
+EX1_279	Pyroblast	Spell	10	NA	NA	NA	Deal $10 damage.	NA	Mage	Classic	Epic
+BRM_007	Gang Up	Spell	2	NA	NA	NA	Choose a minion. Shuffle 3 copies of it into your deck.	NA	Rogue	Blackrock Mountain	Common
+BRM_011	Lava Shock	Spell	2	NA	NA	NA	Deal $2 damage.Unlock your <b>Overloaded</b> Mana Crystals.	NA	Shaman	Blackrock Mountain	Rare
+BRM_013	Quick Shot	Spell	2	NA	NA	NA	Deal $3 damage.If your hand is empty, draw a card.	AffectedBySpellPower	Hunter	Blackrock Mountain	Common
+BRM_017	Resurrect	Spell	2	NA	NA	NA	Summon a random friendly minion that died this game.	NA	Priest	Blackrock Mountain	Rare
+BRM_015	Revenge	Spell	2	NA	NA	NA	Deal $1 damage to all minions. If you have 12 or less Health, deal $3 damage instead.	NA	Warrior	Blackrock Mountain	Rare
+BRM_005	Demonwrath	Spell	3	NA	NA	NA	Deal $2 damage to all non-Demon minions.	AffectedBySpellPower	Warlock	Blackrock Mountain	Rare
+BRM_003	Dragon's Breath	Spell	5	NA	NA	NA	Deal $4 damage. Costs (1) less for each minion that died this turn.	NA	Mage	Blackrock Mountain	Common
+BRM_001	Solemn Vigil	Spell	5	NA	NA	NA	Draw 2 cards. Costs (1) less for each minion that died this turn.	NA	Paladin	Blackrock Mountain	Common
+GVG_012	Light of the Naaru	Spell	1	NA	NA	NA	Restore #3 Health. If the target is still damaged, summon a Lightwarden.	NA	Priest	Goblins vs Gnomes	Rare
+GVG_017	Call Pet	Spell	2	NA	NA	NA	Draw a card.If it's a Beast, it costs (4) less.	NA	Hunter	Goblins vs Gnomes	Rare
+GVG_038	Crackle	Spell	2	NA	NA	NA	Deal $3-$6 damage. <b>Overload:</b> (1)	Overload	Shaman	Goblins vs Gnomes	Common
+GVG_015	Darkbomb	Spell	2	NA	NA	NA	Deal $3 damage.	NA	Warlock	Goblins vs Gnomes	Common
+GVG_026	Feign Death	Spell	2	NA	NA	NA	Trigger all <b>Deathrattles</b> on your minions.	NA	Hunter	Goblins vs Gnomes	Epic
+GVG_001	Flamecannon	Spell	2	NA	NA	NA	Deal $4 damage to a random enemy minion.	NA	Mage	Goblins vs Gnomes	Common
+GVG_057	Seal of Light	Spell	2	NA	NA	NA	Restore #4 Health to your hero and gain +2 Attack this turn.	NA	Paladin	Goblins vs Gnomes	Common
+GVG_003	Unstable Portal	Spell	2	NA	NA	NA	Add a random minion to your hand. It costs (3) less.	NA	Mage	Goblins vs Gnomes	Rare
+GVG_050	Bouncing Blade	Spell	3	NA	NA	NA	Deal $1 damage to a random minion. Repeat until a minion dies.	NA	Warrior	Goblins vs Gnomes	Epic
+GVG_061	Muster for Battle	Spell	3	NA	NA	NA	Summon three 1/1 Silver Hand Recruits. Equip a 1/4 Weapon.	NA	Paladin	Goblins vs Gnomes	Rare
+GVG_010	Velen's Chosen	Spell	3	NA	NA	NA	Give a minion +2/+4 and <b>Spell Damage +1</b>.	NA	Priest	Goblins vs Gnomes	Common
+GVG_029	Ancestor's Call	Spell	4	NA	NA	NA	Put a random minion from each player's hand into the battlefield.	NA	Shaman	Goblins vs Gnomes	Epic
+GVG_005	Echo of Medivh	Spell	4	NA	NA	NA	Put a copy of each friendly minion into your hand.	NA	Mage	Goblins vs Gnomes	Epic
+GVG_045	Imp-losion	Spell	4	NA	NA	NA	Deal $2-$4 damage to a minion. Summon a 1/1 Imp for each damage dealt.	NA	Warlock	Goblins vs Gnomes	Rare
+GVG_047	Sabotage	Spell	4	NA	NA	NA	Destroy a random enemy minion. <b>Combo</b>: And your opponent's weapon.	Combo	Rogue	Goblins vs Gnomes	Epic
+GVG_022	Tinker's Sharpsword Oil	Spell	4	NA	NA	NA	Give your weapon +3 Attack. <b>Combo:</b> Give a random friendly minion +3 Attack.	Combo	Rogue	Goblins vs Gnomes	Common
+GVG_073	Cobra Shot	Spell	5	NA	NA	NA	Deal $3 damage to a minion and the enemy hero.	NA	Hunter	Goblins vs Gnomes	Common
+GVG_019	Demonheart	Spell	5	NA	NA	NA	Deal $5 damage to a minion.  If it's a friendly Demon, give it +5/+5 instead.	NA	Warlock	Goblins vs Gnomes	Epic
+GVG_041	Dark Wispers	Spell	6	NA	NA	NA	<b>Choose One -</b> Summon 5 Wisps; or Give a minion +5/+5 and <b>Taunt</b>.	NA	Druid	Goblins vs Gnomes	Epic
+GVG_008	Lightbomb	Spell	6	NA	NA	NA	Deal damage to each minion equal to its Attack.	AffectedBySpellPower	Priest	Goblins vs Gnomes	Epic
+GVG_031	Recycle	Spell	6	NA	NA	NA	Shuffle an enemy minion into your opponent's deck.	NA	Druid	Goblins vs Gnomes	Rare
+GVG_052	Crush	Spell	7	NA	NA	NA	Destroy a minion. If you have a damaged minion, this costs (4) less.	NA	Warrior	Goblins vs Gnomes	Epic
+GVG_033	Tree of Life	Spell	9	NA	NA	NA	Restore all characters to full Health.	NA	Druid	Goblins vs Gnomes	Epic
+FP1_020	Avenge	Spell	1	NA	NA	NA	<b>Secret:</b> When one of your minions dies, give a random friendly minion +3/+2.	Secret	Paladin	Naxxramas	Common
+FP1_025	Reincarnate	Spell	2	NA	NA	NA	Destroy a minion, then return it to life with full Health.	NA	Shaman	Naxxramas	Common
+FP1_018	Duplicate	Spell	3	NA	NA	NA	<b>Secret:</b> When a friendly minion dies, put 2 copies of it into your hand.	Secret	Mage	Naxxramas	Common
+FP1_019	Poison Seeds	Spell	4	NA	NA	NA	Destroy all minions and summon 2/2 Treants to replace them.	NA	Druid	Naxxramas	Common
+AT_004	Arcane Blast	Spell	1	NA	NA	NA	Deal $2 damage to a minion. This spell gets double bonus from <b>Spell Damage</b>.	NA	Mage	The Grand Tournament	Epic
+AT_073	Competitive Spirit	Spell	1	NA	NA	NA	<b>Secret:</b> When your turn starts, give your minions +1/+1.	Secret	Paladin	The Grand Tournament	Rare
+AT_055	Flash Heal	Spell	1	NA	NA	NA	Restore #5 Health.	NA	Priest	The Grand Tournament	Common
+AT_037	Living Roots	Spell	1	NA	NA	NA	<b>Choose One</b> - Deal $2 damage; or Summon two 1/1 Saplings.	NA	Druid	The Grand Tournament	Common
+AT_013	Power Word: Glory	Spell	1	NA	NA	NA	Choose a minion. Whenever it attacks, restore 4 Health toyour hero.	NA	Priest	The Grand Tournament	Common
+AT_053	Ancestral Knowledge	Spell	2	NA	NA	NA	Draw 2 cards. <b>Overload: (2)</b>	Overload	Shaman	The Grand Tournament	Common
+AT_060	Bear Trap	Spell	2	NA	NA	NA	<b>Secret:</b> After your hero is attacked, summon a 3/3 Bear with <b>Taunt</b>.	Secret	Hunter	The Grand Tournament	Common
+AT_068	Bolster	Spell	2	NA	NA	NA	Give your <b>Taunt</b> minions +2/+2.	NA	Warrior	The Grand Tournament	Common
+AT_016	Confuse	Spell	2	NA	NA	NA	Swap the Attack and Health of all minions.	NA	Priest	The Grand Tournament	Epic
+AT_015	Convert	Spell	2	NA	NA	NA	Put a copy of an enemy minion into your hand.	NA	Priest	The Grand Tournament	Rare
+AT_024	Demonfuse	Spell	2	NA	NA	NA	Give a Demon +3/+3. Give your opponent a Mana Crystal.	NA	Warlock	The Grand Tournament	Common
+AT_061	Lock and Load	Spell	2	NA	NA	NA	Each time you cast a spell this turn, add a random Hunter card to your hand.	NA	Hunter	The Grand Tournament	Epic
+AT_064	Bash	Spell	3	NA	NA	NA	Deal $3 damage.Gain 3 Armor.	NA	Warrior	The Grand Tournament	Common
+AT_035	Beneath the Grounds	Spell	3	NA	NA	NA	Shuffle 3 Ambushes into your opponent's deck. When drawn, you summon a 4/4 Nerubian.	NA	Rogue	The Grand Tournament	Epic
+AT_033	Burgle	Spell	3	NA	NA	NA	Add 2 random class cards to your hand <i>(from your opponent's class)</i>.	NA	Rogue	The Grand Tournament	Rare
+AT_002	Effigy	Spell	3	NA	NA	NA	<b>Secret:</b> When a friendly minion dies, summon a random minion with the same Cost.	Secret	Mage	The Grand Tournament	Rare
+AT_051	Elemental Destruction	Spell	3	NA	NA	NA	Deal $4-$5 damage to all minions. <b>Overload: (5)</b>	Overload	Shaman	The Grand Tournament	Epic
+AT_048	Healing Wave	Spell	3	NA	NA	NA	Restore #7 Health. Reveal a minion in each deck. If yours costs more, Restore #14 instead.	NA	Shaman	The Grand Tournament	Rare
+AT_044	Mulch	Spell	3	NA	NA	NA	Destroy a minion.Add a random minion to your opponent's hand.	NA	Druid	The Grand Tournament	Epic
+AT_005	Polymorph: Boar	Spell	3	NA	NA	NA	Transform a minion into a 4/2 Boar with <b>Charge</b>.	NA	Mage	The Grand Tournament	Rare
+AT_056	Powershot	Spell	3	NA	NA	NA	Deal $2 damage to a minion and the minions next to it.	NA	Hunter	The Grand Tournament	Rare
+AT_074	Seal of Champions	Spell	3	NA	NA	NA	Give a minion+3 Attack and <b>Divine Shield</b>.	NA	Paladin	The Grand Tournament	Common
+AT_043	Astral Communion	Spell	4	NA	NA	NA	Gain 10 Mana Crystals. Discard your hand.	NA	Druid	The Grand Tournament	Epic
+AT_022	Fist of Jaraxxus	Spell	4	NA	NA	NA	When you play or discard this, deal $4 damage to a random enemy.	InvisibleDeathrattle	Warlock	The Grand Tournament	Rare
+AT_001	Flame Lance	Spell	5	NA	NA	NA	Deal $8 damage to a minion.	NA	Mage	The Grand Tournament	Common
+AT_062	Ball of Spiders	Spell	6	NA	NA	NA	Summon three 1/1 Webspinners.	NA	Hunter	The Grand Tournament	Rare
+AT_025	Dark Bargain	Spell	6	NA	NA	NA	Destroy 2 random enemy minions. Discard 2 random cards.	NA	Warlock	The Grand Tournament	Epic
+AT_078	Enter the Coliseum	Spell	6	NA	NA	NA	Destroy all minions except each player's highest Attack minion.	NA	Paladin	The Grand Tournament	Epic
+LOE_115	Raven Idol	Spell	1	NA	NA	NA	<b>Choose One -</b><b>Discover</b> a minion; or <b>Discover</b> a spell.	NA	Druid	The League of Explorers	Common
+LOE_027	Sacred Trial	Spell	1	NA	NA	NA	<b>Secret:</b> After your opponent has at least 3 minions and plays another, destroy it.	Secret	Paladin	The League of Explorers	Common
+LOE_007	Curse of Rafaam	Spell	2	NA	NA	NA	Give your opponent a 'Cursed!' card.While they hold it, they take 2 damage on their turn.	NA	Warlock	The League of Explorers	Common
+LOE_021	Dart Trap	Spell	2	NA	NA	NA	<b>Secret:</b> When an opposing <b>Hero Power</b> is used, deal $5 damage to a random enemy.	Secret	Hunter	The League of Explorers	Common
+LOE_105	Explorer's Hat	Spell	2	NA	NA	NA	Give a minion +1/+1 and \<b>Deathrattle:</b> Add an Explorer's Hat to your hand.\	NA	Hunter	The League of Explorers	Rare
+LOE_002	Forgotten Torch	Spell	3	NA	NA	NA	Deal $3 damage. Shuffle a 'Roaring Torch' into your deck that deals 6 damage.	NA	Mage	The League of Explorers	Common
+LOE_111	Excavated Evil	Spell	5	NA	NA	NA	Deal $3 damage to all minions.Shuffle this card into your opponent's deck.	NA	Priest	The League of Explorers	Rare
+LOE_104	Entomb	Spell	6	NA	NA	NA	Choose an enemy minion.Shuffle it into your deck.	NA	Priest	The League of Explorers	Common
+LOE_113	Everyfin is Awesome	Spell	7	NA	NA	NA	Give your minions +2/+2.Costs (1) less for each Murloc you control.	NA	Shaman	The League of Explorers	Rare
+LOE_026	Anyfin Can Happen	Spell	10	NA	NA	NA	Summon 7 Murlocs that died this game.	NA	Paladin	The League of Explorers	Rare

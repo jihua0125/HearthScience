@@ -1,24 +1,24 @@
-cardId	name	type	cost	attack	health	durability	text	mechanics	playerClass	cardSet	rarity	ID	flavor	artist	collectible	howToGet	howToGetGold	img	imgGold	locale	race	faction	elite
-CS2_091	Light's Justice	Weapon	1	1	NA	4	NA	NA	Paladin	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_106	Fiery War Axe	Weapon	2	3	NA	2	NA	NA	Warrior	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_097	Truesilver Champion	Weapon	4	4	NA	2	Whenever your hero attacks, restore 2 Health to it.	NA	Paladin	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_112	Arcanite Reaper	Weapon	5	5	NA	2	NA	NA	Warrior	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-CS2_080	Assassin's Blade	Weapon	5	3	NA	4	NA	NA	Rogue	Basic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_247	Stormforged Axe	Weapon	2	2	NA	3	<b>Overload:</b> (1)	Overload	Shaman	Classic	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_536	Eaglehorn Bow	Weapon	3	3	NA	2	Whenever a friendly <b>Secret</b> is revealed, gain +1 Durability.	NA	Hunter	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_133	Perdition's Blade	Weapon	3	2	NA	2	<b>Battlecry:</b> Deal 1 damage. <b>Combo:</b> Deal 2 instead.	Battlecry	Rogue	Classic	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_366	Sword of Justice	Weapon	3	1	NA	5	After you summon a minion, give it +1/+1 and this loses 1 Durability.	NA	Paladin	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_567	Doomhammer	Weapon	5	2	NA	8	<b>Windfury, Overload:</b> (2)	Windfury	Shaman	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-DS1_188	Gladiator's Longbow	Weapon	7	5	NA	2	Your hero is <b>Immune</b> while attacking.	NA	Hunter	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-EX1_411	Gorehowl	Weapon	7	7	NA	1	Attacking a minion costs 1 Attack instead of 1 Durability.	NA	Warrior	Classic	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-GVG_043	Glaivezooka	Weapon	2	2	NA	2	<b>Battlecry:</b> Give a random friendly minion +1 Attack.	Battlecry	Hunter	Goblins vs Gnomes	Common	16	For the times when a regular bazooka just isn't enough.	Gino Whitehall	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_043.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_043_premium.gif	enUS	NA	NA	NA
-GVG_059	Coghammer	Weapon	3	2	NA	3	<b>Battlecry:</b> Give a random friendly minion <b>Divine Shield</b> and <b>Taunt</b>.	Battlecry	Paladin	Goblins vs Gnomes	Epic	36	So you ripped this out of a machine, carved some runes on it, stuck it on a handle, and now it's a weapon of great divine power? Seems legit.	Dany Orizio	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_059.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_059_premium.gif	enUS	NA	NA	NA
-GVG_024	Cogmaster's Wrench	Weapon	3	1	NA	3	Has +2 Attack while you have a Mech.	Aura	Rogue	Goblins vs Gnomes	Epic	37	For tightening cogs and smashin' troggs!	Richard Wright	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_024.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_024_premium.gif	enUS	NA	NA	NA
-GVG_054	Ogre Warmaul	Weapon	3	4	NA	2	50% chance to attack the wrong enemy.	NA	Warrior	Goblins vs Gnomes	Common	50	Simple, misguided, and incredibly dangerous. You know, like most things ogre.	Richard Wright	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_054.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_054_premium.gif	enUS	NA	NA	NA
-GVG_036	Powermace	Weapon	3	3	NA	2	<b>Deathrattle</b>: Give a random friendly Mech +2/+2.	Deathrattle	Shaman	Goblins vs Gnomes	Rare	51	People assume that shamans control the elements, but really, they have to ask them stuff and the elements are like, \Yeah ok, sure.\	Zoltan and Gabor	TRUE	NA	NA	http://wow.zamimg.com/images/hearthstone/cards/enus/original/GVG_036.png	http://wow.zamimg.com/images/hearthstone/cards/enus/animated/GVG_036_premium.gif	enUS	NA	NA	NA
-FP1_021	Death's Bite	Weapon	4	4	NA	2	<b>Deathrattle:</b> Deal 1 damage to all minions.	Deathrattle	Warrior	Naxxramas	Common	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_077	Argent Lance	Weapon	2	2	NA	2	<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, +1 Durability.	Battlecry	Paladin	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_065	King's Defender	Weapon	3	3	NA	2	<b>Battlecry</b>: If you have a minion with <b>Taunt</b>,  gain +1 Durability.	Battlecry	Warrior	The Grand Tournament	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_050	Charged Hammer	Weapon	4	2	NA	4	<b>Deathrattle:</b> Your Hero Power becomes 'Deal 2 damage.'	Deathrattle	Shaman	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-AT_034	Poisoned Blade	Weapon	4	1	NA	3	Your Hero Power gives this weapon +1 Attack instead of replacing it.	NA	Rogue	The Grand Tournament	Epic	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
-LOE_118	Cursed Blade	Weapon	1	2	NA	3	Double all damage dealt to your hero.	NA	Warrior	The League of Explorers	Rare	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+cardId	name	type	cost	attack	health	durability	text	mechanics	playerClass	cardSet	rarity
+CS2_091	Light's Justice	Weapon	1	1	NA	4	NA	NA	Paladin	Basic	Free
+CS2_106	Fiery War Axe	Weapon	2	3	NA	2	NA	NA	Warrior	Basic	Free
+CS2_097	Truesilver Champion	Weapon	4	4	NA	2	Whenever your hero attacks, restore 2 Health to it.	NA	Paladin	Basic	Common
+CS2_112	Arcanite Reaper	Weapon	5	5	NA	2	NA	NA	Warrior	Basic	Common
+CS2_080	Assassin's Blade	Weapon	5	3	NA	4	NA	NA	Rogue	Basic	Common
+EX1_247	Stormforged Axe	Weapon	2	2	NA	3	<b>Overload:</b> (1)	Overload	Shaman	Classic	Common
+EX1_536	Eaglehorn Bow	Weapon	3	3	NA	2	Whenever a friendly <b>Secret</b> is revealed, gain +1 Durability.	NA	Hunter	Classic	Rare
+EX1_133	Perdition's Blade	Weapon	3	2	NA	2	<b>Battlecry:</b> Deal 1 damage. <b>Combo:</b> Deal 2 instead.	Battlecry	Rogue	Classic	Rare
+EX1_366	Sword of Justice	Weapon	3	1	NA	5	After you summon a minion, give it +1/+1 and this loses 1 Durability.	NA	Paladin	Classic	Epic
+EX1_567	Doomhammer	Weapon	5	2	NA	8	<b>Windfury, Overload:</b> (2)	Windfury	Shaman	Classic	Epic
+DS1_188	Gladiator's Longbow	Weapon	7	5	NA	2	Your hero is <b>Immune</b> while attacking.	NA	Hunter	Classic	Epic
+EX1_411	Gorehowl	Weapon	7	7	NA	1	Attacking a minion costs 1 Attack instead of 1 Durability.	NA	Warrior	Classic	Epic
+GVG_043	Glaivezooka	Weapon	2	2	NA	2	<b>Battlecry:</b> Give a random friendly minion +1 Attack.	Battlecry	Hunter	Goblins vs Gnomes	Common
+GVG_059	Coghammer	Weapon	3	2	NA	3	<b>Battlecry:</b> Give a random friendly minion <b>Divine Shield</b> and <b>Taunt</b>.	Battlecry	Paladin	Goblins vs Gnomes	Epic
+GVG_024	Cogmaster's Wrench	Weapon	3	1	NA	3	Has +2 Attack while you have a Mech.	Aura	Rogue	Goblins vs Gnomes	Epic
+GVG_054	Ogre Warmaul	Weapon	3	4	NA	2	50% chance to attack the wrong enemy.	NA	Warrior	Goblins vs Gnomes	Common
+GVG_036	Powermace	Weapon	3	3	NA	2	<b>Deathrattle</b>: Give a random friendly Mech +2/+2.	Deathrattle	Shaman	Goblins vs Gnomes	Rare
+FP1_021	Death's Bite	Weapon	4	4	NA	2	<b>Deathrattle:</b> Deal 1 damage to all minions.	Deathrattle	Warrior	Naxxramas	Common
+AT_077	Argent Lance	Weapon	2	2	NA	2	<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, +1 Durability.	Battlecry	Paladin	The Grand Tournament	Rare
+AT_065	King's Defender	Weapon	3	3	NA	2	<b>Battlecry</b>: If you have a minion with <b>Taunt</b>,  gain +1 Durability.	Battlecry	Warrior	The Grand Tournament	Rare
+AT_050	Charged Hammer	Weapon	4	2	NA	4	<b>Deathrattle:</b> Your Hero Power becomes 'Deal 2 damage.'	Deathrattle	Shaman	The Grand Tournament	Epic
+AT_034	Poisoned Blade	Weapon	4	1	NA	3	Your Hero Power gives this weapon +1 Attack instead of replacing it.	NA	Rogue	The Grand Tournament	Epic
+LOE_118	Cursed Blade	Weapon	1	2	NA	3	Double all damage dealt to your hero.	NA	Warrior	The League of Explorers	Rare
