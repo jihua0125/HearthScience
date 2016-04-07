@@ -1,0 +1,10 @@
+cardId	name	type	cost	attack	health	durability	text	mechanics	playerClass	cardSet	rarity	ID	flavor	artist	collectible	howToGet	howToGetGold	img	imgGold	locale	race	faction	elite
+HERO_09	Anduin Wrynn	Hero	NA	NA	30	NA	NA	NA	Priest	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_01	Garrosh Hellscream	Hero	NA	NA	30	NA	NA	NA	Warrior	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_07	Gul'dan	Hero	NA	NA	30	NA	NA	NA	Warlock	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_08	Jaina Proudmoore	Hero	NA	NA	30	NA	NA	NA	Mage	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_06	Malfurion Stormrage	Hero	NA	NA	30	NA	NA	NA	Druid	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_05	Rexxar	Hero	NA	NA	30	NA	NA	NA	Hunter	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_02	Thrall	Hero	NA	NA	30	NA	NA	NA	Shaman	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_04	Uther Lightbringer	Hero	NA	NA	30	NA	NA	NA	Paladin	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+HERO_03	Valeera Sanguinar	Hero	NA	NA	30	NA	NA	NA	Rogue	Basic	Free	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
