@@ -1,0 +1,68 @@
+---
+title: "Hearth-science"
+output: html_document
+---
+
+# Stage 1
+
+The card a player can use is restricted by the number of mana he/she has for that turn, starting from 0 at the beginning and will reach to a maximum of 10 since the 10th turn. If there is no card with cost less than or equal to the number of mana in that turn, the player cannot use any card.
+Note that without this consideration, we may choose all 30 cards to be with very high cost -- however, we are not able to use them in the first several turns. If the opponent do have small cards, we may be attacked to death before we could ever use any card.
+Therefore, the balance between "small" cards and "big" cards is important. In this stage, we want to know that how many card we want for each cost value, in a total of 30 cards.
+
+Assumptions:
+1. Players will not use the card with cost 0 in the earlier several turns.
+2. Cost can roughly represent the value of the card, thus we can maximum the cost of all 30 cards to maximum the value.
+3. We focus on the first 5 turns.
+
+First, create decks with all reasonable combinations of small cards (1-5) and others.
+
+```{r}
+decks <- expand.grid(n1=0:6, n2=0:6, n3=0:6, n4=0:6, n5=0:6)
+decks <- decks %>% tbl_df %>% mutate(others = 30-n1-n2-n3-n4-n5)
+
+```
+
+Next, use similation to estimate the probability to use card in the first 1/2/3/4/5-turn for each deck. Estimations are made for offensive player, as the defensive player has higher possiblity to use cards (4 cards at the begining with a special 0 cost card that temporatily increases the mana by 1) for the first few turns.
+
+```{r}
+prob_usecard <- function(deck){
+        card <- rep(c(1,2,3,4,5,10), deck)
+                
+        # offensive player
+        temp <- t(replicate(1000,sample(card,10)))
+        # assume choosing the 3 smallest cards for the starting hand
+        sortcard <- t(apply(temp[,1:6],1,sort))
+        temp[,1:6] <- sortcard
+        temp <- temp[,-(4:6)]
+        
+        # p1: can use card in the first turn
+        p1 <- mean(apply(temp[,1:3],1,function(c){as.numeric(sum(c<2)>0)}))  
+        # p2: can use card in the first 2 turns
+        p2 <- mean(apply(temp[,1:4],1,function(c){as.numeric(sum(c<3)>0)}))  
+        # p3: can use card in the first 3 turns
+        p3 <- mean(apply(temp[,1:5],1,function(c){as.numeric(sum(c<4)>0)}))  
+        # p4: can use card in the first 4 turns
+        p4 <- mean(apply(temp[,1:6],1,function(c){as.numeric(sum(c<5)>0)}))  
+        # p4: can use card in the first 5 turns
+        p5 <- mean(apply(temp[,1:7],1,function(c){as.numeric(sum(c<6)>0)}))  
+        
+        c(p1, p2, p3, p4, p5)     
+}
+
+# get the probability of using card and combine
+usecard <- t(apply(decks,1,prob_usecard))
+colnames(usecard) <- c("p1","p2","p3","p4","p5")
+decks <- cbind(decks,usecard) %>% 
+        # add the total cost for each deck
+        mutate(sum = n1+2*n2+3*n3+4*n4+5*n5+10*others) 
+rm(usecard)
+```
+
+
+
+
+
+
+
+
+
