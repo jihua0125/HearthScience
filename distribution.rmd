@@ -1,0 +1,241 @@
+>setwd("~/Documents/2016Spring/260/final")
+
+#load library
+```{r}
+#rm(list=ls())
+library(knitr)
+opts_chunk$set(cache = TRUE, message = FALSE)
+library(knitr)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(gridExtra)
+library(graphics)
+library(plotrix)
+library(gridBase)
+library(grid)
+theme_set(theme_bw(base_size = 16))
+```
+
+#read data 
+```{r}
+#raw<-read.csv("tidy_minions.csv",header=TRUE,sep="\t")
+load("minions_text.RData")
+data<-minions_text
+
+```
+
+#distribution of Cost
+```{r}
+#remove costs that are "12" and "20" 
+Cost<-data%>%arrange(cost)
+Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+lbls<-Cost$cost
+slices<-Cost$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of Card Cost")
+``` 
+Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
+
+#distribution of attack
+```{r}
+#pie chart
+Attackk<-data%>%arrange(attack)
+Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+lbls<-Attack$attack
+slices<-Attack$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of Attack")
+#histogram
+x <- Attackk$attack
+h<-hist(x, breaks=12, col="red", ylim=c(0,120),xlab="deal damage to the opponent", 
+  	main="Histogram for attack") 
+xfit<-seq(min(x),max(x),length=40) 
+yfit<-dnorm(xfit,mean=mean(x),sd=sd(x)) 
+yfit <- yfit*diff(h$mids[1:2])*length(x) 
+lines(xfit, yfit, col="blue", lwd=2)
+#density plot
+d <- density(Attackk$attack)
+plot(d, main="Kernel density for attack")
+polygon(d, col="red", border="blue")
+```
+
+#distribution of health
+```{r}
+#pie chart
+Health<-data%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
+lbls<-Health$health
+slices<-Health$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of Health")
+#histogram
+x <- Health$health
+h<-hist(x, breaks=12, col="green", xlab="Health for each card", 
+  	main="Histogram for card health") 
+xfit<-seq(min(x),max(x),length=40) 
+yfit<-dnorm(xfit,mean=mean(x),sd=sd(x)) 
+yfit <- yfit*diff(h$mids[1:2])*length(x) 
+lines(xfit, yfit, col="blue", lwd=2)
+```
+
+#distribution of mechanics 
+```{r}
+#pie chart
+Mechanics<-data%>%arrange(mechanics)
+Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
+lbls<-Mechanics$mechanics
+slices<-Health$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of Mechanics")
+#histogram
+meme<-barplot(prop.table(table(data$mechanics)),col=rainbow(20), names.arg="")
+## Use grid to add the labels    
+vps <- baseViewports()
+pushViewport(vps$inner, vps$figure, vps$plot)
+
+grid.text(Mechanics$mechanics,x = unit(meme, "native"), y=unit(-1, "lines"),
+    just="right", rot=50)
+
+popViewport(3)
+```
+
+# distribution of playerclass
+```{r}
+#pie chart
+pc<-data%>%arrange(playerClass)
+pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
+lbls<-pc$playerClass
+slices<-pc$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of player class")
+#histogram
+pcpc<-barplot(prop.table(table(data$playerClass)),col=rainbow(28), names.arg="")
+## Use grid to add the labels    
+vps <- baseViewports()
+pushViewport(vps$inner, vps$figure, vps$plot)
+
+grid.text(pc$playerClass,x = unit(meme, "native"),y=unit(-1, "lines"),rot=50)
+
+popViewport(3)
+```
+
+# distribution of cardSet
+```{r}
+#pie chart
+cs<-data%>%arrange(cardSet)
+cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
+lbls<-cs$cardSet
+slices<-cs$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of card set")
+#histogram
+cscs<-barplot(prop.table(table(data$cardSet)),col=rainbow(10), names.arg="")
+## Use grid to add the labels    
+vps <- baseViewports()
+pushViewport(vps$inner, vps$figure, vps$plot)
+
+grid.text(cs$cardSet,x = unit(meme, "native"),y=unit(-1, "lines"),rot=50)
+
+popViewport(3)
+```
+
+# distribution of rarity
+```{r}
+#pie chart
+rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
+lbls<-rr$rarity
+slices<-rr$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of rarity")
+#histogram
+rrrr<-barplot(prop.table(table(data$rarity)),col=rainbow(10), names.arg="")
+## Use grid to add the labels    
+vps <- baseViewports()
+pushViewport(vps$inner, vps$figure, vps$plot)
+
+grid.text(rr$rarity,x = unit(meme, "native"),y=unit(-1, "lines"),rot=50)
+
+popViewport(3)
+```
+
+#distribution of "Battlecry" to "Nothing"
+```{r}
+#pie chart
+Attackk<-data%>%arrange(attack)
+Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+lbls<-Attack$attack
+slices<-Attack$n
+pct <- round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct) # add percents to labels 
+lbls <- paste(lbls,"%",sep="") # ad % to labels 
+pie(slices,labels = lbls, col=rainbow(length(lbls)),
+  	main="Pie Chart of Attack")
+#histogram
+x <- Attackk$attack
+h<-hist(x, breaks=12, col="red", ylim=c(0,120),xlab="deal damage to the opponent", 
+  	main="Histogram for attack") 
+xfit<-seq(min(x),max(x),length=40) 
+yfit<-dnorm(xfit,mean=mean(x),sd=sd(x)) 
+yfit <- yfit*diff(h$mids[1:2])*length(x) 
+lines(xfit, yfit, col="blue", lwd=2)
+#density plot
+d <- density(Attackk$attack)
+plot(d, main="Kernel density for attack")
+polygon(d, col="red", border="blue")
+
+
+list<-c("Battlecry","Taunt")#,"HealTarget","Charge","Aura","AdjacentBuff","Spell_Damage","Freeze","Enrage","Divine_Shield","Stealth","Overload","Deathrattle","Windfury","Combo","Poisonous","Inspire","Normal","Choice","Conditional","Add","Cast","Deal","Destroy","Discover","Draw","Discard","Gain","Give","Reduce","Remove","Restore")
+
+#for(i in 1:length(list)){
+  
+  #pie chart
+ 
+# column<-match(list[i],names(data))
+#  list1<-data%>%arrange(data[,j])
+  
+#  list1<-unique(list1%>%group_by(data[,colnum])%>%mutate(n=n())%>%ungroup()%>%select(data[,colnum],n))
+#  lbls<-list1$list[i]
+#  slices<-list1$n
+#  pct <- round(slices/sum(slices)*100)
+#  lbls <- paste(lbls, pct) # add percents to labels 
+#  lbls <- paste(lbls,"%",sep="") # ad % to labels 
+#  pie(slices,labels = lbls, col=rainbow(length(lbls)),main="pie chart of XX")
+#histogram
+#  x <- list1$list[i]
+#  h<-hist(x, breaks=12, col="red", ylim=c(0,120),xlab=list[i], 
+#  	main="Histogram for XX") 
+#  xfit<-seq(min(x),max(x),length=40) 
+#  yfit<-dnorm(xfit,mean=mean(x),sd=sd(x)) 
+#  yfit <- yfit*diff(h$mids[1:2])*length(x) 
+#  lines(xfit, yfit, col="blue", lwd=2)
+  
+#density plot
+#  d <- density(x)
+#  plot(d, main="Kernel density for XXX")
+#  polygon(d, col="red", border="blue")
+#}
+```
