@@ -1,0 +1,84 @@
+---
+title: "Text_calssification"
+author: "Chi-Hsuan Chang"
+date: "April 16, 2016"
+output: html_document
+---
+
+Data wrangling of card descriptions:
+This part is aimed for detailed classification of minion card descriptions (other than the mechanics they are currently classified as). 
+
+1. For some minions that have more than one mechanics (e.g. Taunt that has deathrattle), they are only classified as one of their mechanics in the Hearthstone dataset. The following wrangling aims to classify them with all the mechanics they have with dummy variables (having certain feature = 1 vs. without certain feature = 0).
+
+```{r}
+library(tidyr)
+library(dplyr)
+load("minions.RData")
+minions_text = tbl_df(minions) %>%
+  select(-ID, -flavor, -type, -artist, -collectible, -howToGet, -howToGetGold, -img, -imgGold, -locale, -race, -faction, -elite) %>%
+  mutate(playerClass = ifelse(is.na(playerClass), "All", as.character(playerClass)))
+
+minions_text = minions_text %>% 
+  mutate(text = as.character(text)) %>%
+  mutate(text = gsub("<b>", "", text)) %>%
+  mutate(text = gsub("</b>", "", text)) %>%
+  mutate(text = gsub("\xa1\xaf", "'", text)) %>%
+  mutate(text = ifelse(is.na(text), "None", text)) 
+
+minions_text = minions_text %>%
+  mutate(AdjacentBuff= ifelse(text %in% minions_text$text[grep("AdjacentBuff",minions_text$text)], 1, AdjacentBuff))%>% 
+   mutate(Aura= ifelse(text %in% minions_text$text[grep("Aura",minions_text$text)], 1, 0))%>% 
+   mutate(Battlecry = ifelse(text %in% minions_text$text[grep("Battlecry",minions_text$text)], 1, Battlecry))%>%
+  mutate(Charge= ifelse(text %in% minions_text$text[grep("Charge",minions_text$text)], 1, Charge))%>%
+ mutate(Combo = ifelse(text %in% minions_text$text[grep("Combo",minions_text$text)], 1, Combo))%>%
+  mutate(Deathrattle = ifelse(text %in% minions_text$text[grep("Deathrattle",minions_text$text)], 1, Deathrattle))%>%
+  mutate(Divine_Shield = ifelse(text %in% minions_text$text[grep("Divine_Shield",minions_text$text)], 1, Divine_Shield))%>%
+  mutate(Enrage = ifelse(text %in% minions_text$text[grep("Enrage",minions_text$text)], 1, Enrage))%>%
+  mutate(Inspire = ifelse(text %in% minions_text$text[grep("Inspire",minions_text$text)], 1, Inspire))%>%
+  mutate(Overload= ifelse(text %in% minions_text$text[grep("Overload",minions_text$text)], 1, Overload))%>%
+  mutate(Poisonous = ifelse(text %in% minions_text$text[grep("Poisonous",minions_text$text)], 1, Poisonous))%>%
+  mutate(Windfury = ifelse(text %in% minions_text$text[grep("Windfury",minions_text$text)], 1, Windfury))
+  
+```
+
+2. The beauty of Hearthstone (and the most difficult part for quantitative analysis) is that almost every minion has its unique feature that are described in text on the card. Therefore, it's hard to "value" a card without taking these descriptions into account while on the other hand, texts them selves are difficult to be simply quantified. The following wrangling aims to identify certain verbs (deal, restore, etc.) and nouns (attacks, healths, etc.) frequently used in the card description and tried to classifiy cards with more features that were not classified by their mechanics.
+
+```{r}
+
+minions_text = minions_text %>%
+  mutate(Choice = ifelse(text %in% minions_text$text[grep("; or",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Conditional = ifelse(text %in% minions_text$text[grep("if",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Conditional = ifelse(text %in% minions_text$text[grep("whenever",minions_text$text, ignore.case = T)], 1, Conditional)) %>% 
+  mutate(Conditional = ifelse(text %in% minions_text$text[grep(",",minions_text$text, ignore.case = T)], 1, Conditional)) %>% 
+  mutate(Add = ifelse(text %in% minions_text$text[grep("add",minions_text$text, ignore.case = T)], 1, 0)) %>%
+  mutate(Cast = ifelse(text %in% minions_text$text[grep("cast",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Deal = ifelse(text %in% minions_text$text[grep("Deal",minions_text$text, ignore.case = T)], 1, 0)) %>%
+  mutate(Destroy = ifelse(text %in% minions_text$text[grep("destroy",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Discover = ifelse(text %in% minions_text$text[grep("discover",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Draw = ifelse(text %in% minions_text$text[grep("draw",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Discard = ifelse(text %in% minions_text$text[grep("discard",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Freeze = ifelse(text %in% minions_text$text[grep("freeze",minions_text$text, ignore.case = T)], 1, Freeze)) %>% 
+  mutate(Gain = ifelse(text %in% minions_text$text[grep("gain",minions_text$text, ignore.case = T)], 1, 0)) %>%
+  mutate(Give = ifelse(text %in% minions_text$text[grep("give",minions_text$text, ignore.case = T)],1,0)) %>%
+  mutate(Reduce = ifelse(text %in% minions_text$text[grep("reduce",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Remove = ifelse(text %in% minions_text$text[grep("remove",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Restore = ifelse(text %in% minions_text$text[grep("restore",minions_text$text, ignore.case = T)], 1, 0))%>%
+  mutate(Reveal = ifelse(text %in% minions_text$text[grep("reveal",minions_text$text, ignore.case = T)],1,0)) %>%
+  mutate(Silence = ifelse(text %in% minions_text$text[grep("silence",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Summon = ifelse(text %in% minions_text$text[grep("summon",minions_text$text, ignore.case = T)], 1, 0)) %>% 
+  mutate(Trigger = ifelse(text %in% minions_text$text[grep("trigger",minions_text$text, ignore.case = T)],1,0)) %>%
+  mutate(Number_within = ifelse(text %in% minions_text$text[grep("+[0-9]", minions_text$text)],1,0))%>%
+  mutate(Attack = ifelse(text %in% minions_text$text[grep("attack",minions_text$text, ignore.case = T)], 1, 0))%>%
+  mutate(Health = ifelse(text %in% minions_text$text[grep("health",minions_text$text, ignore.case = T)], 1, 0))%>%
+  mutate(Damage = ifelse(text %in% minions_text$text[grep("damage",minions_text$text, ignore.case = T)], 1, 0)) %>%
+  mutate(Cant = ifelse(text %in% minions_text$text[grep("can't",minions_text$text, ignore.case = T)], 1, 0)) %>%
+  mutate(Nothing = ifelse(text == "None", 1, 0))
+
+colnames(minions_text)
+```
+
+
+```{r}
+save(minions_text, file = "minions_text.RData")
+```
+
