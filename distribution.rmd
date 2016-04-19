@@ -208,34 +208,29 @@ plot(d, main="Kernel density for attack")
 polygon(d, col="red", border="blue")
 
 
-list<-c("Battlecry","Taunt")#,"HealTarget","Charge","Aura","AdjacentBuff","Spell_Damage","Freeze","Enrage","Divine_Shield","Stealth","Overload","Deathrattle","Windfury","Combo","Poisonous","Inspire","Normal","Choice","Conditional","Add","Cast","Deal","Destroy","Discover","Draw","Discard","Gain","Give","Reduce","Remove","Restore")
+#list<-c("Battlecry","Taunt","HealTarget","Charge","Aura","AdjacentBuff","Spell_Damage","Freeze","Enrage","Divine_Shield","Stealth","Overload","Deathrattle","Windfury","Combo","Poisonous","Inspire","Normal","Choice","Conditional","Add","Cast","Deal","Destroy","Discover","Draw","Discard","Gain","Give","Reduce","Remove","Restore")
 
-#for(i in 1:length(list)){
+for(i in 11:length(data)){
+  #i <- 11
+  object=.dots=as.name(colnames(data)[i])
+  list=as.vector(table(data[,i]))
+  value<-c(0,1)
+  table<-t(rbind(value,list))
+#pie chart  
+  lbls<-table[,1]  
+  slices<-table[,2]
+  pct <- round(slices/sum(slices)*100)
+  lbls <- paste(lbls, pct) # add percents to labels 
+  lbls <- paste(lbls,"%",sep="") # ad % to labels 
+  pie(slices,labels = lbls, col=rainbow(length(lbls)),main=paste("Pie chart of",object))
   
-  #pie chart
- 
-# column<-match(list[i],names(data))
-#  list1<-data%>%arrange(data[,j])
-  
-#  list1<-unique(list1%>%group_by(data[,colnum])%>%mutate(n=n())%>%ungroup()%>%select(data[,colnum],n))
-#  lbls<-list1$list[i]
-#  slices<-list1$n
-#  pct <- round(slices/sum(slices)*100)
-#  lbls <- paste(lbls, pct) # add percents to labels 
-#  lbls <- paste(lbls,"%",sep="") # ad % to labels 
-#  pie(slices,labels = lbls, col=rainbow(length(lbls)),main="pie chart of XX")
 #histogram
-#  x <- list1$list[i]
-#  h<-hist(x, breaks=12, col="red", ylim=c(0,120),xlab=list[i], 
-#  	main="Histogram for XX") 
+#  x <- lbls
+#  h<-hist(x, breaks=5, col="blue", ylim=c(0,100), main=paste("Histogram for",object)) 
 #  xfit<-seq(min(x),max(x),length=40) 
 #  yfit<-dnorm(xfit,mean=mean(x),sd=sd(x)) 
 #  yfit <- yfit*diff(h$mids[1:2])*length(x) 
 #  lines(xfit, yfit, col="blue", lwd=2)
-  
-#density plot
-#  d <- density(x)
-#  plot(d, main="Kernel density for XXX")
-#  polygon(d, col="red", border="blue")
-#}
+
+}
 ```
