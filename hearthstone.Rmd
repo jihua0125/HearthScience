@@ -59,16 +59,26 @@ rm(usecard)
 
 # save simulation results 
 write.csv(decks,file="/Users/Yinnan/Desktop/2016/HearthScience/simulation.csv")
+
+library(readr)
+decks <- read_csv("/Users/Yinnan/Desktop/2016/HearthScience/simulation.csv") 
 ```
 
 Explore the probability of using card in relation to the sum of the deck
 
 ```{r}
 library(ggplot2)
+library(dplyr)
 
 decks %>% ggplot(aes(x=sum, y=p4)) + geom_point()
+decks <- decks[,-1]
+decks.constrain <- decks %>% tbl_df %>% filter(p4>0.95, p2>0.5, p3>0.9, others>10) %>%
+        arrange(desc(sum)) 
 
-decks %>% filter(p4>0.95) %>% ggplot(aes(x=sum, y=p4)) + geom_point()
+decks.constrain %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = min(n1+n2+n3+n4))
+write.csv(decks.constrain,file="/Users/Yinnan/Desktop/2016/HearthScience/simulation_constrain.csv")
+
+decks %>% filter(n2==3, n3==3, n4==1)
 
 ```
 
