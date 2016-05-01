@@ -1,45 +1,65 @@
 ---
 title: "Hearthscience"
-author: "Chi-Hsuan Chang"
+author: "Chi-Hsuan Chang, Yinnan Zheng, Ji Hua, Zou Xu"
 date: "May 1, 2016"
 output: html_document
 ---
 
-# Overview and Motivation:
+## Overview and Motivation:
 Some of our team members are loyal fans of the popular free online card game, Hearthstone: Heroes of Warcraft, which was released worldwide by Blizzard on 2014 with more than 40 million registered Hearthstone accounts by November 2015.[1] 
 
-The main element of the game Hearthstone are cards, which consist of a list of features including cost, attack (number of damages can be made to the opponent per turn),health (number of damages that can bear before being destroyed) and other special abilities. Here is an example of the card: ![card](card.png = 250x)
+The main element of the game Hearthstone are cards, which consist of a list of features including cost, attack (number of damages can be made to the opponent per turn),health (number of damages that can bear before being destroyed) and other special abilities. Here is an example of the card: ![card](card.png)
 
 Before every game starts, each of the two players will choose 1 hero mode among the 9 and then select 30 different cards over 700 cards to build his/her own deck depending on the mode. Each turn, the player will draw one card randomly from the 30 cards and one more mana crystal (money). The player can choose the cards to use among all those in hand that cost up to the mana crystals he/she has by that turn. The game ends when one player is attacked to death (lose all 30 units of health) or he/she concedes, and the other player will win. 
 
-Therefore, the initial building of the 30 cards, as well as the choices of cards to use during the game will directly influence the results of the game. This motivated us to:
-evaluate the strength of all cards, to build a deck with optimal combined strength, and to explore the strategies of card use in different situations during the game as well as with different opponents.
+Therefore, the initial building of the 30 cards, as well as the choices of cards to use during the game will directly influence the results of the game. This motivated us:
+
+* To evaluate the value of all cards.
+* To build a deck with optimal combined strength. 
+* To explore the strategies of card use for different heros or at different rounds during a game.
+
+## Initial Questions: 
+__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?__
+
+> Plan:
+
+* This was considered as the __first stage__ of our analysis. In this stage, we aimed to estimate the value of each card independently, only considering the basic information from the card itself, i.e. attack, health, special ability.
+
+__2. What cost distributions of cards are more likely for players to play the cards they want at each stage of a game? (Considereing that players can only play cards that cost less than or equal to the mana they have each round, they couldn't just build a deck with all the high cost cards or they couldn't play any card at the early stage of a game since each player has one mana at the beggining of a game and will gain one more mana every run.)__
+
+> Plan:
+
+* This is the __second stage__ of our analysis. We aimed to simulate the possibilities of playing a card .... (Yinnan, write a simplified explanation of the simulation constrains of your model here.)
+
+
+__3. Are there any "core" combination of cards?__
+
+> Plan:
+
+* This is the __third stage__ of our analysis. We aimed to estimate the correlation between cards in certain decks of a specific hero and hope to create card combinations based on principal component analyses.
+
+__4. Are we able to build a powerful deck (30 cards) for certain heros?__
+
+> Plan:
+
+* With all our analysis in previous stages, we aimed to build potentially powerful decks for certain heros.
+
+On the fifth stage, we will build an optional deck based on the efforts above and decide the strategy for the ordering of the card to use. We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning (optional).
+
+## Related Work:
+
+## Data:
+
+We plan to collect card data from Hearthstone’s API: http://hearthstoneapi.com/Card.  It contains thorough card information of: card name, card set (Basic / Classic /Blackrock Mountain / Goblins vs Gnomes / Naxxramas / Promotion / The Grand Tournament / The League of Explorers), card type (minions / spells / weapons), player class (Priest / Hunter / Warlock / Shaman / Warrior / Mage / Paladin / Druid / Rogue / All), card description (text), 	mechanics of minions (Battlecry / Taunt / Normal / HealTarget / Charge / Aura / AdjacentBuff / Spell Damage / Freeze / Enrage / Divine Shield / Stealth / Overload / Deathrattle / Windfury / Combo / Poisonous / Inspire), attack , health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
+
+## Exploratory Analysis: 
 
 ```{r}
 
 ```
 
-# Related Work:
 
-```{r}
-
-```
-
-# Data:
-
-```{r}
-
-```
-
-
-# Exploratory Analysis: 
-
-```{r}
-
-```
-
-
-# Final Analysis:
+## Final Analysis:
 
 ```{r}
 
