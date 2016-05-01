@@ -1,0 +1,434 @@
+---
+title: "Hearth Science"
+author: "Xue Zou"
+date: "May 1, 2016"
+output: html_document
+---
+
+## Intrduction to Hearth Stone Card Game
+
+XXXXXX
+
+
+## Exploratory 
+load library 
+```{r pressure, echo=FALSE}
+setwd("~/Desktop/final/")
+#rm(list=ls()) 
+library(knitr)
+opts_chunk$set(cache = TRUE, message = FALSE)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(gridExtra)
+library(graphics)
+library(plotrix)
+library(gridBase)
+library(grid)
+library(sqldf)
+library(ggrepel)
+library(scales)
+theme_set(theme_bw(base_size = 16))
+```
+load data
+```{r}
+load("minions_text.RData")
+data<-minions_text
+```
+distribution of Cost
+```{r}
+#remove costs that are "12" and "20" 
+Cost<-data%>%dplyr::arrange(cost)
+Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost")
+#pie(slices,labels = lbls, col=rainbow(length(lbls)),main="Pie Chart of Card Cost distribution")
+#histogram
+qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost")
+```
+
+Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
+
+distribution of attack
+```{r}
+Attackk<-data%>%arrange(attack)
+Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+#pie chart
+Attack<-Attack%>%mutate(pos=cumsum(n)-n/2)
+p<-Attack%>%ggplot(aes(x=1,y=n,fill=factor(attack)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Attack")
+#histogram
+qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack")
+```
+
+distribution of health
+```{r}
+Health<-data%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
+#pie chart
+Health<-Health%>%mutate(pos=cumsum(n)-n/2)
+p<-Health%>%ggplot(aes(x=1,y=n,fill=factor(health)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Health")
+#histogram
+qplot(data$health,geom="histogram",xlab="health",main="Histogram for health")
+```
+
+distribution of mechanics 
+```{r}
+Mechanics<-data%>%arrange(mechanics)
+Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
+#pie chart
+Mechanics<-Mechanics%>%mutate(pos=cumsum(n)-n/2)
+p<-Mechanics%>%ggplot(aes(x=1,y=n,fill=factor(mechanics)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Mechanics")
+#histogram
+library(ggplot2)
+qplot(data$mechanics,,xlab="mechanics",main="Histogram for Mechanics")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+distribution of playerclass
+```{r}
+pc<-data%>%arrange(playerClass)
+pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
+#pie chart
+playerClass<-pc%>%mutate(pos=cumsum(n)-n/2)
+p<-playerClass%>%ggplot(aes(x=1,y=n,fill=factor(playerClass)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of playerClass")
+#histogram
+library(ggplot2)
+qplot(data$playerClass,,xlab="playerClass",main="Histogram for playerClass")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+distribution of cardSet
+```{r}
+cs<-data%>%arrange(cardSet)
+cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
+#pie chart
+cs<-cs%>%mutate(pos=cumsum(n)-n/2)
+p<-cs%>%ggplot(aes(x=1,y=n,fill=factor(cardSet)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of cardSet")
+#histogram
+library(ggplot2)
+qplot(data$cardSet,,xlab="cardSet",main="Histogram for cardSet")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+distribution of rarity
+```{r}
+rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
+#pie chart
+rr<-rr%>%mutate(pos=cumsum(n)-n/2)
+p<-rr%>%ggplot(aes(x=1,y=n,fill=factor(rarity)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of rarity")
+#histogram
+library(ggplot2)
+qplot(data$cardSet,,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+##correlation of warlock
+
+#pearson correlation of cards
+load library
+```{r}
+library(cowplot)
+library(rvest)
+library(XML)
+library(Heatplus)
+library(vegan)
+library(RColorBrewer)
+library(gplots) 
+library(devtools)
+library(reshape)
+library(dendextend)
+library(colorspace)
+library(reshape2)
+```
+load data
+```{r}
+baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/warlock/page/"
+classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
+tableURL<-"http://www.hearthstonetopdecks.com/deck-category/class/druid/page/"
+
+```
+
+data wrangling 
+```{r}
+allDecks<-list()
+
+for (j in 1:5){
+  tableURL<-paste(baseURL,j,sep="")
+  tables<-as.data.frame(readHTMLTable(tableURL))
+  deckNames<-lapply(tables[,2],as.character)
+  deckNames<-unlist(deckNames)
+  
+  for(i in 1:length(deckNames)){
+    urlName<-tolower(gsub("\\s","-",gsub("[^\\w \\s]+","",deckNames[i],perl = TRUE),perl = TRUE))
+    
+    testURL<-paste("http://www.hearthstonetopdecks.com/decks/",urlName,sep="")
+    tryCatch(webpage<-read_html(testURL),error=function(e){return(i)})
+    
+    cardNames<-webpage%>%
+      html_nodes(".card-name")%>%
+      html_text()
+    
+    cardCounts<-webpage%>%
+      html_nodes(".card-count")%>%
+      html_text()%>%
+      as.numeric()
+    
+    deckId<-(j-1)*25+i
+    
+    deck<-cbind(cardNames,cardCounts,rep(deckId,length(cardNames)))
+    
+    allDecks[[deckId]]<-deck
+  }
+}
+
+largerTable<-data.frame()
+
+for (i in 8:125){
+  largerTable<-rbind(largerTable,allDecks[[i]])
+}
+
+largerTable<-largerTable%>%spread(key=V3,value=cardCounts)
+
+for (i in 2:length(largerTable)){
+  largerTable[,i]<-as.numeric(as.character(largerTable[,i]))
+}
+
+largerTable[is.na(largerTable)]<-0
+
+rownames(largerTable)<-t(largerTable[,1])
+
+```
+
+dataset as a whole
+```{r}
+###
+data<-largerTable%>%select(-cardNames)
+data.t<-t(data)
+d1<-dist(data) 
+d2<-dist(data.t)
+cormat<-round(cor(data.t),2)
+mtscaled<-as.matrix(d1)
+#correlation
+cor_data<-round(cor(data.t),2)
+data.m<-melt(cor_data)
+##############hierarchical culsutering 
+hClust<-hclust(dist(data),method="complete")
+plot(hClust,cex=1)
+```
+
+heatmap
+```{r}
+
+heatmap(mtscaled,Colv=F,cexRow=0.4,cexCol = 0.4)
+#data exploration ( 260 CV)
+image(as.matrix(d1))
+library(ggplot2)
+#no label of x-axis, y-axis
+ggplot(data = data.m, aes(x=X1, y=X2, fill=value)) + 
+  geom_tile()
+
+qplot(x=X1, y=X2, data=data.m, fill=value, geom="tile") + scale_fill_gradient2(limits=c(-1, 1))
+#################################################
+#compute the correlation matrix
+cor_data.t<-round(cor(data.t),2)
+head(cor_data.t)
+melted_data.t <- melt(cor_data.t)
+head(melted_data.t)
+ggplot(data = melted_data.t, aes(x=X1, y=X2, fill=value)) + 
+  geom_tile()
+#get the lower and upper triangles of the correlation matrix
+# Get lower triangle of the correlation matrix
+  get_lower_tri<-function(data.t){
+    data.t[upper.tri(data.t)] <- NA
+    return(data.t)
+  }
+
+  # Get upper triangle of the correlation matrix
+  get_upper_tri <- function(data.t){
+    data.t[lower.tri(data.t)]<- NA
+    return(data.t)
+  }
+upper_tri <- get_upper_tri(data.t)
+upper_tri
+
+# Melt the correlation matrix
+melted_data.t <- melt(upper_tri, na.rm = TRUE)
+
+# Heatmap
+p<-ggplot(data = melted_data.t, aes(X2, X1, fill = value))+
+ geom_tile(color = "white")+
+ scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+   midpoint = 0, limit = c(-1,1), space = "Lab", 
+   name="Pearson\nCorrelation") +
+  theme_minimal()
+
+p+ theme(axis.text.y = element_text(vjust = 1, 
+    size = 8, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+    size = 8, hjust = 1))+ scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0)) 
+
+
+```
+
+#new selection of cards (filtering) 
+```{r}
+###HC
+hClust<-hclust(dist(largerTable),method="complete")
+plot(hClust,cex=0.6)
+
+set.seed(1111)
+###PCA
+cormat=cor(data.t)
+pc<-prcomp(cormat)
+summary(pc)
+
+pcaData <-pc$x[,1:2]
+pca1 <-pc$x[,1]
+pca2 <-pc$x[,2]
+
+wss <- (nrow(pcaData)-1)*sum(apply(pcaData,2,var))
+for (i in 2:15) wss[i] <- sum(kmeans(pcaData,centers=i)$withinss)
+plot(1:15, wss, type="b", xlab="Number of Clusters",
+     ylab="Within groups sum of squares")
+
+###distance matrix 
+d<-dist(largerTable)
+mtscaled<-as.matrix(d)
+image(mtscaled)
+heatmap(mtscaled,Colv=F,cexRow=0.4,cexCol = 0.4)
+#correlation matrix 
+melted_cormat <- melt(cormat)
+p<-ggplot(data = melted_cormat, aes(X2, X1, fill = value))+
+ geom_tile(color = "white")+
+ scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+   midpoint = 0, limit = c(-1,1), space = "Lab", 
+   name="Pearson\nCorrelation") +
+  theme_minimal()
+
+p+ theme(axis.text.y = element_text(vjust = 1, 
+    size = 6, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+    size = 5, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
+
+### triangle heatmap
+install.packages("GGally")
+source("https://raw.githubusercontent.com/briatte/ggcorr/master/ggcorr.R")
+ggcorr(cormat)
+ggcorr(data=NULL,cor_matrix=cor(data.t,use = "everything"),nbreak=4,low = "steelblue", mid = "white", high = "darkred")
+ggcorr(data=NULL,cor_matrix=cor(data.t,use = "everything"),nbreak=4,palette = "RdGy")
+ggcorr(cormat,hjust = 0.75, size = 5, color = "grey50")
+
+
+#qplot(x=pc$x[,1],y=pc$x[,2], geom = "jitter" , color=class, xlab="PC1", ylab = "PC2")
+tmp <- data.frame(pc$rotation, name = rownames(data))
+tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() + 
+  geom_text_repel(aes(PC1, PC2, label=name),
+                  data = filter(tmp,PC1 < -0.15 | PC1 >0.2 | PC2 < -0.2 | PC2>0.1))
+
+```
+
+#look at 4 clusters
+```{r}
+kmeans.cluster<-kmeans(pcaData, centers=4)
+pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
+                  Cluster=factor(kmeans.cluster$cluster))
+### seperate data set
+fullcluster<-pc.df%>%select(-PCA1,-PCA2)
+cluster1<-fullcluster%>%filter(Cluster=="1")%>%select(-Cluster)
+cluster2<-fullcluster%>%filter(Cluster=="2")%>%select(-Cluster)
+cluster3<-fullcluster%>%filter(Cluster=="3")%>%select(-Cluster)
+cluster4<-fullcluster%>%filter(Cluster=="4")%>%select(-Cluster)
+#conver the rownames to first column "ID"
+ID<-rownames(data)
+rownames(data)<-NULL
+data<-cbind(ID,data)
+#create 4 dataset by "ID"
+dataset1<-dplyr::right_join(data,cluster1,by="ID")
+dataset2<-dplyr::right_join(data,cluster2,by="ID")
+dataset3<-dplyr::right_join(data,cluster3,by="ID")
+dataset4<-dplyr::right_join(data,cluster4,by="ID")
+
+#convert the first column to rownames
+rownames(dataset1)<-dataset1$ID
+rownames(dataset2)<-dataset2$ID
+rownames(dataset3)<-dataset3$ID
+rownames(dataset4)<-dataset4$ID
+dataset1<-dataset1[,-1]
+dataset2<-dataset2[,-1]
+dataset3<-dataset3[,-1]
+dataset4<-dataset4[,-1]
+data1.t<-t(dataset1)
+data2.t<-t(dataset2)
+data3.t<-t(dataset3)
+data4.t<-t(dataset4)
+#correlation within the first dataset
+cormat1<-round(cor(data1.t),2)
+cormat2<-round(cor(data2.t),2)
+cormat3<-round(cor(data3.t),2)
+cormat4<-round(cor(data4.t),2)
+# HC of the first dataset
+hClust1<-hclust(dist(dataset1),method="complete")
+hClust2<-hclust(dist(dataset2),method="complete")
+hClust3<-hclust(dist(dataset3),method="complete")
+hClust4<-hclust(dist(dataset4),method="complete")
+plot(hClust1,cex=0.6)
+plot(hClust2,cex=0.6)
+plot(hClust3,cex=0.6)
+plot(hClust4,cex=0.6)
+
+#correlation matrix 
+melted_cormat1 <- melt(cormat1)
+p1<-ggplot(data = melted_cormat1, aes(X2, X1, fill = value))+
+  geom_tile(color = "white")+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  theme_minimal()
+
+p1+ theme(axis.text.y = element_text(vjust = 1, 
+                                    size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                                                                            size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
+
+melted_cormat2 <- melt(cormat2)
+p2<-ggplot(data = melted_cormat2, aes(X2, X1, fill = value))+
+  geom_tile(color = "white")+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  theme_minimal()
+
+p2+ theme(axis.text.y = element_text(vjust = 1, 
+                                    size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                                                                            size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
+
+
+melted_cormat3 <- melt(cormat3)
+p3<-ggplot(data = melted_cormat3, aes(X2, X1, fill = value))+
+  geom_tile(color = "white")+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  theme_minimal()
+
+p3+ theme(axis.text.y = element_text(vjust = 1, 
+                                    size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                                                                            size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
+
+
+melted_cormat4 <- melt(cormat4)
+p4<-ggplot(data = melted_cormat4, aes(X2, X1, fill = value))+
+  geom_tile(color = "white")+
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Pearson\nCorrelation") +
+  theme_minimal()
+
+p4+ theme(axis.text.y = element_text(vjust = 1, 
+                                    size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                                                                            size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
+```
