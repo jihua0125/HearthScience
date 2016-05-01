@@ -1,0 +1,197 @@
+## pearson correlation of cards
+load library
+```{r}
+setwd("~/Desktop/final/")
+
+library(rvest)
+library(XML)
+library(dplyr)
+library(tidyr)
+```
+load data
+```{r}
+baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/"
+classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
+tableURL<-"http://www.hearthstonetopdecks.com/deck-category/class/druid/page/"
+```
+arrange data
+```{r}
+allDecks<-list()
+for (j in 1:5){
+  tableURL<-paste("http://www.hearthstonetopdecks.com/deck-category/class/druid/page/",j,sep="")
+  tables<-as.data.frame(readHTMLTable(tableURL))
+  deckNames<-lapply(tables[,2],as.character)
+  deckNames<-unlist(deckNames)
+  
+  for(i in 1:length(deckNames)){
+    urlName<-tolower(gsub("\\s","-",gsub("[^\\w \\s]+","",deckNames[i],perl = TRUE),perl = TRUE))
+    
+    testURL<-paste("http://www.hearthstonetopdecks.com/decks/",urlName,sep="")
+    tryCatch(webpage<-read_html(testURL),error=function(e){return(i)})
+    
+    cardNames<-webpage%>%
+      html_nodes(".card-name")%>%
+      html_text()
+    
+    cardCounts<-webpage%>%
+      html_nodes(".card-count")%>%
+      html_text()%>%
+      as.numeric()
+    
+    deckId<-(j-1)*25+i
+    
+    deck<-cbind(cardNames,cardCounts,rep(deckId,length(cardNames)))
+    
+    allDecks[[deckId]]<-deck
+  }
+}
+
+largerTable<-data.frame()
+
+for (i in 6:125){
+  largerTable<-rbind(largerTable,allDecks[[i]])
+}
+
+largerTable<-largerTable%>%spread(key=V3,value=cardCounts)
+
+for (i in 2:121){
+  largerTable[,i]<-as.numeric(as.character(largerTable[,i]))
+}
+
+largerTable[is.na(largerTable)]<-0
+```
+heatmap
+```{r}
+rownames(largerTable)<-t(largerTable[,1])
+data<-largerTable%>%select(-cardNames)
+data.t<-t(data)
+#data<-as.numeric(data)
+d1<-dist(data)
+d2<-dist(data.t)
+mtscaled<-as.matrix(d1)
+#correlation
+cor_data<-round(cor(data.t),2)
+data.m<-melt(corMatrix)
+##############hierarchical culsutering 
+hcdat<-hclust(dist(data),method="complete")
+plot(hClust,cex=0.6)
+#class.factor??
+#what k should we use?
+library(dendextend)
+dend <- as.dendrogram(hcdat)
+dend <- rotate(dend, 1:145)
+dend <- color_branches(dend, k=10) 
+library(colorspace)
+#labels_colors(dend) <-
+#  rainbow_hcl(4)[
+#    as.numeric(class.factor)[order.dendrogram(dend)]]
+#labels(dend) <- paste(as.character(class.factor)[order.dendrogram(dend)],"(",labels(dend),")", sep = "")
+dend <- hang.dendrogram(dend,hang_height=0.1)
+dend <- set(dend, "labels_cex", 0.5)
+par(cex=0.4,mar=c(5,8,4,1))
+plot(dend, ylab="sample",xlab="height",
+     main = "Figure1: Clustered (all) cards", 
+     horiz =  TRUE,  nodePar = list(cex = .07),cex.main=2.5)
+#legend("topleft",legend=card_type,fill=rainbow_hcl(4))
+
+
+
+######heatmap
+library(ggplot2)
+library(reshape2)
+
+heatmap(mtscaled,Colv=F,cexRow=0.4,cexCol = 0.4)
+#data exploration ( 260 CV)
+image(as.matrix(d1))
+
+#no label of x-axis, y-axis
+ggplot(data = data.m, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()
+
+qplot(x=Var1, y=Var2, data=data.m, fill=value, geom="tile") + scale_fill_gradient2(limits=c(-1, 1))
+#################################################
+#compute the correlation matrix
+cor_data.t<-round(cor(data.t),2)
+head(cor_data.t)
+melted_data.t <- melt(cor_data.t)
+head(melted_data.t)
+ggplot(data = melted_data.t, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()
+#get the lower and upper triangles of the correlation matrix
+# Get lower triangle of the correlation matrix
+  get_lower_tri<-function(data.t){
+    data.t[upper.tri(data.t)] <- NA
+    return(data.t)
+  }
+
+  # Get upper triangle of the correlation matrix
+  get_upper_tri <- function(data.t){
+    data.t[lower.tri(data.t)]<- NA
+    return(data.t)
+  }
+upper_tri <- get_upper_tri(data.t)
+upper_tri
+
+# Melt the correlation matrix
+melted_data.t <- melt(upper_tri, na.rm = TRUE)
+
+# Heatmap
+library(ggplot2)
+p<-ggplot(data = melted_data.t, aes(Var2, Var1, fill = value))+
+ geom_tile(color = "white")+
+ scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+   midpoint = 0, limit = c(-1,1), space = "Lab", 
+   name="Pearson\nCorrelation") +
+  theme_minimal()
+
+p+ theme(axis.text.y = element_text(vjust = 1, 
+    size = 8, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+    size = 8, hjust = 1))+ scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0)) 
+
+
+```
+only pick top 20 cards
+```{r}
+data_10.t<-data.t[1:10,1:10]
+#cor_data.t<-round(cor(data_10.t),2)
+cor_data_10.t<-cor_data.t[1:10,1:10]
+
+melted_data_10.t <- melt(cor_data_10.t)
+
+ggplot(data = melted_data_10.t, aes(x=Var1, y=Var2, fill=value)) + geom_tile()
+#get the lower and upper triangles of the correlation matrix
+# Get lower triangle of the correlation matrix
+  get_lower_tri<-function(data_10.t){
+    data.t[upper.tri(data_20.t)] <- NA
+    return(data_20.t)
+  }
+
+  # Get upper triangle of the correlation matrix
+  get_upper_tri <- function(data_20.t){
+    data_20.t[lower.tri(data_20.t)]<- NA
+    return(data_20.t)
+  }
+upper_tri <- get_upper_tri(data_20.t)
+upper_tri
+
+# Melt the correlation matrix
+melted_data_20.t <- melt(upper_tri, na.rm = TRUE)
+
+
+
+#reorder the correlation matrix
+reorder_data_20.t <- function(data_20.t){
+# Use correlation between variables as distance
+dd <- as.dist((1-data_20.t)/2)
+hc <- hclust(dd)
+data_20.t <-data_20.t[hc$order, hc$order]
+} 
+# Reorder the correlation matrix
+data_20.t <- reorder_data_20.t(data_20.t)
+upper_tri <- get_upper_tri(data_20.t)
+
+# Melt the correlation matrix
+melted_data_20.t <- melt(upper_tri, na.rm = TRUE)
+
+
+```
