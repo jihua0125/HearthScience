@@ -22,27 +22,27 @@ Therefore, the initial building of the 30 cards, as well as the choices of cards
 
 
 ## Initial Questions: 
->__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?__
+>__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?___
 
 * This was considered as the __first stage__ of our analysis. In this stage, we aimed to estimate the value of each card independently, only considering the basic information from the card itself, i.e. attack, health, special ability.
 
->__2. What is the balance between small cost cards and big cost cards? __
+>__2. What is the balance between low cost cards and high cost cards?___
 
 * This is the __second stage__ of our analysis. The card a player can use is restricted by the number of mana he/she has for that turn, starting from 1 at the beginning and will reach to a maximum of 10 since the 10th turn. If there is no card with cost less than or equal to the number of mana in that turn, the player cannot use any card. 
 Note that without this consideration, we may choose all 30 cards to be with very high cost -- however, we are not able to use them in the first several turns. If the opponent do have small cards, we may be attacked to death before we could ever use any card.
 We aimed to simulate the possibilities of playing a card in the first 5 turns. 
 
-
->__3. Are there any "core" combination of cards?__
+>__3. Are there any "core" combination of cards?___
 
 * This is the __third stage__ of our analysis. We aimed to estimate the correlation between cards in certain decks of a specific hero and hope to create card combinations based on principal component analyses. In deciding the number of core cards, we also want to explore the number of drawing cards we need, in order to be able to get the core cards in the random drawing during the game.
 
->__4. Are we able to build a powerful deck (30 cards) for some heros?__
+>__4. Are we able to build a powerful deck (30 cards) for some heros?___
 
 * With all our analysis in previous stages, we aimed to build potentially powerful decks for certain heros.
+![flowchart](flowchart.png)
 
-On the fifth stage, we will build an optional deck based on the efforts above and decide the strategy for the ordering of the card to use. We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning (optional).
-
+>__5. Test the deck we built (optional)___
+* We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning.
 ## Related Work:
 
 
