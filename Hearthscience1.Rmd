@@ -48,7 +48,7 @@ On the fifth stage, we will build an optional deck based on the efforts above an
 
 ##library
 Here are the libraries we have used in our project.
-```{r, warning= F, error=F}
+```{r, warning= F, error=F,message=F}
 library(rjson)
 library(dplyr)
 library(tidyr)
@@ -58,7 +58,6 @@ library(stringr)
 library(ggplot2)
 library(gridExtra)
 library(graphics)
-library(plotrix)
 library(grid)
 library(ggrepel)
 library(scales)
@@ -730,11 +729,6 @@ classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","w
 removeList<-c(9,6,10,10,4,7,10,7,7)
 baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/"
 
-minions<-read.csv("minions.csv",sep="\t")
-weapons<-read.csv("weapons.csv",sep="\t")
-spells<-read.csv("spells.csv",sep="\t")
-cards<-rbind(minions,weapons,spells)
-load("D:/HSPH/BIO 260/final/data/minions_text.RData")
 
 totalInfoDeckList<-list()
 
@@ -808,6 +802,21 @@ for(i in 1:9){
 From our empirical knowledge, we know that each deck has its own strategy to win the game, such as aggro, control, midrange, face, etc. These strategies are highly related to the average cost of all the minions inside the deck. 
 
 ```{r,warning=F,error=F}
+minions<-read.csv("minions.csv",sep="\t")
+weapons<-read.csv("weapons.csv",sep="\t")
+spells<-read.csv("spells.csv",sep="\t")
+cards<-rbind(minions,weapons,spells)
+load("D:/HSPH/BIO 260/final/data/minions_text.RData")
+
+classes<-c("druid","hunter","mage","paladin","priest","rogue","shaman","warlock","warrior")
+decks<-list()
+heroDeckLists<-list()
+for(i in 1:9){
+  filename<-paste(classes[i],"decks.csv",sep="")
+  heroDeckLists[[i]]<-read.csv(filename,sep="\t")
+  decks[[i]]<-heroDeckLists[[i]]%>%gather(deckId,cardCounts,2:(length(heroDeckLists[[i]])-1))
+}
+
 ###warlock deck
 warlockDeckCost<-decks[[8]]%>%filter(cardCounts!=0)%>%
   left_join(cards,by=c("cardNames"="name"))%>%
@@ -949,53 +958,13 @@ plot(hClust,cex=0.6)
 
 pc<-prcomp(corMatrix)
 summary(pc)
-```
 
-
-#new selection of cards (filtering) 
-```{r, warning=F}
-data<-largerTable%>%select(-cardNames)
 data.t<-t(data)
 d1<-dist(data) 
 d2<-dist(data.t)
 cormat<-round(cor(data.t),2)
 mtscaled<-as.matrix(d1)
-###HC
-hClust<-hclust(dist(largerTable),method="complete")
-plot(hClust,cex=0.3)
 
-set.seed(1111)
-###PCA
-cormat=cor(data.t)
-pc<-prcomp(cormat)
-summary(pc)
-
-pcaData <-pc$x[,1:2]
-pca1 <-pc$x[,1]
-pca2 <-pc$x[,2]
-
-wss <- (nrow(pcaData)-1)*sum(apply(pcaData,2,var))
-for (i in 2:15) wss[i] <- sum(kmeans(pcaData,centers=i)$withinss)
-plot(1:15, wss, type="b", xlab="Number of Clusters",
-     ylab="Within groups sum of squares")
-
-###distance matrix 
-d<-dist(largerTable)
-mtscaled<-as.matrix(d)
-image(mtscaled)
-heatmap(mtscaled,Colv=F,cexRow=0.4,cexCol = 0.4)
-#correlation matrix 
-melted_cormat <- melt(cormat)
-p<-ggplot(data = melted_cormat, aes(X2, X1, fill = value))+
-  geom_tile(color = "white")+
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
-                       midpoint = 0, limit = c(-1,1), space = "Lab", 
-                       name="Pearson\nCorrelation") +
-  theme_minimal()
-
-p+ theme(axis.text.y = element_text(vjust = 1, 
-                                    size = 3, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
-                                                                                           size = 2, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
 
 ### triangle heatmap
 
@@ -1004,16 +973,33 @@ ggcorr(cormat)
 ggcorr(cormat,hjust = 0.3, size = 1, color = "grey50")
 
 
-#qplot(x=pc$x[,1],y=pc$x[,2], geom = "jitter" , color=class, xlab="PC1", ylab = "PC2")
-tmp <- data.frame(pc$rotation, name = rownames(data))
-tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() + 
-  geom_text_repel(aes(PC1, PC2, label=name),
-                  data = filter(tmp,PC1 < -0.15 | PC1 >0.2 | PC2 < -0.2 | PC2>0.1))
+```
+
+From the principle components analysis, we can see the top 2 principle components have explained 2/3 of the variance between cards. So here, we are going to use the first 2 pcs to do the following analysisto keep the scale of problem small enough.
+
+```{r,warning=F,error=F}
+
+pcaData <-pc$x[,1:2]
+pca1 <-pc$x[,1]
+pca2 <-pc$x[,2]
+
+wss <- (nrow(pcaData)-1)*sum(apply(pcaData,2,var))
+for (i in 2:20) wss[i] <- sum(kmeans(pcaData,centers=i)$withinss)
+plot(1:20, wss, type="b", xlab="Number of Clusters",
+     ylab="Within groups sum of squares")
+
+
+kmeans.cluster<-kmeans(pcaData, centers=4)
+pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, Cluster=factor(kmeans.cluster$cluster))
+pc.df%>%ggplot(aes(x=PCA1, y=PCA2, label=ID, color=Cluster))+geom_jitter()+
+  geom_text_repel(aes(PCA1, PCA2, label=ID),data = filter(pc.df,PCA1 < -2.5 | PCA1 >2.5| PCA2 < -1.5 | PCA2>1.5))
+
+pc.df%>%group_by(Cluster)%>%summarize(n())
 
 ```
 
 #look at 4 clusters
-```{r warning= F, error=F}
+```{r warning= F, error=F, eval=F}
 kmeans.cluster<-kmeans(pcaData, centers=4)
 pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
                   Cluster=factor(kmeans.cluster$cluster))
@@ -1052,14 +1038,14 @@ cormat2<-round(cor(data2.t),2)
 cormat3<-round(cor(data3.t),2)
 cormat4<-round(cor(data4.t),2)
 # HC of the first dataset
-hClust1<-hclust(dist(dataset1),method="complete")
-hClust2<-hclust(dist(dataset2),method="complete")
-hClust3<-hclust(dist(dataset3),method="complete")
-hClust4<-hclust(dist(dataset4),method="complete")
-plot(hClust1,cex=0.6)
-plot(hClust2,cex=0.6)
-plot(hClust3,cex=0.6)
-plot(hClust4,cex=0.6)
+#hClust1<-hclust(dist(dataset1),method="complete")
+#hClust2<-hclust(dist(dataset2),method="complete")
+#hClust3<-hclust(dist(dataset3),method="complete")
+#hClust4<-hclust(dist(dataset4),method="complete")
+#plot(hClust1,cex=0.6)
+#plot(hClust2,cex=0.6)
+#plot(hClust3,cex=0.6)
+#plot(hClust4,cex=0.6)
 
 #correlation matrix 
 melted_cormat1 <- melt(cormat1)
@@ -1111,36 +1097,6 @@ p4<-ggplot(data = melted_cormat4, aes(X2, X1, fill = value))+
 p4+ theme(axis.text.y = element_text(vjust = 1, 
                                      size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
                                                                                              size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
-```
-
-
-From the principle components analysis, we can see the top 2 principle components have explained 2/3 of the variance between cards. So here, we are going to use the first 2 pcs to do the following analysisto keep the scale of problem small enough.
-
-```{r,warning=F,error=F}
-tmp <- data.frame(pc$rotation, name = rownames(data))
-tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() + 
-  geom_text_repel(aes(PC1, PC2, label=name),
-                  data = filter(tmp,PC1 < -0.15 | PC1 >0.2 | PC2 < -0.2 | PC2>0.1))
-
-
-pcaData <-pc$x[,1:2]
-pca1 <-pc$x[,1]
-pca2 <-pc$x[,2]
-
-wss <- (nrow(pcaData)-1)*sum(apply(pcaData,2,var))
-for (i in 2:20) wss[i] <- sum(kmeans(pcaData,centers=i)$withinss)
-plot(1:20, wss, type="b", xlab="Number of Clusters",
-     ylab="Within groups sum of squares")
-
-
-kmeans.cluster<-kmeans(pcaData, centers=4)
-pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, Cluster=factor(kmeans.cluster$cluster))
-pc.df%>%ggplot(aes(x=PCA1, y=PCA2, label=ID, color=Cluster))+geom_jitter()+
-  geom_text_repel(aes(PCA1, PCA2, label=ID),data = filter(pc.df,PCA1 < -2.5 | PCA1 >2.5| PCA2 < -1.5 | PCA2>1.5))
-
-pc.df%>%group_by(Cluster)%>%summarize(n())
-
-
 ```
 
 #### Number of Draw cards
