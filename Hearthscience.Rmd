@@ -40,8 +40,10 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 >__4. Are we able to build a powerful deck (30 cards) for some heros?__
 
 * With all our analysis in previous stages, we aimed to build potentially powerful decks for certain heros.
+![flowchart](flowchart.png)
 
-On the fifth stage, we will build an optional deck based on the efforts above and decide the strategy for the ordering of the card to use. We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning (optional).
+>__5. Test the deck we built (optional)___
+* We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning.
 
 ## Related Work:
 
