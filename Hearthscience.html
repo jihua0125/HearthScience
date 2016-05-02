@@ -129,30 +129,26 @@ $(document).ready(function () {
 </div>
 <div id="initial-questions" class="section level2">
 <h2>Initial Questions:</h2>
-<p><strong>1. What are the “true” values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?</strong></p>
 <blockquote>
-<p>Plan:</p>
+<p><strong>1. What are the “true” values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?</strong></p>
 </blockquote>
 <ul>
 <li>This was considered as the <strong>first stage</strong> of our analysis. In this stage, we aimed to estimate the value of each card independently, only considering the basic information from the card itself, i.e. attack, health, special ability.</li>
 </ul>
-<p><strong>2. What cost distributions of cards are more likely for players to play the cards they want at each stage of a game? (Considereing that players can only play cards that cost less than or equal to the mana they have each round, they couldn’t just build a deck with all the high cost cards or they couldn’t play any card at the early stage of a game since each player has one mana at the beggining of a game and will gain one more mana every run.)</strong></p>
 <blockquote>
-<p>Plan:</p>
+<p><strong>2. What cost distributions of cards are more likely for players to play the cards they want at each stage of a game? (Considereing that players can only play cards that cost less than or equal to the mana they have each round, they couldn’t just build a deck with all the high cost cards or they couldn’t play any card at the early stage of a game since each player has one mana at the beggining of a game and will gain one more mana every run.)</strong></p>
 </blockquote>
 <ul>
 <li>This is the <strong>second stage</strong> of our analysis. We aimed to simulate the possibilities of playing a card …. (Yinnan, write a simplified explanation of the simulation constrains of your model here.)</li>
 </ul>
-<p><strong>3. Are there any “core” combination of cards?</strong></p>
 <blockquote>
-<p>Plan:</p>
+<p><strong>3. Are there any “core” combination of cards?</strong></p>
 </blockquote>
 <ul>
 <li>This is the <strong>third stage</strong> of our analysis. We aimed to estimate the correlation between cards in certain decks of a specific hero and hope to create card combinations based on principal component analyses.</li>
 </ul>
-<p><strong>4. Are we able to build a powerful deck (30 cards) for certain heros?</strong></p>
 <blockquote>
-<p>Plan:</p>
+<p><strong>4. Are we able to build a powerful deck (30 cards) for some heros?</strong></p>
 </blockquote>
 <ul>
 <li>With all our analysis in previous stages, we aimed to build potentially powerful decks for certain heros.</li>
@@ -164,7 +160,64 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level2">
 <h2>Data:</h2>
-<p>We plan to collect card data from Hearthstone’s API: <a href="http://hearthstoneapi.com/Card" class="uri">http://hearthstoneapi.com/Card</a>. It contains thorough card information of: card name, card set (Basic / Classic /Blackrock Mountain / Goblins vs Gnomes / Naxxramas / Promotion / The Grand Tournament / The League of Explorers), card type (minions / spells / weapons), player class (Priest / Hunter / Warlock / Shaman / Warrior / Mage / Paladin / Druid / Rogue / All), card description (text), mechanics of minions (Battlecry / Taunt / Normal / HealTarget / Charge / Aura / AdjacentBuff / Spell Damage / Freeze / Enrage / Divine Shield / Stealth / Overload / Deathrattle / Windfury / Combo / Poisonous / Inspire), attack , health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.</p>
+<p>We have two types of data: 1) basic card information (attack/health/cost/description of cards) and 2) frequently used decks from top players.</p>
+<ul>
+<li><strong>Basic card information:</strong> We collected card data from Hearthstone’s API: http:,, hearthstoneapi.com, Card. It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain, Goblins vs Gnomes, Naxxramas, Promotion, The Grand Tournament, The League of Explorers), card type (minions, spells, weapons), player class (Priest, Hunter, Warlock, Shaman, Warrior, Mage, Paladin, Druid, Rogue, All), card description (text), mechanics of minions (Battlecry, Taunt, Normal, HealTarget, Charge, Aura, AdjacentBuff, Spell Damage, Freeze, Enrage, Divine Shield, Stealth, Overload, Deathrattle, Windfury, Combo, Poisonous, Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.</li>
+</ul>
+<pre class="r"><code>## Data wrangling from json to RData:
+library(&quot;rjson&quot;)
+library(&quot;dplyr&quot;)</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>json_file = &quot;cards2.txt&quot;
+data &lt;- fromJSON(file = json_file)
+card_category = names(data)
+
+not_empty = which(sapply(1:length(data), function(i){length(data[[i]])})&gt;0)
+
+card_category = card_category[not_empty]
+
+data = lapply(not_empty, function(i){data[[i]]})
+data1 = lapply(1:length(data), function(k) {lapply(data[[k]],
+                                                   function(i) {lapply(i, function(j){
+                                                     j = ifelse(is.null(j),NA,j)})})})
+
+col_names = lapply(1:length(data1),
+                   function(k) {
+                     lapply(1:length(data1[[k]]),
+                            function(i) {names(data1[[k]][[i]])})})
+
+data2 = lapply(1:length(data1), 
+           function(k) {
+             lapply(1:length(data1[[k]]),
+                    function(i) {
+                      matrix(unlist(data1[[k]][[i]]), 
+                             ncol = length(data1[[k]][[i]]), 
+                             byrow = T)})})
+
+for(k in 1:length(data2)){
+  colnames(data2[[k]][[1]]) = col_names[[k]][[1]]
+  data2[[k]][[1]] = data.frame(data2[[k]][[1]])
+  for(i in 2:length(data2[[k]])){
+    colnames(data2[[k]][[i]]) = col_names[[k]][[i]]
+    data2[[k]][[i]] = data.frame(data2[[k]][[i]])
+    data2[[k]][[i]] = bind_rows(data2[[k]][[i-1]],data2[[k]][[i]])
+  }
+  assign(card_category[k], tbl_df(data2[[k]][[length(data2[[k]])]]))
+}
+
+final_data = get(card_category[1])
+for (i in 2:length(data2)){
+  final_data = bind_rows(final_data, get(card_category[i]))
+}
+# write.table(final_data, file = &quot;final_data.csv&quot;, sep = &quot;\t&quot;)
+# save(final_data, file = &quot;final_data.RData&quot;)</code></pre>
 </div>
 <div id="exploratory-analysis" class="section level2">
 <h2>Exploratory Analysis:</h2>
