@@ -3,7 +3,7 @@ title: "Hearth-science"
 output: html_document
 ---
 
-# Stage 1
+# Simulation 1
 
 The card a player can use is restricted by the number of mana he/she has for that turn, starting from 0 at the beginning and will reach to a maximum of 10 since the 10th turn. If there is no card with cost less than or equal to the number of mana in that turn, the player cannot use any card.
 Note that without this consideration, we may choose all 30 cards to be with very high cost -- however, we are not able to use them in the first several turns. If the opponent do have small cards, we may be attacked to death before we could ever use any card.
@@ -24,7 +24,7 @@ decks <- decks %>% tbl_df %>% mutate(others = 30-n1-n2-n3-n4-n5)
 
 Next, use similation to estimate the probability to use card in the first 1/2/3/4/5-turn for each deck. Estimations are made for offensive player, as the defensive player has higher possiblity to use cards (4 cards at the begining with a special 0 cost card that temporatily increases the mana by 1) for the first few turns.
 
-```{r}
+```{r,eval=FALSE}
 prob_usecard <- function(deck){
         card <- rep(c(1,2,3,4,5,10), deck)
                 
@@ -64,134 +64,215 @@ rm(usecard)
 write.csv(decks,file="/Users/Yinnan/Desktop/2016/HearthScience/simulation.csv")
 
 library(readr)
-decks <- read_csv("/Users/Yinnan/Desktop/2016/HearthScience/simulation.csv") 
+# For loading from my own computer
+# decks <- read_csv("/Users/Yinnan/Desktop/2016/HearthScience/simulation.csv") 
 ```
 
-Explore the probability of using card in relation to the sum of the deck
 
 ```{r}
 library(ggplot2)
 library(dplyr)
+# get the simulation result from github
+url <- "https://raw.githubusercontent.com/jihua0125/HearthScience/master/simulation.csv"
+decks <- read_csv(url)
 
-decks %>% ggplot(aes(x=sum, y=p4)) + geom_point()
 decks <- decks[,-1]
+
+# constrain on probability of using card
 decks.constrain <- decks %>% tbl_df %>% filter(p4>0.95, p2>0.5, p3>0.9, others>10) %>%
         arrange(desc(sum)) 
 
 decks.constrain %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = min(n1+n2+n3+n4))
-write.csv(decks.constrain,file="/Users/Yinnan/Desktop/2016/HearthScience/simulation_constrain.csv")
+
+# save constrain result
+# write.csv(decks.constrain,file="/Users/Yinnan/Desktop/2016/HearthScience/simulation_constrain.csv")
+
 
 ```
 
 
-# Stage 2
+# Simulation 2
 For each deck, there are several "core" cards that can have the greatest effect when they are used together. We will usually put 2 cards for each component of core cards, and we want to get at least one for every component as early as possible.
 
 First we list all possible decks with core cards and normal cards. Each set of core cards includes 2-5 different components.
+
 ```{r}
+# sort the first 6 card for offensive side/early hand, assume we will always keep the core card
+sort.offensive <- function(tmp){
+        sortcard <- t(apply(tmp[,1:6],1,function(x){sort(x,decreasing = T)}))
+        tmp[,1:6] <- sortcard
+        sortcard2 <- t(apply(tmp[,4:30],1,function(x){sample(x,27)}))
+        tmp[,4:30] <- sortcard2
+        tmp
+}
+
 # 2 components core cards set, each with 2 cards
 card <- c(1,1,2,2,rep(0,26))
-tmp <- t(replicate(1000,sample(card,30)))
-# sort the first 6 card, assume we will always keep the core card
-sortcard <- t(apply(tmp[,1:6],1,function(x){sort(x,decreasing = T)}))
-tmp[,1:6] <- sortcard
-sortcard2 <- t(apply(tmp[,4:30],1,function(x){sample(x,27)}))
-tmp[,4:30] <- sortcard2
-rm(sortcard)
-rm(sortcard2)
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
 
 # the probability of having the complete set of core cards by n turns
-# we want to know by which turn the probability is above 0.9, to determin how many "extra card" card we want to put in out dek
-q15 <- mean(apply(tmp[,1:18],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)}))  
-q16 <- mean(apply(tmp[,1:19],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)}))  
-q17 <- mean(apply(tmp[,1:20],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)}))  
-q18 <- mean(apply(tmp[,1:21],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)}))  
-q19 <- mean(apply(tmp[,1:22],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)}))  
-q20 <- mean(apply(tmp[,1:23],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)}))  
-c2 <- c(q15,q16,q17,q18,q19,q20)
-```
+# we want to know the probability by each turn i
 
-```{r}
+offen_core2 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)})) 
+}
+
+o2 <- sapply(1:27,offen_core2)
+
+
+
 # 3 components core cards set, each with 2 cards
 card <- c(1,1,2,2,3,3,rep(0,24))
-tmp <- t(replicate(1000,sample(card,30)))
-# sort the first 6 card, assume we will always keep the core card
-sortcard <- t(apply(tmp[,1:6],1,function(x){sort(x,decreasing = T)}))
-tmp[,1:6] <- sortcard
-sortcard2 <- t(apply(tmp[,4:30],1,function(x){sample(x,27)}))
-tmp[,4:30] <- sortcard2
-rm(sortcard)
-rm(sortcard2)
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
 
 # the probability of having the complete set of core cards by n turns
-# we want to know by which turn the probability is above 0.9, to determin how many "extra card" card we want to put in out dek
-q15 <- mean(apply(tmp[,1:18],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)}))  
-q16 <- mean(apply(tmp[,1:19],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)}))  
-q17 <- mean(apply(tmp[,1:20],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)}))  
-q18 <- mean(apply(tmp[,1:21],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)}))  
-q19 <- mean(apply(tmp[,1:22],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)}))  
-q20 <- mean(apply(tmp[,1:23],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)}))  
-q21 <- mean(apply(tmp[,1:24],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)}))  
-c3 <- c(q15,q16,q17,q18,q19,q20,q21)
-```
+# we want to know the probability by each turn i
+offen_core3 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)})) 
+}
 
-```{r}
+o3 <- sapply(1:27,offen_core3)
+
+
 # 4 components core cards set, each with 2 cards
 card <- c(1,1,2,2,3,3,4,4,rep(0,22))
-tmp <- t(replicate(1000,sample(card,30)))
-# sort the first 6 card, assume we will always keep the core card
-sortcard <- t(apply(tmp[,1:6],1,function(x){sort(x,decreasing = T)}))
-tmp[,1:6] <- sortcard
-sortcard2 <- t(apply(tmp[,4:30],1,function(x){sample(x,27)}))
-tmp[,4:30] <- sortcard2
-rm(sortcard)
-rm(sortcard2)
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
 
 # the probability of having the complete set of core cards by n turns
-# we want to know by which turn the probability is above 0.9, to determin how many "extra card" card we want to put in out dek
-q15 <- mean(apply(tmp[,1:18],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
-q16 <- mean(apply(tmp[,1:19],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
-q17 <- mean(apply(tmp[,1:20],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
-q18 <- mean(apply(tmp[,1:21],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
-q19 <- mean(apply(tmp[,1:22],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
-q20 <- mean(apply(tmp[,1:23],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
-q21 <- mean(apply(tmp[,1:24],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
-q22 <- mean(apply(tmp[,1:25],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0)}))  
+# we want to know the probability by each turn i
+offen_core4 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0})) 
+}
 
-c4 <- c(q15,q16,q17,q18,q19,q20,q21,q22)
-```
+o4 <- sapply(1:27,offen_core4) 
 
-```{r}
+
 # 5 components core card set
 card <- c(1,1,2,2,3,3,4,4,5,5,rep(0,20))
-tmp <- t(replicate(1000,sample(card,30)))
-# sort the first 6 card, assume we will always keep the core card
-sortcard <- t(apply(tmp[,1:6],1,function(x){sort(x,decreasing = T)}))
-tmp[,1:6] <- sortcard
-sortcard2 <- t(apply(tmp[,4:30],1,function(x){sample(x,27)}))
-tmp[,4:30] <- sortcard2
-rm(sortcard)
-rm(sortcard2)
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
 
 # the probability of having the complete set of core cards by n turns
-# we want to know by which turn the probability is above 0.9, to determin how many "extra card" card we want to put in out dek
-q15 <- mean(apply(tmp[,1:18],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
-q16 <- mean(apply(tmp[,1:19],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
-q17 <- mean(apply(tmp[,1:20],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
-q18 <- mean(apply(tmp[,1:21],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
-q19 <- mean(apply(tmp[,1:22],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
-q20 <- mean(apply(tmp[,1:23],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
-q21 <- mean(apply(tmp[,1:24],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
-q22 <- mean(apply(tmp[,1:25],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0 & sum(c==4)>0 & sum(c==5)>0)}))  
+# we want to know the probability by each turn i
+offen_core5 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0})) 
+}
 
-c5 <- c(q15,q16,q17,q18,q19,q20,q21,q22)
+o5 <- sapply(1:27,offen_core5) 
 ```
 
 
 
 
+Similarly we can estimate the probability for the defensive side/late hand.
+
+```{r}
+# sort the first 6 card for offensive side, assume we will always keep the core card
+sort.defensive <- function(tmp){
+        sortcard <- t(apply(tmp[,1:8],1,function(x){sort(x,decreasing = T)}))
+        tmp[,1:8] <- sortcard
+        sortcard2 <- t(apply(tmp[,5:30],1,function(x){sample(x,26)}))
+        tmp[,5:30] <- sortcard2
+        tmp
+}
+
+# 2 components core cards set, each with 2 cards
+card <- c(1,1,2,2,rep(0,26))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+
+defen_core2 <- function(i){
+        mean(apply(tmp[,1:(i+4)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)})) 
+}
+
+d2 <- sapply(1:26,defen_core2)
 
 
+
+# 3 components core cards set, each with 2 cards
+card <- c(1,1,2,2,3,3,rep(0,24))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core3 <- function(i){
+        mean(apply(tmp[,1:(i+4)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)})) 
+}
+
+d3 <- sapply(1:26,defen_core3)
+
+
+# 4 components core cards set, each with 2 cards
+card <- c(1,1,2,2,3,3,4,4,rep(0,22))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core4 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0})) 
+}
+
+d4 <- sapply(1:26,defen_core4) 
+
+
+# 5 components core card set
+card <- c(1,1,2,2,3,3,4,4,5,5,rep(0,20))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core5 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0})) 
+}
+
+d5 <- sapply(1:26,defen_core5) 
+```
+
+
+```{r}
+# show results
+
+offensive <- data.frame(o2,o3,o4,o5)
+colnames(offensive) <- c(2,3,4,5)
+offensive <- offensive %>% mutate(turn=1:27, card=4:30) %>% gather("n_core","prob",1:4)
+
+defensive <- data.frame(d2,d3,d4,d5)
+colnames(defensive) <- c(2,3,4,5)
+defensive <- defensive %>% mutate(turn=1:26, card=5:30) %>% gather("n_core","prob",1:4)
+
+
+#pdf("~/Desktop/2016/HearthScience/corecard_simulation.pdf")
+
+offensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
+        ggtitle("The probability of getting the whole set of core cards (Offensive)") +
+        scale_x_continuous(breaks=4:30) +
+        scale_y_continuous(breaks=seq(0,1,0.1))
+defensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
+        ggtitle("The probability of getting the whole set of core cards (Defensive)") +
+        scale_x_continuous(breaks=5:30) +
+        scale_y_continuous(breaks=seq(0,1,0.1))
+#dev.off()
+
+
+
+```
 
 
 
