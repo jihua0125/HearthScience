@@ -22,22 +22,22 @@ Therefore, the initial building of the 30 cards, as well as the choices of cards
 
 
 ## Initial Questions: 
->__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?__
+>__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?___
 
 * This was considered as the __first stage__ of our analysis. In this stage, we aimed to estimate the value of each card independently, only considering the basic information from the card itself, i.e. attack, health, special ability.
 
->__2. What is the balance between low cost cards and high cost cards? __
+>__2. What is the balance between low cost cards and high cost cards?___
 
 * This is the __second stage__ of our analysis. The card a player can use is restricted by the number of mana he/she has for that turn, starting from 1 at the beginning and will reach to a maximum of 10 since the 10th turn. If there is no card with cost less than or equal to the number of mana in that turn, the player cannot use any card. 
 Note that without this consideration, we may choose all 30 cards to be with very high cost -- however, we are not able to use them in the first several turns. If the opponent do have small cards, we may be attacked to death before we could ever use any card.
 We aimed to simulate the possibilities of playing a card in the first 5 turns. 
 
 
->__3. Are there any "core" combination of cards?__
+>__3. Are there any "core" combination of cards?___
 
 * This is the __third stage__ of our analysis. We aimed to estimate the correlation between cards in certain decks of a specific hero and hope to create card combinations based on principal component analyses. In deciding the number of core cards, we also want to explore the number of drawing cards we need, in order to be able to get the core cards in the random drawing during the game.
 
->__4. Are we able to build a powerful deck (30 cards) for some heros?__
+>__4. Are we able to build a powerful deck (30 cards) for some heros?___
 
 * With all our analysis in previous stages, we aimed to build potentially powerful decks for certain heros.
 ![flowchart](flowchart.png)
@@ -48,7 +48,7 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 ## Related Work:
 
 
-##library
+### library
 Here are the libraries we have used in our project.
 ```{r, warning= F error=F}
 library(rjson)
@@ -78,11 +78,12 @@ library(VGAM)
 ```
 
 
-## Data:
+## Data Wrangling
 
 We have two types of data: 1) basic card information (attack/health/cost/description of cards) and 2) frequently used decks from top players. 
 
-* __Basic card information:__ We collected card data from Hearthstone’s API: http:,, hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
+### Basic Card Information
+* We collected card data from Hearthstone’s API: http:,, hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
 
 ```{r eval=F warning=F error=F}
 ## Data wrangling from json to RData:
@@ -132,7 +133,8 @@ for (i in 2:length(data2)){
 # save(final_data, file = "final_data.RData")
 ```
 
-Data wrangling of card descriptions:
+#### Card Descriptions
+
 This part is aimed for detailed classification of minion card descriptions (other than the mechanics they are currently classified as). 
 
 1. For some minions that have more than one mechanics (e.g. Taunt that has deathrattle), they are only classified as one of their mechanics in the Hearthstone dataset. The following wrangling aims to classify them with all the mechanics they have with dummy variables (having certain feature = 1 vs. without certain feature = 0).
@@ -206,7 +208,7 @@ save(minions_text, file = "minions_text.RData")
 
 
 
-## Exploratory Analysis
+#### Exploratory Analysis
 ```{r warning=F error=F}
 
 theme_set(theme_bw(base_size = 16))
@@ -214,7 +216,7 @@ theme_set(theme_bw(base_size = 16))
 load("minions_text.RData")
 data<-minions_text
 ```
-distribution of Cost
+#### Distribution of Cost
 ```{r warning=F error=F}
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
@@ -228,7 +230,7 @@ qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost")
 
 Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
 
-distribution of attack
+##### Distribution of Attack
 ```{r warning=F error=F}
 Attackk<-data%>%arrange(attack)
 Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
@@ -240,7 +242,7 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack")
 ```
 
-distribution of health
+##### Distribution of Health
 ```{r warning=F error=F}
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
@@ -252,7 +254,7 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 qplot(data$health,geom="histogram",xlab="health",main="Histogram for health")
 ```
 
-distribution of mechanics 
+##### Distribution of Mechanics 
 ```{r warning=F error=F}
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
@@ -264,7 +266,7 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-distribution of playerclass
+##### Distribution of Playerclass
 ```{r warning=F error=F}
 pc<-data%>%arrange(playerClass)
 pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
@@ -277,7 +279,7 @@ qplot(data$playerClass,xlab="playerClass",main="Histogram for playerClass")+them
 
 ```
 
-distribution of cardSet
+##### Distribution of CardSet
 ```{r warning=F error=F}
 cs<-data%>%arrange(cardSet)
 cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
@@ -290,7 +292,7 @@ qplot(data$cardSet,xlab="cardSet",main="Histogram for cardSet")+theme(axis.text.
 
 ```
 
-distribution of rarity
+##### Distribution of Rarity
 ```{r warning=F error=F}
 rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
 #pie chart
@@ -301,17 +303,17 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 qplot(data$cardSet,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-##correlation of warlock
+### Correlation of Warlock
 
-#pearson correlation of cards
-load data
+#### Pearson Correlation of Cards
+##### Load Data
 ```{r warning=F error=F}
 baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/warlock/page/"
 classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
 
 ```
 
-data wrangling 
+##### Data Wrangling 
 ```{r warning=F error=F}
 allDecks<-list()
 
@@ -362,7 +364,7 @@ rownames(largerTable)<-t(largerTable[,1])
 
 ```
 
-dataset as a whole
+##### Dataset as a Whole
 ```{r warning=F error=F}
 ###
 data<-largerTable%>%select(-cardNames)
@@ -379,7 +381,7 @@ hClust<-hclust(dist(data),method="complete")
 plot(hClust,cex=1)
 ```
 
-heatmap
+##### Heatmap
 ```{r warning=F error=F}
 
 heatmap(mtscaled,Colv=F,cexRow=0.4,cexCol = 0.4)
@@ -431,7 +433,7 @@ p+ theme(axis.text.y = element_text(vjust = 1,
 
 ```
 
-#new selection of cards (filtering) 
+##### New Selection of Cards (filtering) 
 ```{r, warning=F}
 ###HC
 hClust<-hclust(dist(largerTable),method="complete")
@@ -487,7 +489,7 @@ tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() +
 
 ```
 
-#look at 4 clusters
+##### Look at 4 Clusters
 ```{r warning=F error=F}
 kmeans.cluster<-kmeans(pcaData, centers=4)
 pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
