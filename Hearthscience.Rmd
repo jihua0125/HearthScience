@@ -50,7 +50,7 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 
 ### library
 Here are the libraries we have used in our project.
-```{r, warning= F, error=F}
+```{r, warning= F, error=F, message = F}
 library(rjson)
 library(dplyr)
 library(tidyr)
@@ -83,9 +83,10 @@ library(VGAM)
 We have two types of data: 1) basic card information (attack/health/cost/description of cards) and 2) frequently used decks from top players. 
 
 ### 1. Basic Card Information
-* We collected card data from Hearthstone’s API: http:,, hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
+#### Quantitative Features of Cards
+We collected card data from Hearthstone’s API: http://hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
 
-```{r eval=F, warning=F, error=F}
+```{r eval=F, warning=F, error=F, message=F}
 ## Data wrangling from json to RData:
 
 json_file = "cards2.txt"
@@ -139,7 +140,7 @@ This part is aimed for detailed classification of minion card descriptions (othe
 
 1. For some minions that have more than one mechanics (e.g. Taunt that has deathrattle), they are only classified as one of their mechanics in the Hearthstone dataset. The following wrangling aims to classify them with all the mechanics they have with dummy variables (having certain feature = 1 vs. without certain feature = 0).
 
-```{r eval=F, warning=F, error=F}
+```{r eval=F, warning=F, error=F, message = F}
 
 load("minions.RData")
 minions_text = tbl_df(minions) %>%
@@ -171,7 +172,7 @@ minions_text = minions_text %>%
 
 2. The beauty of Hearthstone (and the most difficult part for quantitative analysis) is that almost every minion has its unique feature that are described in text on the card. Therefore, it's hard to "value" a card without taking these descriptions into account while on the other hand, texts them selves are difficult to be simply quantified. The following wrangling aims to identify certain verbs (deal, restore, etc.) and nouns (attacks, healths, etc.) frequently used in the card description and tried to classifiy cards with more features that were not classified by their mechanics.
 
-```{r eval=F, warning=F, error=F}
+```{r eval=F, warning=F, error=F, message = F}
 minions_text = minions_text %>%
   mutate(Choice = ifelse(text %in% minions_text$text[grep("; or",minions_text$text, ignore.case = T)], 1, 0)) %>% 
   mutate(Conditional = ifelse(text %in% minions_text$text[grep("if",minions_text$text, ignore.case = T)], 1, 0)) %>% 
@@ -209,7 +210,7 @@ save(minions_text, file = "minions_text.RData")
 
 
 #### Exploratory Analysis
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 
 theme_set(theme_bw(base_size = 16))
 
@@ -217,7 +218,7 @@ load("minions_text.RData")
 data<-minions_text
 ```
 #### Distribution of Cost
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
 Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
@@ -231,7 +232,7 @@ qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost")
 Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
 
 ##### Distribution of Attack
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 Attackk<-data%>%arrange(attack)
 Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
 #pie chart
@@ -243,7 +244,7 @@ qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack")
 ```
 
 ##### Distribution of Health
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #pie chart
@@ -267,7 +268,7 @@ qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis
 ```
 
 ##### Distribution of Playerclass
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 pc<-data%>%arrange(playerClass)
 pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
 #pie chart
@@ -280,7 +281,7 @@ qplot(data$playerClass,xlab="playerClass",main="Histogram for playerClass")+them
 ```
 
 ##### Distribution of CardSet
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 cs<-data%>%arrange(cardSet)
 cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
 #pie chart
@@ -293,7 +294,7 @@ qplot(data$cardSet,xlab="cardSet",main="Histogram for cardSet")+theme(axis.text.
 ```
 
 ##### Distribution of Rarity
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
 #pie chart
 rr<-rr%>%mutate(pos=cumsum(n)-n/2)
@@ -307,14 +308,14 @@ qplot(data$cardSet,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x 
 
 #### Pearson Correlation of Cards
 ##### Load Data
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/warlock/page/"
 classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
 
 ```
 
 ##### Data Wrangling 
-```{r, warning=F, error=F, eval=F}
+```{r, warning=F, error=F, eval=F, message = F}
 allDecks<-list()
 
 for (j in 1:5){
@@ -365,7 +366,7 @@ rownames(largerTable)<-t(largerTable[,1])
 ```
 
 ##### Dataset as a Whole
-```{r, warning=F, error=F, eval=F}
+```{r, warning=F, error=F, eval=F, message = F}
 ###
 data<-largerTable%>%select(-cardNames)
 data.t<-t(data)
@@ -382,7 +383,7 @@ plot(hClust,cex=1)
 ```
 
 ##### Heatmap
-```{r, warning=F, error=F, eval = F}
+```{r, warning=F, error=F, eval = F, message = F}
 
 heatmap(mtscaled,Colv=F,cexRow=0.4,cexCol = 0.4)
 #data exploration ( 260 CV)
@@ -434,7 +435,7 @@ p+ theme(axis.text.y = element_text(vjust = 1,
 ```
 
 ##### New Selection of Cards (filtering) 
-```{r, warning=F, eval = F}
+```{r, warning=F, eval = F, message = F}
 ###HC
 hClust<-hclust(dist(largerTable),method="complete")
 plot(hClust,cex=0.6)
@@ -490,7 +491,7 @@ tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() +
 ```
 
 ##### Look at 4 Clusters
-```{r, warning=F, error=F, eval = F}
+```{r, warning=F, error=F, eval = F, message = F}
 kmeans.cluster<-kmeans(pcaData, centers=4)
 pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
                   Cluster=factor(kmeans.cluster$cluster))
@@ -597,7 +598,7 @@ p4+ theme(axis.text.y = element_text(vjust = 1,
 >__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?__
 
 
-```{r, fig.width= 8}
+```{r, fig.width= 8, message = F}
 
 load("minions_text.RData")
 ## cost vs attack+health:
@@ -608,14 +609,14 @@ minions_text %>% mutate(attplusheal = attack+health) %>% ggplot(aes(attplusheal)
 
 From the above plots, we can found similar distributions between the cost and the sum of attach and health, where the distributions are right-skewed. Also, there seems to be some outliers that are very different from other cards.
 
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 minions_text %>%
   filter(cost > 10) %>%
   select(name, cost, attack, health, mechanics, playerClass)
 ```
 
 It might be a good idea to filter out these cards.
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 minions_text = minions_text %>% mutate(attplusheal = attack+health) %>% filter(cost <= 10)
 
 ## cost vs attack+health:
@@ -629,7 +630,7 @@ We can see from the above graph that higher attplusheal value (attack+health) is
 
 In Hearthstone, the cost of cards is usually categorized into 0 ~ 6 and 7+. Here, we wrangled the card costs into these 8 categories and also separate them by cardSet:
 
-```{r, fig.width= 8}
+```{r, fig.width= 8, message = F}
 ## All:
 minions_text = minions_text %>% 
   mutate(cost1 = ifelse(cost >= 7, 7, cost))
@@ -644,7 +645,7 @@ minions_text %>% ggplot(aes(cost1, group = cardSet, fill = cardSet)) + stat_bin(
 ```
 
 
-```{r, warning=F, error=F}
+```{r, warning=F, error=F, message = F}
 
 ## by attack, cost, health:
 minions_bars = minions_text %>% gather(key, value, cost, attack, health)
@@ -672,11 +673,10 @@ Using this cumulative logits model, we are able to estimate the probability of a
 
 Since one of our assumption that the cost of a card is proportional to the damage it can lead to, we first considered a univariate model which include __attack__ as the only covariate: 
 
-```{r, warning= F}
+```{r, warning= F, message = F}
 ## X: attack
 ## Y: cost
 
-library(VGAM)
 minions_text1 = minions_text %>% 
   filter(cost != 0) %>%
   arrange(cost) %>%
