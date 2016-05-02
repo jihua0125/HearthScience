@@ -382,7 +382,6 @@ Since one of our assumption that the cost of a card is proportional to the damag
 ## X: attack
 ## Y: cost
 
-library(VGAM)
 minions_text1 = minions_text %>% 
   filter(cost != 0) %>%
   arrange(cost) %>%
@@ -437,8 +436,6 @@ Since the cost of a card can also be influenced by the time it can survive on th
 ## X: attplusheal
 ## Y: cost
 
-library(VGAM)
-
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ attplusheal, cumulative(parallel = T, reverse = F), data = train)
 # summary(fitCL)
 
@@ -468,13 +465,12 @@ model2 = RMSE(test2$cost1, test2$value)
 rmse_results =  bind_rows(rmse_results, data_frame(method = "X: attplusheal", RMSE = model2))
 ```
 
-It seemed like the univariate __attack+health__ worked well in the model, since my testing the model in our testing set, the RMSE decreased. Therefore, we considered a model which include __attack__ and __health__ separately:
+It seemed like the univariate __attack+health__ worked well in the model, since my testing the model in our testing set, the RMSE decreased. Also, we considered a model which include __attack__ and __health__ separately:
 
 ```{r}
 ## X: attack, health
 ## Y: cost
 
-library(VGAM)
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack, cumulative(parallel = T, reverse = F), data = train)
 # summary(fitCL)
 
@@ -647,7 +643,7 @@ final = minions_text %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+c
 
 final %>% filter(value != cost1) %>%
   mutate(resid = value - cost1) %>%
-  ggplot(aes(cost1, value, col = mechanics))
+  ggplot(aes(cost1, value, col = mechanics))+geom_point()
 
 ```
 
