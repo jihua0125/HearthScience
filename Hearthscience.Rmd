@@ -16,6 +16,7 @@ Therefore, the initial building of the 30 cards, as well as the choices of cards
 
 * To evaluate the value of all cards.
 * To explore the correlation between cards.
+* To decide the set of core cards and number of drawing cards.
 * To explore the number of different costs of card in a deck with simulations.
 * To build a deck with optimal combined strength. 
 
