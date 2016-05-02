@@ -15,17 +15,21 @@ Before every game starts, each of the two players will choose 1 hero mode among 
 Therefore, the initial building of the 30 cards, as well as the choices of cards to use during the game will directly influence the results of the game. This motivated us:
 
 * To evaluate the value of all cards.
+* To explore the correlation between cards.
+* To explore the number of different costs of card in a deck with simulations.
 * To build a deck with optimal combined strength. 
-* To explore the proportion of different kinds of card in a deck with simulations.
+
 
 ## Initial Questions: 
 >__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?__
 
 * This was considered as the __first stage__ of our analysis. In this stage, we aimed to estimate the value of each card independently, only considering the basic information from the card itself, i.e. attack, health, special ability.
 
->__2. What cost distributions of cards are more likely for players to play the cards they want at each stage of a game? (Considereing that players can only play cards that cost less than or equal to the mana they have each round, they couldn't just build a deck with all the high cost cards or they couldn't play any card at the early stage of a game since each player has one mana at the beggining of a game and will gain one more mana every run.)__
+>__2. What is the balance between small cost cards and big cost cards? __
 
-* This is the __second stage__ of our analysis. We aimed to simulate the possibilities of playing a card .... (Yinnan, write a simplified explanation of the simulation constrains of your model here.)
+* This is the __second stage__ of our analysis. The card a player can use is restricted by the number of mana he/she has for that turn, starting from 1 at the beginning and will reach to a maximum of 10 since the 10th turn. If there is no card with cost less than or equal to the number of mana in that turn, the player cannot use any card. 
+Note that without this consideration, we may choose all 30 cards to be with very high cost -- however, we are not able to use them in the first several turns. If the opponent do have small cards, we may be attacked to death before we could ever use any card.
+We aimed to simulate the possibilities of playing a card in the first 5 turns. 
 
 
 >__3. Are there any "core" combination of cards?__
