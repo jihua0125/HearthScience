@@ -4,11 +4,6 @@ output: html_document
 ---
 
 # Simulation 1
-
-The card a player can use is restricted by the number of mana he/she has for that turn, starting from 0 at the beginning and will reach to a maximum of 10 since the 10th turn. If there is no card with cost less than or equal to the number of mana in that turn, the player cannot use any card.
-Note that without this consideration, we may choose all 30 cards to be with very high cost -- however, we are not able to use them in the first several turns. If the opponent do have small cards, we may be attacked to death before we could ever use any card.
-Therefore, the balance between "small" cards and "big" cards is important. In this stage, we want to know that how many card we want for each cost value, in a total of 30 cards.
-
 Assumptions:
 1. Players will not use the card with cost 0 in the earlier several turns.
 2. Cost can roughly represent the value of the card, thus we can maximum the cost of all 30 cards to maximum the value.

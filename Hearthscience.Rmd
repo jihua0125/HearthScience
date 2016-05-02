@@ -35,7 +35,7 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 
 >__3. Are there any "core" combination of cards?__
 
-* This is the __third stage__ of our analysis. We aimed to estimate the correlation between cards in certain decks of a specific hero and hope to create card combinations based on principal component analyses.
+* This is the __third stage__ of our analysis. We aimed to estimate the correlation between cards in certain decks of a specific hero and hope to create card combinations based on principal component analyses. In deciding the number of core cards, we also want to explore the number of drawing cards we need, in order to be able to get the core cards in the random drawing during the game.
 
 >__4. Are we able to build a powerful deck (30 cards) for some heros?__
 
@@ -588,6 +588,8 @@ p4+ theme(axis.text.y = element_text(vjust = 1,
 
 
 ## Final Analysis:
+
+### Card Value Analysis 
 >__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?__
 
 
@@ -892,12 +894,91 @@ test3 %>% filter(value != cost1) %>%
   print(n=50)
 ```
 
-##Deck Analysis
+
+### Simulation
+>__2. What is the balance between small cost cards and big cost cards? __
+Assumptions:
+1. Players will not use the card with cost 0 in the earlier several turns.
+2. Cost can roughly represent the value of the card, thus we can maximum the cost of all 30 cards to maximum the value.
+3. We focus on the first 5 turns.
+
+First, create decks with all reasonable combinations of small cards (1-5) and others.
+
+```{r}
+decks <- expand.grid(n1=0:6, n2=0:6, n3=0:6, n4=0:6, n5=0:6)
+decks <- decks %>% tbl_df %>% mutate(others = 30-n1-n2-n3-n4-n5)
+
+```
+
+Next, use similation to estimate the probability to use card in the first 1/2/3/4/5-turn for each deck. Estimations are made for offensive player, as the defensive player has higher possiblity to use cards (4 cards at the begining with a special 0 cost card that temporatily increases the mana by 1) for the first few turns.
+
+```{r,eval=FALSE}
+prob_usecard <- function(deck){
+        card <- rep(c(1,2,3,4,5,10), deck)
+                
+        # offensive player
+        temp <- t(replicate(1000,sample(card,30)))
+        # assume choosing the 3 smallest cards for the starting hand
+        sortcard <- t(apply(temp[,1:6],1,sort))
+        temp[,1:6] <- sortcard
+        sortcard2 <- t(apply(temp[,4:30],1,function(x){sample(x,27)}))
+        temp[,4:30] <- sortcard2
+        rm(sortcard)
+        rm(sortcard2)
+        
+        # p1: can use card in the first turn
+        p1 <- mean(apply(temp[,1:4],1,function(c){as.numeric(sum(c<2)>0)}))  
+        # p2: can use card in the first 2 turns
+        p2 <- mean(apply(temp[,1:5],1,function(c){as.numeric(sum(c<3)>0)}))  
+        # p3: can use card in the first 3 turns
+        p3 <- mean(apply(temp[,1:6],1,function(c){as.numeric(sum(c<4)>0)}))  
+        # p4: can use card in the first 4 turns
+        p4 <- mean(apply(temp[,1:7],1,function(c){as.numeric(sum(c<5)>0)}))  
+        # p5: can use card in the first 5 turns
+        p5 <- mean(apply(temp[,1:8],1,function(c){as.numeric(sum(c<6)>0)}))  
+        
+        c(p1, p2, p3, p4, p5)     
+}
+
+# get the probability of using card and combine
+usecard <- t(apply(decks,1,prob_usecard))
+colnames(usecard) <- c("p1","p2","p3","p4","p5")
+decks <- cbind(decks,usecard) %>% 
+        # add the total cost for each deck
+        mutate(sum = n1+2*n2+3*n3+4*n4+5*n5+10*others) 
+rm(usecard)
+
+# save simulation results 
+write.csv(decks,file="/Users/Yinnan/Desktop/2016/HearthScience/simulation.csv")
+
+```
+
+
+```{r}
+# get the simulation result from github
+url <- "https://raw.githubusercontent.com/jihua0125/HearthScience/master/simulation.csv"
+decks <- read_csv(url)
+
+decks <- decks[,-1]
+
+# constrain on probability of using card
+decks.constrain <- decks %>% tbl_df %>% filter(p4>0.95, p2>0.5, p3>0.9, others>10) %>%
+        arrange(desc(sum)) 
+
+decks.constrain %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = min(n1+n2+n3+n4))
+
+```
+
+
+
+
+### Deck Analysis
+>__3. Are there any "core" combination of cards?__
 Instead of looking at the card information alone, we are trying to consider how one card interacts with others. We are using the built-up decks from top players of Hearthstone from the following website:
 <http://www.hearthstonetopdecks.com/>
 A typical deck looks like this: ![deck][deck.png]
 
-###Data Wrangling
+#### Data Wrangling
 ```{r warning=F error=F eval=F}
 classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
 removeList<-c(9,6,10,10,4,7,10,7,7)
@@ -976,7 +1057,7 @@ for(i in 1:9){
 }
 ```
 
-###Deeper look into the deck information
+#### Deeper look into the deck information
 
 From our empirical knowledge, we know that each deck has its own strategy to win the game, such as aggro, control, midrange, face, etc. These strategies are highly related to the average cost of all the minions inside the deck. 
 
@@ -1106,7 +1187,7 @@ warriorDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
 ```
 From the histogram we can see warlock is quite different from other heros, the distribution of the costs of decks has double peaks, while others are more likely following a normal distribution. This finding gives us a suggestion to explore data furtherly.
 
-###Explore Card Interactions within Warlock Decks
+#### Explore Card Interactions within Warlock Decks
 Let's have a look at the correlation between the cards within warlock decks.
 ```{r,warning=F,error=F}
 data<-read.csv("correlation.csv")
@@ -1123,7 +1204,9 @@ plot(hClust,cex=0.6)
 pc<-prcomp(corMatrix)
 summary(pc)
 ```
+
 From the principle components analysis, we can see the top 2 principle components have explained 2/3 of the variance between cards. So here, we are going to use the first 2 pcs to do the following analysisto keep the scale of problem small enough.
+
 ```{r,warning=F,error=F}
 tmp <- data.frame(pc$rotation, name = rownames(data))
 tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() + 
@@ -1150,3 +1233,175 @@ pc.df%>%group_by(Cluster)%>%summarize(n())
 
 
 ```
+
+#### Number of Draw cards
+For each deck, there are several "core" cards that can have the greatest effect when they are used together. We will usually put 2 cards for each component of core cards, and we want to get at least one for every component as early as possible.
+
+First we list all possible decks with core cards and normal cards. Each set of core cards includes 2-5 different components. We consider the offensive side/early hand first.
+
+```{r}
+# sort the first 6 card for offensive side/early hand, assume we will always keep the core card
+sort.offensive <- function(tmp){
+        sortcard <- t(apply(tmp[,1:6],1,function(x){sort(x,decreasing = T)}))
+        tmp[,1:6] <- sortcard
+        sortcard2 <- t(apply(tmp[,4:30],1,function(x){sample(x,27)}))
+        tmp[,4:30] <- sortcard2
+        tmp
+}
+
+# 2 components core cards set, each with 2 cards
+card <- c(1,1,2,2,rep(0,26))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+
+offen_core2 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)})) 
+}
+
+o2 <- sapply(1:27,offen_core2)
+
+# 3 components core cards set, each with 2 cards
+card <- c(1,1,2,2,3,3,rep(0,24))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+offen_core3 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)})) 
+}
+
+o3 <- sapply(1:27,offen_core3)
+
+
+# 4 components core cards set, each with 2 cards
+card <- c(1,1,2,2,3,3,4,4,rep(0,22))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+offen_core4 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0})) 
+}
+
+o4 <- sapply(1:27,offen_core4) 
+
+
+# 5 components core card set
+card <- c(1,1,2,2,3,3,4,4,5,5,rep(0,20))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+offen_core5 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0})) 
+}
+
+o5 <- sapply(1:27,offen_core5) 
+```
+
+Similarly we can estimate the probability for the defensive side/late hand.
+
+```{r}
+# sort the first 6 card for offensive side, assume we will always keep the core card
+sort.defensive <- function(tmp){
+        sortcard <- t(apply(tmp[,1:8],1,function(x){sort(x,decreasing = T)}))
+        tmp[,1:8] <- sortcard
+        sortcard2 <- t(apply(tmp[,5:30],1,function(x){sample(x,26)}))
+        tmp[,5:30] <- sortcard2
+        tmp
+}
+
+# 2 components core cards set, each with 2 cards
+card <- c(1,1,2,2,rep(0,26))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+
+defen_core2 <- function(i){
+        mean(apply(tmp[,1:(i+4)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0)})) 
+}
+
+d2 <- sapply(1:26,defen_core2)
+
+# 3 components core cards set, each with 2 cards
+card <- c(1,1,2,2,3,3,rep(0,24))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core3 <- function(i){
+        mean(apply(tmp[,1:(i+4)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0)})) 
+}
+
+d3 <- sapply(1:26,defen_core3)
+
+# 4 components core cards set, each with 2 cards
+card <- c(1,1,2,2,3,3,4,4,rep(0,22))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core4 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0})) 
+}
+
+d4 <- sapply(1:26,defen_core4) 
+
+
+# 5 components core card set
+card <- c(1,1,2,2,3,3,4,4,5,5,rep(0,20))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core5 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0})) 
+}
+
+d5 <- sapply(1:26,defen_core5) 
+```
+
+
+```{r}
+# show results
+
+offensive <- data.frame(o2,o3,o4,o5)
+colnames(offensive) <- c(2,3,4,5)
+offensive <- offensive %>% mutate(turn=1:27, card=4:30) %>% gather("n_core","prob",1:4)
+
+defensive <- data.frame(d2,d3,d4,d5)
+colnames(defensive) <- c(2,3,4,5)
+defensive <- defensive %>% mutate(turn=1:26, card=5:30) %>% gather("n_core","prob",1:4)
+
+# plot the relatiionship between number of cards and the probability of gettin the whole set
+offensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
+        ggtitle("The probability of getting the whole set of core cards (Offensive)") +
+        scale_x_continuous(breaks=4:30) +
+        scale_y_continuous(breaks=seq(0,1,0.1))
+defensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
+        ggtitle("The probability of getting the whole set of core cards (Defensive)") +
+        scale_x_continuous(breaks=5:30) +
+        scale_y_continuous(breaks=seq(0,1,0.1))
+
+```
+
+
