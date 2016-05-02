@@ -48,7 +48,7 @@ On the fifth stage, we will build an optional deck based on the efforts above an
 
 ##library
 Here are the libraries we have used in our project.
-```{r, warning= F error=F}
+```{r, warning= F, error=F}
 library(rjson)
 library(dplyr)
 library(tidyr)
@@ -82,7 +82,7 @@ We have two types of data: 1) basic card information (attack/health/cost/descrip
 
 * __Basic card information:__ We collected card data from Hearthstone’s API: http:,, hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
 
-```{r eval=F warning=F error=F}
+```{r eval=F, warning=F, error=F}
 ## Data wrangling from json to RData:
 
 json_file = "cards2.txt"
@@ -135,7 +135,7 @@ This part is aimed for detailed classification of minion card descriptions (othe
 
 1. For some minions that have more than one mechanics (e.g. Taunt that has deathrattle), they are only classified as one of their mechanics in the Hearthstone dataset. The following wrangling aims to classify them with all the mechanics they have with dummy variables (having certain feature = 1 vs. without certain feature = 0).
 
-```{r eval=F warning=F error=F}
+```{r eval=F, warning=F, error=F}
 
 load("minions.RData")
 minions_text = tbl_df(minions) %>%
@@ -167,7 +167,7 @@ minions_text = minions_text %>%
 
 2. The beauty of Hearthstone (and the most difficult part for quantitative analysis) is that almost every minion has its unique feature that are described in text on the card. Therefore, it's hard to "value" a card without taking these descriptions into account while on the other hand, texts them selves are difficult to be simply quantified. The following wrangling aims to identify certain verbs (deal, restore, etc.) and nouns (attacks, healths, etc.) frequently used in the card description and tried to classifiy cards with more features that were not classified by their mechanics.
 
-```{r eval=F warning=F error=F}
+```{r eval=F, warning=F, error=F}
 minions_text = minions_text %>%
   mutate(Choice = ifelse(text %in% minions_text$text[grep("; or",minions_text$text, ignore.case = T)], 1, 0)) %>% 
   mutate(Conditional = ifelse(text %in% minions_text$text[grep("if",minions_text$text, ignore.case = T)], 1, 0)) %>% 
@@ -205,7 +205,7 @@ save(minions_text, file = "minions_text.RData")
 
 
 ## Exploratory Analysis
-```{r warning=F error=F}
+```{r warning= F, error=F}
 
 theme_set(theme_bw(base_size = 16))
 
@@ -213,7 +213,7 @@ load("minions_text.RData")
 data<-minions_text
 ```
 distribution of Cost
-```{r warning=F error=F}
+```{r warning= F, error=F}
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
 Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
@@ -227,7 +227,7 @@ qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost")
 Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
 
 distribution of attack
-```{r warning=F error=F}
+```{r warning= F, error=F}
 Attackk<-data%>%arrange(attack)
 Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
 #pie chart
@@ -239,7 +239,7 @@ qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack")
 ```
 
 distribution of health
-```{r warning=F error=F}
+```{r warning= F, error=F}
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #pie chart
@@ -251,7 +251,7 @@ qplot(data$health,geom="histogram",xlab="health",main="Histogram for health")
 ```
 
 distribution of mechanics 
-```{r warning=F error=F}
+```{r warning= F, error=F}
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
 #pie chart
@@ -263,7 +263,7 @@ qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis
 ```
 
 distribution of playerclass
-```{r warning=F error=F}
+```{r warning= F, error=F}
 pc<-data%>%arrange(playerClass)
 pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
 #pie chart
@@ -276,7 +276,7 @@ qplot(data$playerClass,xlab="playerClass",main="Histogram for playerClass")+them
 ```
 
 distribution of cardSet
-```{r warning=F error=F}
+```{r warning= F, error=F}
 cs<-data%>%arrange(cardSet)
 cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
 #pie chart
@@ -289,7 +289,7 @@ qplot(data$cardSet,xlab="cardSet",main="Histogram for cardSet")+theme(axis.text.
 ```
 
 distribution of rarity
-```{r warning=F error=F}
+```{r warning= F, error=F}
 rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
 #pie chart
 rr<-rr%>%mutate(pos=cumsum(n)-n/2)
@@ -725,7 +725,7 @@ Instead of looking at the card information alone, we are trying to consider how 
 A typical deck looks like this: ![deck][deck.png]
 
 #### Data Wrangling
-```{r warning=F error=F eval=F}
+```{r warning= F, error=F, eval=F}
 classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
 removeList<-c(9,6,10,10,4,7,10,7,7)
 baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/"
@@ -1013,7 +1013,7 @@ tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() +
 ```
 
 #look at 4 clusters
-```{r warning=F error=F}
+```{r warning= F, error=F}
 kmeans.cluster<-kmeans(pcaData, centers=4)
 pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
                   Cluster=factor(kmeans.cluster$cluster))
