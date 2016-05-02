@@ -401,13 +401,13 @@ test <- minions_text1[test_indices,]
 train <- minions_text1[-test_indices,]
 
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ attack, cumulative(parallel = T, reverse = F), data = train)
-summary(fitCL)
+# summary(fitCL)
 
 for(i in 1: 6){
   assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
 }
 
-
+# To estimate the cost of cards based on attack:
 test1 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*attack)/(1+exp(coef1[1,]+coef1[2,]*attack)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*attack)/(1+exp(coef2[1,]+coef2[2,]*attack))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*attack)/(1+exp(coef3[1,]+coef3[2,]*attack))) - p1 - p2) %>%
@@ -440,17 +440,19 @@ Since the cost of a card can also be influenced by the time it can survive on th
 library(VGAM)
 
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ attplusheal, cumulative(parallel = T, reverse = F), data = train)
-summary(fitCL)
+# summary(fitCL)
 
 for(i in 1: 6){
   assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
 }
-test2 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*attack)/(1+exp(coef1[1,]+coef1[2,]*attack)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*attack)/(1+exp(coef2[1,]+coef2[2,]*attack))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*attack)/(1+exp(coef3[1,]+coef3[2,]*attack))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*attack)/(1+exp(coef4[1,]+coef4[2,]*attack))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*attack)/(1+exp(coef5[1,]+coef5[2,]*attack))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*attack)/(1+exp(coef6[1,]+coef6[2,]*attack))) - p1 - p2 - p3 - p4 - p5) %>% 
+
+# To estimate the cost of cards based on attack plus health:
+test2 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*attplusheal)/(1+exp(coef1[1,]+coef1[2,]*attplusheal)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*attplusheal)/(1+exp(coef2[1,]+coef2[2,]*attplusheal))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*attplusheal)/(1+exp(coef3[1,]+coef3[2,]*attplusheal))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*attplusheal)/(1+exp(coef4[1,]+coef4[2,]*attplusheal))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*attplusheal)/(1+exp(coef5[1,]+coef5[2,]*attplusheal))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*attplusheal)/(1+exp(coef6[1,]+coef6[2,]*attplusheal))) - p1 - p2 - p3 - p4 - p5) %>% 
   mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
   mutate(value = 7) %>% 
   group_by(cardId) %>%
@@ -474,11 +476,14 @@ It seemed like the univariate __attack+health__ worked well in the model, since 
 
 library(VGAM)
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack, cumulative(parallel = T, reverse = F), data = train)
-summary(fitCL)
+# summary(fitCL)
 
 for(i in 1: 6){
   assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
 }
+
+
+# To estimate the cost of cards based on attack and health:
 test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack))) - p1 - p2) %>%
@@ -508,12 +513,15 @@ We then considered a model which include some feature of the cards, and __Charge
 ## Y: cost
 
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge, cumulative(parallel = T, reverse = F), data = train)
-summary(fitCL)
+# summary(fitCL)
 
 
 for(i in 1: 6){
   assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
 }
+
+
+# To estimate the cost of cards based on attack, health, and charge:
 test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge))) - p1 - p2) %>%
@@ -544,12 +552,14 @@ rmse_results
 ## Y: cost
 
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = train)
-summary(fitCL)
+# summary(fitCL)
 
 
 for(i in 1: 6){
   assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
 }
+
+# To estimate the cost of cards based on attack, health, charge, divine shield, and taunt:
 test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
@@ -581,13 +591,15 @@ rmse_results
 
 train_warlock = train %>% filter(playerClass == "All" | playerClass == "Warlock")
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = train_warlock)
-summary(fitCL)
+# summary(fitCL)
 
 test_warlock = test %>% filter(playerClass == "All" | playerClass == "Warlock")
 
 for(i in 1: 6){
   assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
 }
+
+# To estimate the cost of cards based on attack, health, charge, divine shield, and taunt in warlock:
 test_warlock = test_warlock %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
@@ -635,7 +647,7 @@ final = minions_text %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+c
 
 final %>% filter(value != cost1) %>%
   mutate(resid = value - cost1) %>%
-  print(n = 240)
+  ggplot(aes(cost1, value, col = mechanics))
 
 ```
 
