@@ -1,6 +1,6 @@
 ---
 title: "Hearthscience"
-author: "Chi-Hsuan Chang, Yinnan Zheng, Ji Hua, Zou Xu"
+author: "Chi-Hsuan Chang, Yinnan Zheng, Ji Hua, Xue Zou"
 date: "May 1, 2016"
 output: html_document
 ---
