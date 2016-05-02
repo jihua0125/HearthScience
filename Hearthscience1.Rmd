@@ -1354,7 +1354,7 @@ d5 <- sapply(1:26,defen_core5)
 ```
 
 
-```{r}
+```{r,fig.width=10}
 # show results
 
 offensive <- data.frame(o2,o3,o4,o5)
