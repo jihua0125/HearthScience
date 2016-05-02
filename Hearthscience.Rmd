@@ -50,7 +50,7 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 
 ### library
 Here are the libraries we have used in our project.
-```{r, warning= F error=F}
+```{r, warning= F, error=F}
 library(rjson)
 library(dplyr)
 library(tidyr)
@@ -85,7 +85,7 @@ We have two types of data: 1) basic card information (attack/health/cost/descrip
 ### 1. Basic Card Information
 * We collected card data from Hearthstone’s API: http:,, hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
 
-```{r eval=F warning=F error=F}
+```{r eval=F, warning=F, error=F}
 ## Data wrangling from json to RData:
 
 json_file = "cards2.txt"
@@ -139,7 +139,7 @@ This part is aimed for detailed classification of minion card descriptions (othe
 
 1. For some minions that have more than one mechanics (e.g. Taunt that has deathrattle), they are only classified as one of their mechanics in the Hearthstone dataset. The following wrangling aims to classify them with all the mechanics they have with dummy variables (having certain feature = 1 vs. without certain feature = 0).
 
-```{r eval=F warning=F error=F}
+```{r eval=F, warning=F, error=F}
 
 load("minions.RData")
 minions_text = tbl_df(minions) %>%
@@ -171,7 +171,7 @@ minions_text = minions_text %>%
 
 2. The beauty of Hearthstone (and the most difficult part for quantitative analysis) is that almost every minion has its unique feature that are described in text on the card. Therefore, it's hard to "value" a card without taking these descriptions into account while on the other hand, texts them selves are difficult to be simply quantified. The following wrangling aims to identify certain verbs (deal, restore, etc.) and nouns (attacks, healths, etc.) frequently used in the card description and tried to classifiy cards with more features that were not classified by their mechanics.
 
-```{r eval=F warning=F error=F}
+```{r eval=F, warning=F, error=F}
 minions_text = minions_text %>%
   mutate(Choice = ifelse(text %in% minions_text$text[grep("; or",minions_text$text, ignore.case = T)], 1, 0)) %>% 
   mutate(Conditional = ifelse(text %in% minions_text$text[grep("if",minions_text$text, ignore.case = T)], 1, 0)) %>% 
@@ -209,7 +209,7 @@ save(minions_text, file = "minions_text.RData")
 
 
 #### Exploratory Analysis
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 
 theme_set(theme_bw(base_size = 16))
 
@@ -217,7 +217,7 @@ load("minions_text.RData")
 data<-minions_text
 ```
 #### Distribution of Cost
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
 Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
@@ -231,7 +231,7 @@ qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost")
 Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
 
 ##### Distribution of Attack
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 Attackk<-data%>%arrange(attack)
 Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
 #pie chart
@@ -243,7 +243,7 @@ qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack")
 ```
 
 ##### Distribution of Health
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #pie chart
@@ -255,7 +255,7 @@ qplot(data$health,geom="histogram",xlab="health",main="Histogram for health")
 ```
 
 ##### Distribution of Mechanics 
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
 #pie chart
@@ -267,7 +267,7 @@ qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis
 ```
 
 ##### Distribution of Playerclass
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 pc<-data%>%arrange(playerClass)
 pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
 #pie chart
@@ -280,7 +280,7 @@ qplot(data$playerClass,xlab="playerClass",main="Histogram for playerClass")+them
 ```
 
 ##### Distribution of CardSet
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 cs<-data%>%arrange(cardSet)
 cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
 #pie chart
@@ -293,7 +293,7 @@ qplot(data$cardSet,xlab="cardSet",main="Histogram for cardSet")+theme(axis.text.
 ```
 
 ##### Distribution of Rarity
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
 #pie chart
 rr<-rr%>%mutate(pos=cumsum(n)-n/2)
@@ -307,14 +307,14 @@ qplot(data$cardSet,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x 
 
 #### Pearson Correlation of Cards
 ##### Load Data
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/warlock/page/"
 classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
 
 ```
 
 ##### Data Wrangling 
-```{r warning=F error=F}
+```{r, warning=F, error=F, eval=F}
 allDecks<-list()
 
 for (j in 1:5){
@@ -365,7 +365,7 @@ rownames(largerTable)<-t(largerTable[,1])
 ```
 
 ##### Dataset as a Whole
-```{r warning=F error=F}
+```{r, warning=F, error=F, eval=F}
 ###
 data<-largerTable%>%select(-cardNames)
 data.t<-t(data)
@@ -382,7 +382,7 @@ plot(hClust,cex=1)
 ```
 
 ##### Heatmap
-```{r warning=F error=F}
+```{r, warning=F, error=F, eval = F}
 
 heatmap(mtscaled,Colv=F,cexRow=0.4,cexCol = 0.4)
 #data exploration ( 260 CV)
@@ -434,7 +434,7 @@ p+ theme(axis.text.y = element_text(vjust = 1,
 ```
 
 ##### New Selection of Cards (filtering) 
-```{r, warning=F}
+```{r, warning=F, eval = F}
 ###HC
 hClust<-hclust(dist(largerTable),method="complete")
 plot(hClust,cex=0.6)
@@ -490,7 +490,7 @@ tmp %>%  ggplot(aes(PC1, PC2)) + geom_point() +
 ```
 
 ##### Look at 4 Clusters
-```{r warning=F error=F}
+```{r, warning=F, error=F, eval = F}
 kmeans.cluster<-kmeans(pcaData, centers=4)
 pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
                   Cluster=factor(kmeans.cluster$cluster))
@@ -608,14 +608,14 @@ minions_text %>% mutate(attplusheal = attack+health) %>% ggplot(aes(attplusheal)
 
 From the above plots, we can found similar distributions between the cost and the sum of attach and health, where the distributions are right-skewed. Also, there seems to be some outliers that are very different from other cards.
 
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 minions_text %>%
   filter(cost > 10) %>%
   select(name, cost, attack, health, mechanics, playerClass)
 ```
 
 It might be a good idea to filter out these cards.
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 minions_text = minions_text %>% filter(cost <= 10)
 
 ## cost vs attack+health:
@@ -644,7 +644,7 @@ minions_text %>% ggplot(aes(cost1, group = cardSet, fill = cardSet)) + stat_bin(
 ```
 
 
-```{r warning=F error=F}
+```{r, warning=F, error=F}
 
 ## by attack, cost, health:
 minions_bars = minions_text %>% gather(key, value, cost, attack, health)
@@ -664,12 +664,20 @@ minions_text %>% ggplot(aes(health, group = cardSet, fill = cardSet)) + stat_bin
 
 ```
 
+Since the outcome variable (Y) in our analysis is the __costs__ of cards, which are normally integer from 0 to 7+ (all values greater than 7 are considered in the group of 7+), we adopted a model that consider ordinal polytomous outcome -- cumulative logits model. Since the features' effects (attack, cost, special abilities, etc.) should be the similar in cards with different costs, we also assumed proportional odds of these features across different cost groups. And we ended up with 7 outcome groups (cost value: 1 to 7+), we excluded cards that cost 0 mana since 1) they are usually cards that do not cost players to play and 2) the nature of these 0 cost cards are quite different from normal minion cards. In general, the cumulative logits model is in format shown below, where X is the covariate matrix, and $\beta$ is the coefficient matrix:
+
+$$\mbox{logit(Pr}{(Y \leq k | X_i = x_i))} = \beta_{k0} + \sum \beta_{ki}*x_i$$
+
+Using this cumulative logits model, we are able to estimate the probability of a card being classified in each cost group (p1 to p7), and then by conditioning on the features of a card, we are able to assign a value of that card with the maximum probability among p1 to p7 (the most likely cost of a card based on its features).
+
+Since one of our assumption that the cost of a card is proportional to the damage it can lead to, we first considered a univariate model which include __attack__ as the only covariate: 
+
 ```{r, warning= F}
 ## X: attack
 ## Y: cost
 
+library(VGAM)
 minions_text1 = minions_text %>% 
-  select(cardId,cost, health, attack, cost1, playerClass, name, mechanics) %>%
   filter(cost != 0) %>%
   arrange(cost) %>%
   mutate(Y1 = ifelse(cost == 1, 1, 0)) %>%
@@ -715,30 +723,17 @@ RMSE <- function(true_ratings, predicted_ratings){
 }
 model1 = RMSE(test1$cost1, test1$value)
 rmse_results = data_frame(method = "X: attack", RMSE = model1)
+```
 
+Since the cost of a card can also be influenced by the time it can survive on the stage, we also included some potential effect of health by summing up both attack and health (__attack+health__ ) as a univariate:
+
+```{r}
 ## X: attplusheal
 ## Y: cost
 
-minions_text2 = minions_text %>% 
-  select(cardId,cost, health, attack, cost1) %>%
-  filter(cost != 0) %>%
-  mutate(attplusheal = attack + health) %>%
-  arrange(cost) %>%
-  mutate(Y1 = ifelse(cost == 1, 1, 0)) %>%
-  mutate(Y2 = ifelse(cost == 2, 1, 0)) %>%
-  mutate(Y3 = ifelse(cost == 3, 1, 0)) %>%
-  mutate(Y4 = ifelse(cost == 4, 1, 0)) %>%
-  mutate(Y5 = ifelse(cost == 5, 1, 0)) %>%
-  mutate(Y6 = ifelse(cost == 6, 1, 0)) %>%
-  mutate(Y7 = ifelse(cost >= 7, 1, 0)) 
+library(VGAM)
 
-set.seed(1001)
-n_test1 <- round(nrow(minions_text1) / 10)
-test_indices1 <- sample(1:nrow(minions_text2), n_test1, replace=FALSE)
-test1 <- minions_text2[test_indices1,]
-train1 <- minions_text2[-test_indices1,]
-
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ attplusheal, cumulative(parallel = T, reverse = F), data = train1)
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ attplusheal, cumulative(parallel = T, reverse = F), data = train)
 summary(fitCL)
 
 for(i in 1: 6){
@@ -749,7 +744,8 @@ test2 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*attack)/(1+exp(c
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*attack)/(1+exp(coef3[1,]+coef3[2,]*attack))) - p1 - p2) %>%
   mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*attack)/(1+exp(coef4[1,]+coef4[2,]*attack))) - p1 - p2 - p3) %>%
   mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*attack)/(1+exp(coef5[1,]+coef5[2,]*attack))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*attack)/(1+exp(coef6[1,]+coef6[2,]*attack))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*attack)/(1+exp(coef6[1,]+coef6[2,]*attack))) - p1 - p2 - p3 - p4 - p5) %>% 
+  mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
   mutate(value = 7) %>% 
   group_by(cardId) %>%
   summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
@@ -762,11 +758,15 @@ test2 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*attack)/(1+exp(c
 test2 = test %>% left_join(test2, by = "cardId")
 model2 = RMSE(test2$cost1, test2$value)
 rmse_results =  bind_rows(rmse_results, data_frame(method = "X: attplusheal", RMSE = model2))
+```
 
+It seemed like the univariate __attack+health__ worked well in the model, since my testing the model in our testing set, the RMSE decreased. Therefore, we considered a model which include __attack__ and __health__ separately:
 
+```{r}
 ## X: attack, health
 ## Y: cost
 
+library(VGAM)
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack, cumulative(parallel = T, reverse = F), data = train)
 summary(fitCL)
 
@@ -795,84 +795,20 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health",
 rmse_results
 ```
 
-```{r warning=F error=F}
-test3 %>% select(name, cost1, value, playerClass, mechanics) %>% mutate(resid = value - cost1) %>% filter(resid !=0) %>% print(n = 50) 
-```
+We then considered a model which include some feature of the cards, and __Charge__ was the only feature that was significant:
 
-
-```{r warning=F error=F}
-
-minions_text = minions_text %>%
-  filter(cost != 0) %>%
-  arrange(cost) %>%
-  mutate(Y1 = ifelse(cost == 1, 1, 0)) %>%
-  mutate(Y2 = ifelse(cost == 2, 1, 0)) %>%
-  mutate(Y3 = ifelse(cost == 3, 1, 0)) %>%
-  mutate(Y4 = ifelse(cost == 4, 1, 0)) %>%
-  mutate(Y5 = ifelse(cost == 5, 1, 0)) %>%
-  mutate(Y6 = ifelse(cost == 6, 1, 0)) %>%
-  mutate(Y7 = ifelse(cost >= 7, 1, 0))
-
-set.seed(1001)
-n_test <- round(nrow(minions_text) / 10)
-test_indices <- sample(1:nrow(minions_text), n_test, replace=FALSE)
-test <- minions_text[test_indices,]
-train <- minions_text[-test_indices,]
-
-## X: attack, health, warlock
-## Y: cost
-
-train_warlock = train %>% filter(playerClass == "All" | playerClass == "Warlock")
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack, cumulative(parallel = T, reverse = F), data = train_warlock)
-summary(fitCL)
-
-test_warlock = test %>% filter(playerClass == "All" | playerClass == "Warlock")
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-test3 = test_warlock %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
-  mutate(value = 7) %>% 
-  group_by(cardId) %>%
-  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
-
-test3 = test_warlock %>%
-  select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
-  left_join(test3, by = "cardId")
-model3 = RMSE(test3$cost1, test3$value)
-rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, warlock",  
-                                     RMSE = model3))
-rmse_results
-test3 %>% filter(value != cost1) %>%
-  print(n=50)
-```
-
-
-
-```{r warning=F error=F}
+```{r}
 ## X: attack, health, charge
 ## Y: cost
 
-train_taunt = train
-test_taunt = test
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge, cumulative(parallel = T, reverse = F), data = train_taunt)
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge, cumulative(parallel = T, reverse = F), data = train)
 summary(fitCL)
 
 
 for(i in 1: 6){
   assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
 }
-test3 = test_taunt %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)))) %>%
+test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge))) - p1 - p2) %>%
   mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3) %>%
@@ -887,15 +823,114 @@ test3 = test_taunt %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coe
               value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
               value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
 
-test3 = test_taunt %>%
+test3 = test %>%
   select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
   left_join(test3, by = "cardId")
 model3 = RMSE(test3$cost1, test3$value)
 rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge",  
                                      RMSE = model3))
 rmse_results
-test3 %>% filter(value != cost1) %>%
-  print(n=50)
+
+```
+
+```{r}
+## X: attack, health, charge, divine shield, taunt
+## Y: cost
+
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = train)
+summary(fitCL)
+
+
+for(i in 1: 6){
+  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
+}
+test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(value = 7) %>% 
+  group_by(cardId) %>%
+  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+
+test3 = test %>%
+  select(cost, cost1, attack, health, mechanics, name, cardId) %>% 
+  left_join(test3, by = "cardId")
+model3 = RMSE(test3$cost1, test3$value)
+rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, divine shield, taunt",  
+                                     RMSE = model3))
+rmse_results
+```
+
+
+```{r}
+## X: attack, health, charge, divine shield, taunt in warlock
+## Y: cost
+
+train_warlock = train %>% filter(playerClass == "All" | playerClass == "Warlock")
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = train_warlock)
+summary(fitCL)
+
+test_warlock = test %>% filter(playerClass == "All" | playerClass == "Warlock")
+
+for(i in 1: 6){
+  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
+}
+test_warlock = test_warlock %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(value = 7) %>% 
+  group_by(cardId, cost1, attack, health) %>%
+  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+
+model3 = RMSE(test_warlock$cost1, test_warlock$value)
+rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, divine shield, taunt in warlock",  
+                                     RMSE = model3))
+rmse_results
+```
+
+
+
+```{r}
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = minions_text)
+summary(fitCL)
+
+for(i in 1: 6){
+  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
+}
+final = minions_text %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(value = 7) %>% 
+  group_by(cardId, cost1, attack, health, name, playerClass, mechanics) %>%
+  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+
+final %>% filter(value != cost1) %>%
+  mutate(resid = value - cost1) %>%
+  print(n = 240)
+
 ```
 
 
@@ -983,7 +1018,7 @@ Instead of looking at the card information alone, we are trying to consider how 
 A typical deck looks like this: ![deck][deck.png]
 
 #### Data Wrangling
-```{r warning=F error=F eval=F}
+```{r, warning=F, error=F, eval=F}
 classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
 removeList<-c(9,6,10,10,4,7,10,7,7)
 baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/"
