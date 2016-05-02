@@ -26,7 +26,7 @@ Therefore, the initial building of the 30 cards, as well as the choices of cards
 
 * This was considered as the __first stage__ of our analysis. In this stage, we aimed to estimate the value of each card independently, only considering the basic information from the card itself, i.e. attack, health, special ability.
 
->__2. What is the balance between small cost cards and big cost cards? __
+>__2. What is the balance between low cost cards and high cost cards? __
 
 * This is the __second stage__ of our analysis. The card a player can use is restricted by the number of mana he/she has for that turn, starting from 1 at the beginning and will reach to a maximum of 10 since the 10th turn. If there is no card with cost less than or equal to the number of mana in that turn, the player cannot use any card. 
 Note that without this consideration, we may choose all 30 cards to be with very high cost -- however, we are not able to use them in the first several turns. If the opponent do have small cards, we may be attacked to death before we could ever use any card.
@@ -896,7 +896,7 @@ test3 %>% filter(value != cost1) %>%
 
 
 ### Simulation
->__2. What is the balance between small cost cards and big cost cards? __
+>__2. What is the balance between low cost cards and high cost cards? __
 Assumptions:
 1. Players will not use the card with cost 0 in the earlier several turns.
 2. Cost can roughly represent the value of the card, thus we can maximum the cost of all 30 cards to maximum the value.
