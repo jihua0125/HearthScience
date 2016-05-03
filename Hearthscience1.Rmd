@@ -1029,16 +1029,20 @@ minions<-read.csv("minions.csv",sep="\t")
 weapons<-read.csv("weapons.csv",sep="\t")
 spells<-read.csv("spells.csv",sep="\t")
 cards<-rbind(minions,weapons,spells)
-load("D:/HSPH/BIO 260/final/data/minions_text.RData")
+# load("D:/HSPH/BIO 260/final/data/minions_text.RData")
 
 classes<-c("druid","hunter","mage","paladin","priest","rogue","shaman","warlock","warrior")
 decks<-list()
 heroDeckLists<-list()
+
+
 for(i in 1:9){
   filename<-paste(classes[i],"decks.csv",sep="")
   heroDeckLists[[i]]<-read.csv(filename,sep="\t")
   decks[[i]]<-heroDeckLists[[i]]%>%gather(deckId,cardCounts,2:(length(heroDeckLists[[i]])-1))
 }
+
+
 
 ###warlock deck
 warlockDeckCost<-decks[[8]]%>%filter(cardCounts!=0)%>%
