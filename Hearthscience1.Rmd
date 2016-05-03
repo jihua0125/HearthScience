@@ -1028,7 +1028,7 @@ minions<-read.csv("minions.csv",sep="\t")
 weapons<-read.csv("weapons.csv",sep="\t")
 spells<-read.csv("spells.csv",sep="\t")
 cards<-rbind(minions,weapons,spells)
-load("D:/HSPH/BIO 260/final/data/minions_text.RData")
+#load("D:/HSPH/BIO 260/final/data/minions_text.RData")
 
 classes<-c("druid","hunter","mage","paladin","priest","rogue","shaman","warlock","warrior")
 decks<-list()
@@ -1231,8 +1231,10 @@ pc.df%>%group_by(Cluster)%>%summarize(n())
 #look at 4 clusters
 In the above codes, we have tried to use Kmeans clustering to distinguish different type of decks. By the FOM plots, we found that 4 is the balanced point, so we made a 4 centroid clustering. Let's pick one deck to see if this clustering make sense.
 ```{r,warning=F,error=F}
-deck<-heroDeckLists[[8]]%>%filter(deckId=="60")%>%left_join(pc.df,by=c("cardNames"="ID"))
-deck[,c(1,13)]%>%kable
+deck<-heroDeckLists[[8]]%>%select(cardNames,X60)%>%
+  filter(X60!=0)%>%
+  left_join(pc.df,by=c("cardNames"="ID"))
+deck[,c(1,12)]%>%kable
 ```
 
 ```{r warning= F, error=F, eval=F}
