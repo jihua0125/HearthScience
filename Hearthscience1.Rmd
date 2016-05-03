@@ -768,7 +768,7 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, char
 rmse_results
 
 ```
-
+## may delete these parts:
 ```{r}
 ## X: attack, health, charge, divine shield, taunt
 ## Y: cost
@@ -805,7 +805,7 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, char
                                      RMSE = model3))
 rmse_results
 ```
-
+## to here.
 ```{r}
 ## X: attack, health, charge, overload
 ## Y: cost
