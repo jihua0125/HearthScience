@@ -1586,19 +1586,23 @@ zooDeck<-zooCore%>%select(ID)%>%mutate(count=2)
 
 zooDeckAvailableNumber<-zooDeckAvailableNumber-dim(zooDeck)[1]*2
 
-zooPCA<-zooDeck%>%left_join(total.df)
-center<-colMeans(zooPCA[,3:11])
 
-neighbors<-total.df%>%
-  mutate(distance=sqrt((PCA1-center[1])^2+
-          (PCA2-center[2])^2+(PCA3-center[3])^2+(PCA4-center[4])^2+(PCA5-center[5])^2)+(PCA6-center[6])^2+
-           (PCA7-center[7])^2+(PCA8-center[8])^2+(PCA9-center[9])^2)%>%arrange(distance)%>%
-  filter(!(ID %in% rownames(zooDeck)))
 
 i<-0
 while(zooDeckAvailableNumber>0){
   i=i+1
-  newCard<-neighbors[i,]%>%mutate(count=ifelse(rarity!="Legendary",2,1))%>%select(ID,count)
+  zooPCA<-zooDeck%>%left_join(total.df)
+  center<-colMeans(zooPCA[,3:11])
+  neighbors<-total.df%>%
+    mutate(distance=sqrt((PCA1-center[1])^2+
+            (PCA2-center[2])^2+(PCA3-center[3])^2+(PCA4-center[4])^2+(PCA5-center[5])^2)+(PCA6-center[6])^2+
+             (PCA7-center[7])^2+(PCA8-center[8])^2+(PCA9-center[9])^2)%>%arrange(distance)%>%
+    filter(!ID %in% zooDeck[,1])
+  if(zooDeckAvailableNumber==1){
+    newCard<-neighbors[i,]%>%mutate(count=1)%>%select(ID,count)
+  }else{
+    newCard<-neighbors[i,]%>%mutate(count=ifelse(rarity!="Legendary",2,1))%>%select(ID,count)
+  }
   zooDeck<-rbind(zooDeck,newCard)
   zooDeckAvailableNumber<-zooDeckAvailableNumber-newCard[,2]
 }
