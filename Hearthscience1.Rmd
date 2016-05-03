@@ -8,7 +8,8 @@ output: html_document
 ## Overview and Motivation:
 Some of our team members are loyal fans of the popular free online card game, Hearthstone: Heroes of Warcraft, which was released worldwide by Blizzard on 2014 with more than 40 million registered Hearthstone accounts by November 2015.
 
-The main element of the game Hearthstone are cards, which consist of a list of features including cost, attack (number of damages can be made to the opponent per turn),health (number of damages that can bear before being destroyed) and other special abilities. Here is an example of the card: ![card](card.png)
+The main element of the game Hearthstone are cards, which consist of a list of features including cost, attack (number of damages can be made to the opponent per turn),health (number of damages that can bear before being destroyed) and other special abilities. Here is an example of the card: 
+<img src="card.png" align="center" height="400" width="350" margin="0 auto" />
 
 Before every game starts, each of the two players will choose 1 hero mode among the 9 and then select 30 different cards over 700 cards to build his/her own deck depending on the mode. Each turn, the player will draw one card randomly from the 30 cards and one more mana crystal (money). The player can choose the cards to use among all those in hand that cost up to the mana crystals he/she has by that turn. The game ends when one player is attacked to death (lose all 30 units of health) or he/she concedes, and the other player will win. 
 
@@ -83,7 +84,6 @@ We have two types of data: 1) basic card information (attack/health/cost/descrip
 
 ```{r eval=F, warning=F, error=F}
 ## Data wrangling from json to RData:
-
 json_file = "cards2.txt"
 data <- fromJSON(file = json_file)
 card_category = names(data)
@@ -136,9 +136,9 @@ This part is aimed for detailed classification of minion card descriptions (othe
 
 ```{r eval=F, warning=F, error=F}
 
-load("minions.RData")
-minions_text = tbl_df(minions) %>%
-  select(-ID, -flavor, -type, -artist, -collectible, -howToGet, -howToGetGold, -img, -imgGold, -locale, -race, -faction, -elite) %>%
+load("minions_text.RData")
+minions_text = tbl_df(minions_text) %>%
+  select(-cardId, -flavor, -type, -artist, -collectible, -howToGet, -howToGetGold, -img, -imgGold, -locale, -race, -faction, -elite) %>%
   mutate(playerClass = ifelse(is.na(playerClass), "All", as.character(playerClass)))
 
 minions_text = minions_text %>% 
@@ -201,8 +201,6 @@ colnames(minions_text)
 save(minions_text, file = "minions_text.RData")
 ```
 
-
-
 ## Exploratory Analysis
 ```{r warning= F, error=F}
 
@@ -216,11 +214,17 @@ distribution of Cost
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
 Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+# 7 stands for higher than 7
+Cost1<-Cost%>%filter(cost<7)                       
+Cost2<-c(7,61)
+Cost<-rbind(Cost1,Cost2)
+
 Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
 p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost")
+
 #histogram
-qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost")
+qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost",binwidth=1)
 ```
 
 Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
@@ -229,50 +233,80 @@ distribution of attack
 ```{r warning= F, error=F}
 Attackk<-data%>%arrange(attack)
 Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
-#pie chart
-Attack<-Attack%>%mutate(pos=cumsum(n)-n/2)
-p<-Attack%>%ggplot(aes(x=1,y=n,fill=factor(attack)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Attack")
 #histogram
-qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack")
+qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack",binwidth=1)
 ```
 
 distribution of health
 ```{r warning= F, error=F}
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
-#pie chart
-Health<-Health%>%mutate(pos=cumsum(n)-n/2)
-p<-Health%>%ggplot(aes(x=1,y=n,fill=factor(health)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Health")
 #histogram
-qplot(data$health,geom="histogram",xlab="health",main="Histogram for health")
+qplot(data$health,geom="histogram",xlab="health",main="Histogram for health",binwidth=1)
 ```
 
 distribution of mechanics 
 ```{r warning= F, error=F}
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
-#pie chart
-Mechanics<-Mechanics%>%mutate(pos=cumsum(n)-n/2)
-p<-Mechanics%>%ggplot(aes(x=1,y=n,fill=factor(mechanics)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Mechanics")
 #histogram
-qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-distribution of playerclass
-```{r warning= F, error=F}
-pc<-data%>%arrange(playerClass)
-pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
-#pie chart
-playerClass<-pc%>%mutate(pos=cumsum(n)-n/2)
-p<-playerClass%>%ggplot(aes(x=1,y=n,fill=factor(playerClass)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of playerClass")
+*distributions for Charge
+```{r}
+charge<-data%>%filter(mechanics=="Charge")
+Cost<-charge%>%dplyr::arrange(cost)
+Cost<-unique(charge%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost for Charge")
+Attackk<-charge%>%arrange(attack)
+Attack<-unique(charge%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+Health<-charge%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #histogram
-qplot(data$playerClass,xlab="playerClass",main="Histogram for playerClass")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
+qplot(charge$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Charge",binwidth=1)
+qplot(charge$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Charge",binwidth=1)
+qplot(charge$health,geom="histogram",xlab="health",main="Histogram of health distribution for Charge",binwidth=1)
 ```
+
+*distributions for Divine Shield
+```{r}
+ds<-data%>%filter(mechanics=="Divine Shield")
+Cost<-ds%>%dplyr::arrange(cost)
+Cost<-unique(ds%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost for Divine Shield")
+Attackk<-ds%>%arrange(attack)
+Attack<-unique(ds%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+Health<-ds%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
+#histogram
+qplot(ds$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Divine Shield",binwidth=1)
+qplot(ds$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Divine Shield",binwidth=1)
+qplot(ds$health,geom="histogram",xlab="health",main="Histogram of health distribution for Divine Shield",binwidth=1)
+```
+
+*distributions for Taunt
+```{r}
+Taunt<-data%>%filter(mechanics=="Taunt")
+Cost<-Taunt%>%dplyr::arrange(cost)
+Cost<-unique(Taunt%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost for Taunt")
+Attackk<-Taunt%>%arrange(attack)
+Attack<-unique(Taunt%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+Health<-Taunt%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
+#histogram
+p1<-qplot(Taunt$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Divine Shield",binwidth=1)
+p2<-qplot(Taunt$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Divine Shield",binwidth=1)
+qplot(Taunt$health,geom="histogram",xlab="health",main="Histogram of health distribution for Divine Shield",binwidth=1)
+```
+
 
 distribution of cardSet
 ```{r warning= F, error=F}
@@ -283,7 +317,55 @@ cs<-cs%>%mutate(pos=cumsum(n)-n/2)
 p<-cs%>%ggplot(aes(x=1,y=n,fill=factor(cardSet)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of cardSet")
 #histogram
-qplot(data$cardSet,xlab="cardSet",main="Histogram for cardSet")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+qplot(data$cardSet,xlab="cardSet",main="Histogram for CardSet distribution")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+###basic carset
+basic<-data%>%filter(cardSet=="Basic")
+qplot(basic$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for basic cardset",binwidth=1)
+qplot(basic$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for basic cardset",binwidth=1)
+qplot(basic$health,geom="histogram",xlab="health",main="Histogram of health distribution for basic cardset",binwidth=1)
+
+###Blackrock Mountain
+bm<-data%>%filter(cardSet=="Blackrock Mountain")
+qplot(bm$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Blackrock Mountain",binwidth=1)
+qplot(bm$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Blackrock Mountain",binwidth=1)
+qplot(bm$health,geom="histogram",xlab="health",main="Histogram of health distribution for Blackrock Mountain",binwidth=1)
+
+###Classic
+Classic<-data%>%filter(cardSet=="Classic")
+qplot(Classic$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Classic",binwidth=1)
+qplot(Classic$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Classic",binwidth=1)
+qplot(Classic$health,geom="histogram",xlab="health",main="Histogram of health distribution for Classic",binwidth=1)
+
+###Goblins vs Gnomes
+gg<-data%>%filter(cardSet=="Goblins vs Gnomes")
+qplot(gg$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Goblins vs Gnomes",binwidth=1)
+qplot(gg$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Goblins vs Gnomes",binwidth=1)
+qplot(gg$health,geom="histogram",xlab="health",main="Histogram of health distribution for Goblins vs Gnomes",binwidth=1)
+
+###Naxxramas
+na<-data%>%filter(cardSet=="Naxxramas")
+qplot(na$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Naxxramas",binwidth=1)
+qplot(na$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Naxxramas",binwidth=1)
+qplot(na$health,geom="histogram",xlab="health",main="Histogram of health distribution for Naxxramas",binwidth=1)
+
+###Promotion
+Promotion<-data%>%filter(cardSet=="Naxxramas")
+qplot(Promotion$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Promotion",binwidth=1)
+qplot(Promotion$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Promotion",binwidth=1)
+qplot(Promotion$health,geom="histogram",xlab="health",main="Histogram of health distribution for Promotion",binwidth=1)
+
+###The Grand Tournament
+tgt<-data%>%filter(cardSet=="The Grand Tournament")
+qplot(tgt$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for The Grand Tournament",binwidth=1)
+qplot(tgt$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for The Grand Tournament",binwidth=1)
+qplot(tgt$health,geom="histogram",xlab="health",main="Histogram of health distribution for The Grand Tournament",binwidth=1)
+
+###The League of Explorers
+tloe<-data%>%filter(cardSet=="The League of Explorers")
+qplot(tloe$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for The League of Explorers",binwidth=1)
+qplot(tloe$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for The League of Explorers",binwidth=1)
+qplot(tloe$health,geom="histogram",xlab="health",main="Histogram of health distribution for The League of Explorers",binwidth=1)
 
 ```
 
@@ -295,7 +377,39 @@ rr<-rr%>%mutate(pos=cumsum(n)-n/2)
 p<-rr%>%ggplot(aes(x=1,y=n,fill=factor(rarity)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of rarity")
 #histogram
-qplot(data$cardSet,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+qplot(data$rarity,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+###Common
+common<-data%>%filter(rarity=="Common")
+qplot(common$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for common",binwidth=1)
+qplot(common$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for common",binwidth=1)
+qplot(common$health,geom="histogram",xlab="health",main="Histogram of health distribution for common",binwidth=1)
+
+###Epic
+Epic<-data%>%filter(rarity=="Epic")
+qplot(Epic$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Epic",binwidth=1)
+qplot(Epic$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Epic",binwidth=1)
+qplot(Epic$health,geom="histogram",xlab="health",main="Histogram of health distribution for Epic",binwidth=1)
+
+###Free
+Free<-data%>%filter(rarity=="Free")
+qplot(Free$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Free",binwidth=1)
+qplot(Free$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Free",binwidth=1)
+qplot(Free$health,geom="histogram",xlab="health",main="Histogram of health distribution for Free",binwidth=1)
+
+###Legendary
+Legendary<-data%>%filter(rarity=="Legendary")
+qplot(Legendary$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Legendary",binwidth=1)
+qplot(Legendary$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Legendary",binwidth=1)
+qplot(Legendary$health,geom="histogram",xlab="health",main="Histogram of health distribution for Legendary",binwidth=1)
+
+###Rare
+Rare<-data%>%filter(rarity=="Rare")
+qplot(Rare$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Rare",binwidth=1)
+qplot(Rare$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Rare",binwidth=1)
+qplot(Rare$health,geom="histogram",xlab="health",main="Histogram of health distribution for Rare",binwidth=1)
+
 ```
 
 ## Final Analysis:
@@ -322,6 +436,12 @@ minions_text %>%
 
 It might be a good idea to filter out these cards.
 ```{r, warning=F, error=F}
+highcost_card = minions_text %>% 
+  mutate(attplusheal = attack+health) %>% filter(cost > 10) %>% 
+  mutate(cost1 = 7) %>%
+  select(cardId, name, cost,cost1,mechanics,Charge, Overload, attack, health)
+  
+
 minions_text = minions_text %>% mutate(attplusheal = attack+health) %>% filter(cost <= 10)
 
 ## cost vs attack+health:
@@ -351,7 +471,6 @@ minions_text %>% ggplot(aes(cost1, group = cardSet, fill = cardSet)) + stat_bin(
 
 
 ```{r, warning=F, error=F}
-
 ## by attack, cost, health:
 minions_bars = minions_text %>% gather(key, value, cost, attack, health)
 minions_bars %>% ggplot(aes(value, group = key, fill = key)) + stat_bin(aes(y = ..count..), bins = 40, position='dodge')
@@ -383,6 +502,7 @@ Since one of our assumption that the cost of a card is proportional to the damag
 ## Y: cost
 
 minions_text1 = minions_text %>% 
+  mutate(mechanics1 = ifelse(mechanics %in% c("Charge","Divine Shield", "Overload", "Taunt", "Stealth", "Windfury"), mechanics, "A")) %>%
   filter(cost != 0) %>%
   arrange(cost) %>%
   mutate(Y1 = ifelse(cost == 1, 1, 0)) %>%
@@ -501,6 +621,82 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health",
                                      RMSE = model3))
 rmse_results
 ```
+
+```{r}
+## X: attack, health, mechanics(factors)
+## Y: cost
+
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + factor(mechanics1), cumulative(parallel = T, reverse = F), data = train)
+# summary(fitCL)
+
+
+for(i in 1: 6){
+  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
+}
+
+
+# To estimate the cost of cards based on attack, health, and charge:
+test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(value = 7) %>% 
+  group_by(cardId) %>%
+  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+
+test3 = test %>%
+  select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
+  left_join(test3, by = "cardId")
+model3 = RMSE(test3$cost1, test3$value)
+rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, mechanics",  
+                                     RMSE = model3))
+rmse_results
+
+## X: attack, health, charge, and overload
+## Y: cost
+
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Overload, cumulative(parallel = T, reverse = F), data = train)
+# summary(fitCL)
+
+
+for(i in 1: 6){
+  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
+}
+
+
+# To estimate the cost of cards based on attack, health, charge and overload:
+test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(value = 7) %>% 
+  group_by(cardId) %>%
+  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+
+test3 = test %>%
+  select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
+  left_join(test3, by = "cardId")
+model3 = RMSE(test3$cost1, test3$value)
+rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, overload",  
+                                     RMSE = model3))
+rmse_results
+
+```
+
 
 We then considered a model which include some feature of the cards, and __Charge__ and __Overload__ were the only features that were significant:
 
@@ -655,44 +851,6 @@ rmse_results
 
 
 ```{r}
-## X: attack, health, charge, divine shield, taunt in warlock
-## Y: cost
-
-train_warlock = train %>% filter(playerClass == "All" | playerClass == "Warlock")
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = train_warlock)
-# summary(fitCL)
-
-test_warlock = test %>% filter(playerClass == "All" | playerClass == "Warlock")
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-
-# To estimate the cost of cards based on attack, health, charge, divine shield, and taunt in warlock:
-test_warlock = test_warlock %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
-  mutate(value = 7) %>% 
-  group_by(cardId, cost1, attack, health) %>%
-  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
-
-model3 = RMSE(test_warlock$cost1, test_warlock$value)
-rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, divine shield, taunt in warlock",  
-                                     RMSE = model3))
-rmse_results
-```
-
-
-
-```{r}
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = minions_text1)
 summary(fitCL)
 
@@ -721,26 +879,24 @@ final %>% filter(value != cost1) %>%
 ```
 
 ```{r}
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Overload, cumulative(parallel = T, reverse = F), data = minions_text1)
-summary(fitCL)
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-final = minions_text %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
+final = minions_text1 %>% 
+  select(cardId, name, cost,cost1,mechanics,Charge, Overload, attack, health) %>%
+  rbind(highcost_card) %>%
+  mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2) %>%
   mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3) %>%
   mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% 
+  mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
   mutate(value = 7) %>% 
-  group_by(cardId, cost1, attack, health, name, playerClass, mechanics) %>%
+  group_by(cardId, cost1, attack, health, name, mechanics) %>%
   summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
 
 final %>% filter(value != cost1) %>%
   mutate(resid = value - cost1) %>%
@@ -914,7 +1070,7 @@ minions<-read.csv("minions.csv",sep="\t")
 weapons<-read.csv("weapons.csv",sep="\t")
 spells<-read.csv("spells.csv",sep="\t")
 cards<-rbind(minions,weapons,spells)
-load("D:/HSPH/BIO 260/final/data/minions_text.RData")
+# load("D:/HSPH/BIO 260/final/data/minions_text.RData")
 
 classes<-c("druid","hunter","mage","paladin","priest","rogue","shaman","warlock","warrior")
 decks<-list()
@@ -1054,7 +1210,7 @@ From the histogram we can see warlock is quite different from other heros, the d
 Let's have a look at the correlation between the cards within warlock decks.
 ```{r,warning=F,error=F}
 data<-read.csv("correlation.csv")
-
+colnames(data)<-gsub("\\."," ",colnames(data))
 #warlockDecks<-heroDeckLists[[8]]
 #rownames(warlockDecks)<-t(warlockDecks[,1])
 #data<-warlockDecks%>%select(-cardNames)
@@ -1077,7 +1233,7 @@ mtscaled<-as.matrix(d1)
 ### triangle heatmap
 
 source("https://raw.githubusercontent.com/briatte/ggcorr/master/ggcorr.R")
-ggcorr(cormat)
+##ggcorr(cormat)
 ggcorr(cormat,hjust = 0.3, size = 1, color = "grey50")
 
 
@@ -1087,9 +1243,16 @@ From the principle components analysis, we can see the top 2 principle component
 
 ```{r,warning=F,error=F}
 
-pcaData <-pc$x[,1:2]
+pcaData <-pc$x[,1:9]
 pca1 <-pc$x[,1]
 pca2 <-pc$x[,2]
+pca3<- pc$x[,3]
+pca4 <-pc$x[,4]
+pca5 <-pc$x[,5]
+pca6<- pc$x[,6]
+pca7 <-pc$x[,7]
+pca8 <-pc$x[,8]
+pca9<- pc$x[,9]
 
 wss <- (nrow(pcaData)-1)*sum(apply(pcaData,2,var))
 for (i in 2:20) wss[i] <- sum(kmeans(pcaData,centers=i)$withinss)
@@ -1098,19 +1261,26 @@ plot(1:20, wss, type="b", xlab="Number of Clusters",
 
 
 kmeans.cluster<-kmeans(pcaData, centers=4)
-pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, Cluster=factor(kmeans.cluster$cluster))
+pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, PCA3=pca3,PCA4=pca4,PCA5=pca5,PCA6=pca6,PCA7=pca7,PCA8=pca8,PCA9=pca9, Cluster=factor(kmeans.cluster$cluster))
 pc.df%>%ggplot(aes(x=PCA1, y=PCA2, label=ID, color=Cluster))+geom_jitter()+
   geom_text_repel(aes(PCA1, PCA2, label=ID),data = filter(pc.df,PCA1 < -2.5 | PCA1 >2.5| PCA2 < -1.5 | PCA2>1.5))
 
-pc.df%>%group_by(Cluster)%>%summarize(n())
+total.df<-pc.df%>%left_join(cards,by=c("ID"="name"))
+total.df%>%ggplot(aes(x=PCA1, y=PCA2, label=cost, color=Cluster))+geom_jitter()+geom_text_repel()
 
+pc.df%>%group_by(Cluster)%>%summarize(n())
+```
+#look at 4 clusters
+In the above codes, we have tried to use Kmeans clustering to distinguish different type of decks. By the FOM plots, we found that 4 is the balanced point, so we made a 4 centroid clustering. Let's pick one deck to see if this clustering make sense.
+```{r,warning=F,error=F}
+deck<-heroDeckLists[[8]]%>%select(cardNames,X60)%>%
+  filter(X60!=0)%>%
+  left_join(pc.df,by=c("cardNames"="ID"))
+deck[,c(1,12)]%>%kable
 ```
 
-#look at 4 clusters
 ```{r warning= F, error=F, eval=F}
-kmeans.cluster<-kmeans(pcaData, centers=4)
-pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
-                  Cluster=factor(kmeans.cluster$cluster))
+
 ### seperate data set
 fullcluster<-pc.df%>%select(-PCA1,-PCA2)
 cluster1<-fullcluster%>%filter(Cluster=="1")%>%select(-Cluster)
@@ -1206,7 +1376,25 @@ p4+ theme(axis.text.y = element_text(vjust = 1,
                                      size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
                                                                                              size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
 ```
+Let's have a look at the card frequency distribution.
+```{r,warning=F,error=F}
+freqTable<-heroDeckLists[[8]]%>%tbl_df()%>%
+  mutate(cardTotalCounts=rowSums(heroDeckLists[[8]][,2:length(heroDeckLists[[8]])]))%>%
+  dplyr::select(cardNames,cardTotalCounts)
+total.df<-total.df%>%left_join(freqTable,by=c("ID"="cardNames"))
+total.df%>%dplyr::select(ID,cardTotalCounts,Cluster)%>%filter(complete.cases(.))%>%
+  ggplot(aes(Cluster,cardTotalCounts))+geom_point()
 
+```
+From the above plots, we can see that the cards in cluster 1 and 4 are more frequent appear in decks.This helps us to select the core cards of a deck. A core card should neither appear too much, which makes it look like panacea; nor appear too little, which means it has fewer interaction with other cards.
+```{r,warning=F,error=F}
+coreTable<-total.df%>%filter(type=="Minion")%>%dplyr::select(ID,cardTotalCounts,Cluster,cost)%>%filter(complete.cases(.))%>%
+  filter(cardTotalCounts<90&cardTotalCounts>60)
+
+coreTable%>%group_by(Cluster)%>%summarize(n())
+
+```
+Now, in each cluster, we have several numbers of core cards. But 6 and 7 core cards are a bit too many. So let's do a simulation of how numbers of core cards affect the probability of getting all the core cards after drawing certain amount of cards.
 #### Number of Draw cards
 For each deck, there are several "core" cards that can have the greatest effect when they are used together. We will usually put 2 cards for each component of core cards, and we want to get at least one for every component as early as possible.
 
@@ -1354,7 +1542,7 @@ d5 <- sapply(1:26,defen_core5)
 ```
 
 
-```{r,fig.width=10}
+```{r}
 # show results
 
 offensive <- data.frame(o2,o3,o4,o5)
@@ -1377,4 +1565,46 @@ defensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
 
 ```
 
+#######ADD explaination here.
 
+After having a deeper look at each clusters' costs, we can see there are some outliers. 
+
+```{r,warning=F,error=F}
+coreTable%>%filter(Cluster==4)%>%kable()
+coreTable%>%filter(Cluster==1)%>%kable()
+# load("D:/HSPH/BIO 260/final/data/final.RData")
+
+coreTable<-coreTable%>%left_join(final,by=c("ID"="name"))
+coreTable<-coreTable%>%select(-cardId)
+coreTable<-coreTable%>%filter(complete.cases(.))%>%
+  mutate(undervalue=value-cost)
+
+zooCore<-coreTable%>%filter(undervalue>0 & Cluster==1)
+
+zooDeckAvailableNumber<-30
+zooDeck<-zooCore%>%select(ID)%>%mutate(count=2)
+
+zooDeckAvailableNumber<-zooDeckAvailableNumber-dim(zooDeck)[1]*2
+
+
+
+i<-0
+while(zooDeckAvailableNumber>0){
+  i=i+1
+  zooPCA<-zooDeck%>%left_join(total.df)
+  center<-colMeans(zooPCA[,3:11])
+  neighbors<-total.df%>%
+    mutate(distance=sqrt((PCA1-center[1])^2+
+            (PCA2-center[2])^2+(PCA3-center[3])^2+(PCA4-center[4])^2+(PCA5-center[5])^2)+(PCA6-center[6])^2+
+             (PCA7-center[7])^2+(PCA8-center[8])^2+(PCA9-center[9])^2)%>%arrange(distance)%>%
+    filter(!ID %in% zooDeck[,1])
+  if(zooDeckAvailableNumber==1){
+    newCard<-neighbors[i,]%>%mutate(count=1)%>%select(ID,count)
+  }else{
+    newCard<-neighbors[i,]%>%mutate(count=ifelse(rarity!="Legendary",2,1))%>%select(ID,count)
+  }
+  zooDeck<-rbind(zooDeck,newCard)
+  zooDeckAvailableNumber<-zooDeckAvailableNumber-newCard[,2]
+}
+
+```
