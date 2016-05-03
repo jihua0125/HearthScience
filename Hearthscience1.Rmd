@@ -438,7 +438,7 @@ It might be a good idea to filter out these cards.
 ```{r, warning=F, error=F}
 highcost_card = minions_text %>% 
   mutate(attplusheal = attack+health) %>% filter(cost > 10) %>% 
-  highcost_card %>% mutate(cost1 = 7) %>%
+  mutate(cost1 = 7) %>%
   select(cardId, name, cost,cost1,mechanics,Charge, Overload, attack, health)
   
 
@@ -1572,7 +1572,7 @@ After having a deeper look at each clusters' costs, we can see there are some ou
 ```{r,warning=F,error=F}
 coreTable%>%filter(Cluster==4)%>%kable()
 coreTable%>%filter(Cluster==1)%>%kable()
-load("D:/HSPH/BIO 260/final/data/final.RData")
+# load("D:/HSPH/BIO 260/final/data/final.RData")
 
 coreTable<-coreTable%>%left_join(final,by=c("ID"="name"))
 coreTable<-coreTable%>%select(-cardId)
