@@ -436,6 +436,12 @@ minions_text %>%
 
 It might be a good idea to filter out these cards.
 ```{r, warning=F, error=F}
+highcost_card = minions_text %>% 
+  mutate(attplusheal = attack+health) %>% filter(cost > 10) %>% 
+  highcost_card %>% mutate(cost1 = 7) %>%
+  select(cardId, name, cost,cost1,mechanics,Charge, Overload, attack, health)
+  
+
 minions_text = minions_text %>% mutate(attplusheal = attack+health) %>% filter(cost <= 10)
 
 ## cost vs attack+health:
@@ -873,26 +879,24 @@ final %>% filter(value != cost1) %>%
 ```
 
 ```{r}
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Overload, cumulative(parallel = T, reverse = F), data = minions_text1)
-summary(fitCL)
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-final = minions_text1 %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
+final = minions_text1 %>% 
+  select(cardId, name, cost,cost1,mechanics,Charge, Overload, attack, health) %>%
+  rbind(highcost_card) %>%
+  mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
   mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1) %>%
   mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2) %>%
   mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3) %>%
   mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% 
+  mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
   mutate(value = 7) %>% 
-  group_by(cardId, cost1, attack, health, name, playerClass, mechanics, mechanics1) %>%
+  group_by(cardId, cost1, attack, health, name, mechanics) %>%
   summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+            value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
 
 final %>% filter(value != cost1) %>%
   mutate(resid = value - cost1) %>%
