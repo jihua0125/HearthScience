@@ -8,7 +8,9 @@ output: html_document
 ## Overview and Motivation:
 Some of our team members are loyal fans of the popular free online card game, Hearthstone: Heroes of Warcraft, which was released worldwide by Blizzard on 2014 with more than 40 million registered Hearthstone accounts by November 2015.
 
-The main element of the game Hearthstone are cards, which consist of a list of features including cost, attack (number of damages can be made to the opponent per turn),health (number of damages that can bear before being destroyed) and other special abilities. Here is an example of the card: ![card](card.png)
+The main element of the game Hearthstone are cards, which consist of a list of features including cost, attack (number of damages can be made to the opponent per turn),health (number of damages that can bear before being destroyed) and other special abilities. Here is an example of the card: 
+
+<img src="card.png" align="center" height="400" width="300" margin="0 auto" />
 
 Before every game starts, each of the two players will choose 1 hero mode among the 9 and then select 30 different cards over 700 cards to build his/her own deck depending on the mode. Each turn, the player will draw one card randomly from the 30 cards and one more mana crystal (money). The player can choose the cards to use among all those in hand that cost up to the mana crystals he/she has by that turn. The game ends when one player is attacked to death (lose all 30 units of health) or he/she concedes, and the other player will win. 
 
