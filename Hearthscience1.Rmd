@@ -616,6 +616,82 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health",
 rmse_results
 ```
 
+```{r}
+## X: attack, health, mechanics()
+## Y: cost
+
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge, cumulative(parallel = T, reverse = F), data = train)
+# summary(fitCL)
+
+
+for(i in 1: 6){
+  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
+}
+
+
+# To estimate the cost of cards based on attack, health, and charge:
+test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(value = 7) %>% 
+  group_by(cardId) %>%
+  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+
+test3 = test %>%
+  select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
+  left_join(test3, by = "cardId")
+model3 = RMSE(test3$cost1, test3$value)
+rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge",  
+                                     RMSE = model3))
+rmse_results
+
+## X: attack, health, charge, and overload
+## Y: cost
+
+fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Overload, cumulative(parallel = T, reverse = F), data = train)
+# summary(fitCL)
+
+
+for(i in 1: 6){
+  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
+}
+
+
+# To estimate the cost of cards based on attack, health, charge and overload:
+test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
+  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1) %>%
+  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2) %>%
+  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3) %>%
+  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4) %>%
+  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
+  mutate(value = 7) %>% 
+  group_by(cardId) %>%
+  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
+              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
+
+test3 = test %>%
+  select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
+  left_join(test3, by = "cardId")
+model3 = RMSE(test3$cost1, test3$value)
+rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, overload",  
+                                     RMSE = model3))
+rmse_results
+
+```
+
+
 We then considered a model which include some feature of the cards, and __Charge__ and __Overload__ were the only features that were significant:
 
 ```{r}
@@ -1028,7 +1104,7 @@ minions<-read.csv("minions.csv",sep="\t")
 weapons<-read.csv("weapons.csv",sep="\t")
 spells<-read.csv("spells.csv",sep="\t")
 cards<-rbind(minions,weapons,spells)
-load("D:/HSPH/BIO 260/final/data/minions_text.RData")
+# load("D:/HSPH/BIO 260/final/data/minions_text.RData")
 
 classes<-c("druid","hunter","mage","paladin","priest","rogue","shaman","warlock","warrior")
 decks<-list()
