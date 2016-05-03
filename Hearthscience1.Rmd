@@ -1468,6 +1468,34 @@ offen_core5 <- function(i){
 }
 
 o5 <- sapply(1:27,offen_core5) 
+
+# 6 components core card set
+card <- c(1,1,2,2,3,3,4,4,5,5,6,6,rep(0,18))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+offen_core6 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0 & sum(c==6)>0})) 
+}
+
+o6 <- sapply(1:27,offen_core6) 
+
+# 7 components core card set
+card <- c(1,1,2,2,3,3,4,4,5,5,6,6,7,7,rep(0,18))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.offensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+offen_core7 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0 & sum(c==6)>0 & sum(c==7)>0})) 
+}
+
+o7 <- sapply(1:27,offen_core7) 
 ```
 
 Similarly we can estimate the probability for the defensive side/late hand.
@@ -1539,29 +1567,58 @@ defen_core5 <- function(i){
 }
 
 d5 <- sapply(1:26,defen_core5) 
+
+# 6 components core card set
+card <- c(1,1,2,2,3,3,4,4,5,5,6,6,rep(0,18))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core6 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0 & sum(c==6)>0})) 
+}
+
+d6 <- sapply(1:26,defen_core6)
+
+# 7 components core card set
+card <- c(1,1,2,2,3,3,4,4,5,5,6,6,7,7,rep(0,16))
+tmp <- t(replicate(10000,sample(card,30)))
+
+tmp <- sort.defensive(tmp)
+
+# the probability of having the complete set of core cards by n turns
+# we want to know the probability by each turn i
+defen_core7 <- function(i){
+        mean(apply(tmp[,1:(i+3)],1,function(c){as.numeric(sum(c==1)>0 & sum(c==2)>0 & sum(c==3)>0) & sum(c==4)>0 & sum(c==5)>0 & sum(c==6)>0 & sum(c==7)>0})) 
+}
+
+d7 <- sapply(1:26,defen_core7) 
 ```
 
 
 ```{r}
-# show results
+# show results: the probability of getting the whole set of core cards
 
-offensive <- data.frame(o2,o3,o4,o5)
-colnames(offensive) <- c(2,3,4,5)
-offensive <- offensive %>% mutate(turn=1:27, card=4:30) %>% gather("n_core","prob",1:4)
+offensive <- data.frame(o2,o3,o4,o5,o6,o7)
+colnames(offensive) <- c(2,3,4,5,6,7)
+offensive <- offensive %>% mutate(turn=1:27, card=4:30) %>% gather("n_core","prob",1:6)
 
-defensive <- data.frame(d2,d3,d4,d5)
-colnames(defensive) <- c(2,3,4,5)
-defensive <- defensive %>% mutate(turn=1:26, card=5:30) %>% gather("n_core","prob",1:4)
+defensive <- data.frame(d2,d3,d4,d5,d6,d7)
+colnames(defensive) <- c(2,3,4,5,6,7)
+defensive <- defensive %>% mutate(turn=1:26, card=5:30) %>% gather("n_core","prob",1:6)
 
-# plot the relatiionship between number of cards and the probability of gettin the whole set
 offensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
-        ggtitle("The probability of getting the whole set of core cards (Offensive)") +
+        ggtitle("Early hand") +
         scale_x_continuous(breaks=4:30) +
-        scale_y_continuous(breaks=seq(0,1,0.1))
+        scale_y_continuous(breaks=seq(0,1,0.1)) +
+        geom_vline(xintercept = 13)
 defensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
-        ggtitle("The probability of getting the whole set of core cards (Defensive)") +
+        ggtitle("Late hand") +
         scale_x_continuous(breaks=5:30) +
-        scale_y_continuous(breaks=seq(0,1,0.1))
+        scale_y_continuous(breaks=seq(0,1,0.1)) +
+        geom_vline(xintercept = 14)
 
 ```
 
