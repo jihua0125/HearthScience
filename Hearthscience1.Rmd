@@ -83,7 +83,6 @@ We have two types of data: 1) basic card information (attack/health/cost/descrip
 
 ```{r eval=F, warning=F, error=F}
 ## Data wrangling from json to RData:
-
 json_file = "cards2.txt"
 data <- fromJSON(file = json_file)
 card_category = names(data)
@@ -136,9 +135,9 @@ This part is aimed for detailed classification of minion card descriptions (othe
 
 ```{r eval=F, warning=F, error=F}
 
-load("minions.RData")
-minions_text = tbl_df(minions) %>%
-  select(-ID, -flavor, -type, -artist, -collectible, -howToGet, -howToGetGold, -img, -imgGold, -locale, -race, -faction, -elite) %>%
+load("minions_text.RData")
+minions_text = tbl_df(minions_text) %>%
+  select(-cardId, -flavor, -type, -artist, -collectible, -howToGet, -howToGetGold, -img, -imgGold, -locale, -race, -faction, -elite) %>%
   mutate(playerClass = ifelse(is.na(playerClass), "All", as.character(playerClass)))
 
 minions_text = minions_text %>% 
@@ -201,8 +200,6 @@ colnames(minions_text)
 save(minions_text, file = "minions_text.RData")
 ```
 
-
-
 ## Exploratory Analysis
 ```{r warning= F, error=F}
 
@@ -216,11 +213,17 @@ distribution of Cost
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
 Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+# 7 stands for higher than 7
+Cost1<-Cost%>%filter(cost<7)                       
+Cost2<-c(7,61)
+Cost<-rbind(Cost1,Cost2)
+
 Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
 p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost")
+
 #histogram
-qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost")
+qplot(data$cost,geom="histogram",xlab="cost",main="Histogram for cost",binwidth=1)
 ```
 
 Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
@@ -229,50 +232,80 @@ distribution of attack
 ```{r warning= F, error=F}
 Attackk<-data%>%arrange(attack)
 Attack<-unique(Attackk%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
-#pie chart
-Attack<-Attack%>%mutate(pos=cumsum(n)-n/2)
-p<-Attack%>%ggplot(aes(x=1,y=n,fill=factor(attack)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Attack")
 #histogram
-qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack")
+qplot(data$attack,geom="histogram",xlab="attack",main="Histogram for attack",binwidth=1)
 ```
 
 distribution of health
 ```{r warning= F, error=F}
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
-#pie chart
-Health<-Health%>%mutate(pos=cumsum(n)-n/2)
-p<-Health%>%ggplot(aes(x=1,y=n,fill=factor(health)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Health")
 #histogram
-qplot(data$health,geom="histogram",xlab="health",main="Histogram for health")
+qplot(data$health,geom="histogram",xlab="health",main="Histogram for health",binwidth=1)
 ```
 
 distribution of mechanics 
 ```{r warning= F, error=F}
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
-#pie chart
-Mechanics<-Mechanics%>%mutate(pos=cumsum(n)-n/2)
-p<-Mechanics%>%ggplot(aes(x=1,y=n,fill=factor(mechanics)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Mechanics")
 #histogram
-qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+qplot(data$mechanics,xlab="mechanics",main="Histogram for Mechanics")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-distribution of playerclass
-```{r warning= F, error=F}
-pc<-data%>%arrange(playerClass)
-pc<-unique(pc%>%group_by(playerClass)%>%mutate(n=n())%>%ungroup()%>%select(playerClass,n))
-#pie chart
-playerClass<-pc%>%mutate(pos=cumsum(n)-n/2)
-p<-playerClass%>%ggplot(aes(x=1,y=n,fill=factor(playerClass)))
-p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of playerClass")
+*distributions for Charge
+```{r}
+charge<-data%>%filter(mechanics=="Charge")
+Cost<-charge%>%dplyr::arrange(cost)
+Cost<-unique(charge%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost for Charge")
+Attackk<-charge%>%arrange(attack)
+Attack<-unique(charge%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+Health<-charge%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #histogram
-qplot(data$playerClass,xlab="playerClass",main="Histogram for playerClass")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
+qplot(charge$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Charge",binwidth=1)
+qplot(charge$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Charge",binwidth=1)
+qplot(charge$health,geom="histogram",xlab="health",main="Histogram of health distribution for Charge",binwidth=1)
 ```
+
+*distributions for Divine Shield
+```{r}
+ds<-data%>%filter(mechanics=="Divine Shield")
+Cost<-ds%>%dplyr::arrange(cost)
+Cost<-unique(ds%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost for Divine Shield")
+Attackk<-ds%>%arrange(attack)
+Attack<-unique(ds%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+Health<-ds%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
+#histogram
+qplot(ds$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Divine Shield",binwidth=1)
+qplot(ds$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Divine Shield",binwidth=1)
+qplot(ds$health,geom="histogram",xlab="health",main="Histogram of health distribution for Divine Shield",binwidth=1)
+```
+
+*distributions for Taunt
+```{r}
+Taunt<-data%>%filter(mechanics=="Taunt")
+Cost<-Taunt%>%dplyr::arrange(cost)
+Cost<-unique(Taunt%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
+p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost for Taunt")
+Attackk<-Taunt%>%arrange(attack)
+Attack<-unique(Taunt%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+Health<-Taunt%>%arrange(health)
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
+#histogram
+p1<-qplot(Taunt$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Divine Shield",binwidth=1)
+p2<-qplot(Taunt$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Divine Shield",binwidth=1)
+qplot(Taunt$health,geom="histogram",xlab="health",main="Histogram of health distribution for Divine Shield",binwidth=1)
+```
+
 
 distribution of cardSet
 ```{r warning= F, error=F}
@@ -283,7 +316,55 @@ cs<-cs%>%mutate(pos=cumsum(n)-n/2)
 p<-cs%>%ggplot(aes(x=1,y=n,fill=factor(cardSet)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of cardSet")
 #histogram
-qplot(data$cardSet,xlab="cardSet",main="Histogram for cardSet")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+qplot(data$cardSet,xlab="cardSet",main="Histogram for CardSet distribution")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+###basic carset
+basic<-data%>%filter(cardSet=="Basic")
+qplot(basic$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for basic cardset",binwidth=1)
+qplot(basic$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for basic cardset",binwidth=1)
+qplot(basic$health,geom="histogram",xlab="health",main="Histogram of health distribution for basic cardset",binwidth=1)
+
+###Blackrock Mountain
+bm<-data%>%filter(cardSet=="Blackrock Mountain")
+qplot(bm$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Blackrock Mountain",binwidth=1)
+qplot(bm$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Blackrock Mountain",binwidth=1)
+qplot(bm$health,geom="histogram",xlab="health",main="Histogram of health distribution for Blackrock Mountain",binwidth=1)
+
+###Classic
+Classic<-data%>%filter(cardSet=="Classic")
+qplot(Classic$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Classic",binwidth=1)
+qplot(Classic$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Classic",binwidth=1)
+qplot(Classic$health,geom="histogram",xlab="health",main="Histogram of health distribution for Classic",binwidth=1)
+
+###Goblins vs Gnomes
+gg<-data%>%filter(cardSet=="Goblins vs Gnomes")
+qplot(gg$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Goblins vs Gnomes",binwidth=1)
+qplot(gg$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Goblins vs Gnomes",binwidth=1)
+qplot(gg$health,geom="histogram",xlab="health",main="Histogram of health distribution for Goblins vs Gnomes",binwidth=1)
+
+###Naxxramas
+na<-data%>%filter(cardSet=="Naxxramas")
+qplot(na$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Naxxramas",binwidth=1)
+qplot(na$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Naxxramas",binwidth=1)
+qplot(na$health,geom="histogram",xlab="health",main="Histogram of health distribution for Naxxramas",binwidth=1)
+
+###Promotion
+Promotion<-data%>%filter(cardSet=="Naxxramas")
+qplot(Promotion$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Promotion",binwidth=1)
+qplot(Promotion$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Promotion",binwidth=1)
+qplot(Promotion$health,geom="histogram",xlab="health",main="Histogram of health distribution for Promotion",binwidth=1)
+
+###The Grand Tournament
+tgt<-data%>%filter(cardSet=="The Grand Tournament")
+qplot(tgt$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for The Grand Tournament",binwidth=1)
+qplot(tgt$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for The Grand Tournament",binwidth=1)
+qplot(tgt$health,geom="histogram",xlab="health",main="Histogram of health distribution for The Grand Tournament",binwidth=1)
+
+###The League of Explorers
+tloe<-data%>%filter(cardSet=="The League of Explorers")
+qplot(tloe$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for The League of Explorers",binwidth=1)
+qplot(tloe$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for The League of Explorers",binwidth=1)
+qplot(tloe$health,geom="histogram",xlab="health",main="Histogram of health distribution for The League of Explorers",binwidth=1)
 
 ```
 
@@ -295,7 +376,39 @@ rr<-rr%>%mutate(pos=cumsum(n)-n/2)
 p<-rr%>%ggplot(aes(x=1,y=n,fill=factor(rarity)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of rarity")
 #histogram
-qplot(data$cardSet,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+qplot(data$rarity,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+###Common
+common<-data%>%filter(rarity=="Common")
+qplot(common$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for common",binwidth=1)
+qplot(common$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for common",binwidth=1)
+qplot(common$health,geom="histogram",xlab="health",main="Histogram of health distribution for common",binwidth=1)
+
+###Epic
+Epic<-data%>%filter(rarity=="Epic")
+qplot(Epic$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Epic",binwidth=1)
+qplot(Epic$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Epic",binwidth=1)
+qplot(Epic$health,geom="histogram",xlab="health",main="Histogram of health distribution for Epic",binwidth=1)
+
+###Free
+Free<-data%>%filter(rarity=="Free")
+qplot(Free$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Free",binwidth=1)
+qplot(Free$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Free",binwidth=1)
+qplot(Free$health,geom="histogram",xlab="health",main="Histogram of health distribution for Free",binwidth=1)
+
+###Legendary
+Legendary<-data%>%filter(rarity=="Legendary")
+qplot(Legendary$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Legendary",binwidth=1)
+qplot(Legendary$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Legendary",binwidth=1)
+qplot(Legendary$health,geom="histogram",xlab="health",main="Histogram of health distribution for Legendary",binwidth=1)
+
+###Rare
+Rare<-data%>%filter(rarity=="Rare")
+qplot(Rare$cost,geom="histogram",xlab="cost",main="Histogram of cost distribution for Rare",binwidth=1)
+qplot(Rare$attack,geom="histogram",xlab="attack",main="Histogram of attack distribution for Rare",binwidth=1)
+qplot(Rare$health,geom="histogram",xlab="health",main="Histogram of health distribution for Rare",binwidth=1)
+
 ```
 
 ## Final Analysis:
