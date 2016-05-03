@@ -1,0 +1,489 @@
+"cardId","cost1","attack","health","name","playerClass","mechanics","mechanics1","value"
+"AT_003",2,3,2,"Fallen Hero","Mage","Normal","A",3
+"AT_006",4,3,5,"Dalaran Aspirant","Mage","Inspire","A",4
+"AT_007",3,3,4,"Spellslinger","Mage","Battlecry","A",4
+"AT_008",6,6,6,"Coldarra Drake","Mage","Normal","A",6
+"AT_009",7,7,7,"Rhonin","Mage","Deathrattle","A",7
+"AT_010",5,3,3,"Ram Wrangler","Hunter","Battlecry","A",3
+"AT_011",4,3,5,"Holy Champion","Priest","Normal","A",4
+"AT_012",4,5,4,"Spawn of Shadows","Priest","Inspire","A",5
+"AT_014",3,3,3,"Shadowfiend","Priest","Normal","A",3
+"AT_017",4,2,6,"Twilight Guardian","All","Battlecry","A",4
+"AT_018",7,5,4,"Confessor Paletress","Priest","Inspire","A",5
+"AT_019",4,1,1,"Dreadsteed","Warlock","Deathrattle","A",1
+"AT_020",7,6,8,"Fearsome Doomguard","Warlock","Normal","A",7
+"AT_021",2,3,2,"Tiny Knight of Evil","Warlock","Normal","A",3
+"AT_023",6,5,4,"Void Crusher","Warlock","Inspire","A",5
+"AT_026",2,4,3,"Wrathguard","Warlock","Normal","A",4
+"AT_027",6,4,4,"Wilfred Fizzlebang","Warlock","Normal","A",4
+"AT_028",5,3,7,"Shado-Pan Rider","Rogue","Combo","A",5
+"AT_029",1,2,1,"Buccaneer","Rogue","Normal","A",2
+"AT_030",2,3,2,"Undercity Valiant","Rogue","Combo","A",3
+"AT_031",2,2,2,"Cutpurse","Rogue","Normal","A",2
+"AT_032",3,4,3,"Shady Dealer","Rogue","Battlecry","A",4
+"AT_036",7,8,4,"Anub'arak","Rogue","Deathrattle","A",6
+"AT_038",2,2,3,"Darnassus Aspirant","Druid","Battlecry","A",3
+"AT_039",4,5,4,"Savage Combatant","Druid","Inspire","A",5
+"AT_040",4,4,4,"Wildwalker","Druid","Battlecry","A",4
+"AT_041",7,6,6,"Knight of the Wild","Druid","Normal","A",6
+"AT_042",2,2,1,"Druid of the Saber","Druid","Normal","A",2
+"AT_045",7,5,5,"Aviana","Druid","Aura","A",5
+"AT_046",3,3,2,"Tuskarr Totemic","Shaman","Battlecry","A",3
+"AT_047",4,4,4,"Draenei Totemcarver","Shaman","Battlecry","A",4
+"AT_049",5,3,6,"Thunder Bluff Valiant","Shaman","Inspire","A",5
+"AT_052",2,3,4,"Totem Golem","Shaman","Overload","Overload",3
+"AT_054",6,4,4,"The Mistcaller","Shaman","Battlecry","A",4
+"AT_057",3,4,2,"Stablemaster","Hunter","Battlecry","A",3
+"AT_058",2,3,2,"King's Elekk","Hunter","Battlecry","A",3
+"AT_059",1,2,1,"Brave Archer","Hunter","Inspire","A",2
+"AT_063",7,4,2,"Acidmaw","Hunter","Normal","A",3
+"AT_063t",3,4,2,"Dreadscale","Hunter","Normal","A",3
+"AT_066",3,3,3,"Orgrimmar Aspirant","Warrior","Inspire","A",3
+"AT_067",4,5,3,"Magnataur Alpha","Warrior","Normal","A",4
+"AT_069",2,3,2,"Sparring Partner","Warrior","Taunt","Taunt",3
+"AT_070",7,4,6,"Skycap'n Kragg","All","Charge","Charge",6
+"AT_071",2,2,3,"Alexstrasza's Champion","Warrior","Battlecry","A",3
+"AT_072",7,7,7,"Varian Wrynn","Warrior","Battlecry","A",7
+"AT_075",3,2,4,"Warhorse Trainer","Paladin","Aura","A",3
+"AT_076",4,3,4,"Murloc Knight","Paladin","Inspire","A",4
+"AT_079",6,6,6,"Mysterious Challenger","Paladin","Battlecry","A",6
+"AT_080",2,2,3,"Garrison Commander","All","Normal","A",3
+"AT_081",7,3,7,"Eadric the Pure","Paladin","Battlecry","A",5
+"AT_082",1,1,2,"Lowly Squire","All","Inspire","A",2
+"AT_083",3,3,3,"Dragonhawk Rider","All","Inspire","A",3
+"AT_084",2,1,2,"Lance Carrier","All","Battlecry","A",2
+"AT_085",4,2,6,"Maiden of the Lake","All","Aura","A",4
+"AT_086",3,4,3,"Saboteur","All","Battlecry","A",4
+"AT_087",3,2,1,"Argent Horserider","All","Charge","Charge",2
+"AT_088",6,8,5,"Mogor's Champion","All","Normal","A",7
+"AT_089",2,3,2,"Boneguard Lieutenant","All","Inspire","A",3
+"AT_090",5,4,3,"Mukla's Champion","All","Inspire","A",4
+"AT_091",4,1,8,"Tournament Medic","All","Inspire","A",5
+"AT_092",3,5,2,"Ice Rager","All","Normal","A",4
+"AT_093",4,2,6,"Frigid Snobold","All","Spell Damage","A",4
+"AT_094",2,2,3,"Flame Juggler","All","Battlecry","A",3
+"AT_095",3,2,2,"Silent Knight","All","Divine Shield","Divine Shield",2
+"AT_096",5,5,5,"Clockwork Knight","All","Battlecry","A",5
+"AT_097",1,2,1,"Tournament Attendee","All","Taunt","Taunt",2
+"AT_098",6,6,5,"Sideshow Spelleater","All","Battlecry","A",6
+"AT_099",6,3,5,"Kodorider","All","Inspire","A",4
+"AT_100",3,3,3,"Silver Hand Regent","All","Inspire","A",3
+"AT_101",5,5,6,"Pit Fighter","All","Normal","A",6
+"AT_102",7,5,9,"Captured Jormungar","All","Normal","A",7
+"AT_103",7,9,7,"North Sea Kraken","All","Battlecry","A",7
+"AT_104",5,5,5,"Tuskarr Jouster","Paladin","Battlecry","A",5
+"AT_105",1,2,4,"Injured Kvaldir","All","Battlecry","A",3
+"AT_106",3,4,3,"Light's Champion","All","Battlecry","A",4
+"AT_108",4,5,3,"Armored Warhorse","All","Battlecry","A",5
+"AT_109",2,2,4,"Argent Watchman","All","Inspire","A",3
+"AT_110",3,2,5,"Coliseum Manager","All","Inspire","A",4
+"AT_111",4,3,5,"Refreshment Vendor","All","Battlecry","A",4
+"AT_112",6,5,6,"Master Jouster","All","Battlecry","A",6
+"AT_113",5,5,4,"Recruiter","All","Inspire","A",5
+"AT_114",4,5,4,"Evil Heckler","All","Taunt","Taunt",5
+"AT_115",3,2,2,"Fencing Coach","All","Battlecry","A",2
+"AT_116",2,1,4,"Wyrmrest Agent","Priest","Battlecry","A",3
+"AT_117",3,4,2,"Master of Ceremonies","All","Battlecry","A",3
+"AT_118",6,5,5,"Grand Crusader","All","Battlecry","A",5
+"AT_119",5,4,4,"Kvaldir Raider","All","Inspire","A",4
+"AT_120",7,8,8,"Frost Giant","All","Normal","A",7
+"AT_121",4,4,4,"Crowd Favorite","All","Normal","A",4
+"AT_122",4,4,4,"Gormok the Impaler","All","Battlecry","A",4
+"AT_123",7,6,6,"Chillmaw","All","Deathrattle","A",6
+"AT_124",6,3,9,"Bolf Ramshield","All","Normal","A",6
+"AT_125",7,10,10,"Icehowl","All","Charge","Charge",7
+"AT_127",5,4,5,"Nexus-Champion Saraad","All","Inspire","A",5
+"AT_128",6,7,4,"The Skeleton Knight","All","Deathrattle","A",6
+"AT_129",3,3,4,"Fjola Lightbane","All","Normal","A",4
+"AT_130",6,6,7,"Sea Reaver","Warrior","Normal","A",7
+"AT_131",3,3,4,"Eydis Darkbane","All","Normal","A",4
+"AT_132",6,6,3,"Justicar Trueheart","All","Battlecry","A",5
+"AT_133",1,1,2,"Gadgetzan Jouster","All","Battlecry","A",2
+"BRM_002",3,2,4,"Flamewaker","Mage","Normal","A",3
+"BRM_004",1,2,1,"Twilight Whelp","Priest","Battlecry","A",2
+"BRM_006",3,2,4,"Imp Gang Boss","Warlock","Normal","A",3
+"BRM_008",5,4,3,"Dark Iron Skulker","Rogue","Battlecry","A",4
+"BRM_009",7,7,8,"Volcanic Lumberer","Druid","Taunt","Taunt",7
+"BRM_010",3,2,2,"Druid of the Flame","Druid","Normal","A",2
+"BRM_012",4,3,6,"Fireguard Destroyer","Shaman","Battlecry","A",4
+"BRM_014",4,4,4,"Core Rager","Hunter","Battlecry","A",4
+"BRM_016",4,2,5,"Axe Flinger","Warrior","Normal","A",4
+"BRM_018",5,5,5,"Dragon Consort","Paladin","Battlecry","A",5
+"BRM_019",5,3,3,"Grim Patron","All","Normal","A",3
+"BRM_020",4,3,5,"Dragonkin Sorcerer","All","Normal","A",4
+"BRM_022",1,0,2,"Dragon Egg","All","Normal","A",1
+"BRM_024",6,6,6,"Drakonid Crusher","All","Battlecry","A",6
+"BRM_025",6,6,4,"Volcanic Drake","All","Normal","A",5
+"BRM_026",4,5,6,"Hungry Dragon","All","Battlecry","A",6
+"BRM_027",7,9,7,"Majordomo Executus","All","Deathrattle","A",7
+"BRM_028",6,5,5,"Emperor Thaurissan","All","Normal","A",5
+"BRM_029",7,8,4,"Rend Blackhand","All","Battlecry","A",6
+"BRM_030",7,8,8,"Nefarian","All","Battlecry","A",7
+"BRM_031",7,6,8,"Chromaggus","All","Normal","A",7
+"BRM_033",3,2,4,"Blackwing Technician","All","Battlecry","A",3
+"BRM_034",5,5,4,"Blackwing Corruptor","All","Battlecry","A",5
+"CS1_042",1,1,2,"Goldshire Footman","All","Taunt","Taunt",2
+"CS1_069",5,3,6,"Fen Creeper","All","Taunt","Taunt",5
+"CS2_033",4,3,6,"Water Elemental","Mage","Freeze","A",5
+"CS2_042",6,6,5,"Fire Elemental","Shaman","Battlecry","A",6
+"CS2_059",1,0,1,"Blood Imp","Warlock","Stealth","Stealth",1
+"CS2_064",6,6,6,"Dread Infernal","Warlock","Battlecry","A",6
+"CS2_065",1,1,3,"Voidwalker","Warlock","Taunt","Taunt",2
+"CS2_088",7,5,6,"Guardian of Kings","Paladin","Battlecry","A",6
+"CS2_117",3,3,3,"Earthen Ring Farseer","All","Battlecry","A",3
+"CS2_118",3,5,1,"Magma Rager","All","Normal","A",3
+"CS2_119",4,2,7,"Oasis Snapjaw","All","Normal","A",5
+"CS2_120",2,2,3,"River Crocolisk","All","Normal","A",3
+"CS2_121",2,2,2,"Frostwolf Grunt","All","Taunt","Taunt",2
+"CS2_122",3,2,2,"Raid Leader","All","Aura","A",2
+"CS2_124",3,3,1,"Wolfrider","All","Charge","Charge",3
+"CS2_125",3,3,3,"Ironfur Grizzly","All","Taunt","Taunt",3
+"CS2_127",3,1,4,"Silverback Patriarch","All","Taunt","Taunt",3
+"CS2_131",4,2,5,"Stormwind Knight","All","Charge","Charge",4
+"CS2_141",3,2,2,"Ironforge Rifleman","All","Battlecry","A",2
+"CS2_142",2,2,2,"Kobold Geomancer","All","Spell Damage","A",2
+"CS2_146",1,2,1,"Southsea Deckhand","All","Normal","A",2
+"CS2_147",4,2,4,"Gnomish Inventor","All","Battlecry","A",3
+"CS2_150",5,4,2,"Stormpike Commando","All","Battlecry","A",3
+"CS2_151",5,4,4,"Silver Hand Knight","All","Battlecry","A",4
+"CS2_155",6,4,7,"Archmage","All","Spell Damage","A",6
+"CS2_161",7,7,5,"Ravenholdt Assassin","All","Stealth","Stealth",6
+"CS2_162",6,6,5,"Lord of the Arena","All","Taunt","Taunt",6
+"CS2_168",1,2,1,"Murloc Raider","All","Normal","A",2
+"CS2_169",1,1,1,"Young Dragonhawk","All","Windfury","Windfury",1
+"CS2_171",1,1,1,"Stonetusk Boar","All","Charge","Charge",2
+"CS2_172",2,3,2,"Bloodfen Raptor","All","Normal","A",3
+"CS2_173",2,2,1,"Bluegill Warrior","All","Charge","Charge",2
+"CS2_179",4,3,5,"Sen'jin Shieldmasta","All","Taunt","Taunt",4
+"CS2_181",3,4,7,"Injured Blademaster","All","Battlecry","A",6
+"CS2_182",4,4,5,"Chillwind Yeti","All","Normal","A",5
+"CS2_186",7,7,7,"War Golem","All","Normal","A",7
+"CS2_187",5,5,4,"Booty Bay Bodyguard","All","Taunt","Taunt",5
+"CS2_188",1,2,1,"Abusive Sergeant","All","Battlecry","A",2
+"CS2_189",1,1,1,"Elven Archer","All","Battlecry","A",1
+"CS2_196",3,2,3,"Razorfen Hunter","All","Battlecry","A",3
+"CS2_197",4,4,4,"Ogre Magi","All","Spell Damage","A",4
+"CS2_200",6,6,7,"Boulderfist Ogre","All","Normal","A",7
+"CS2_201",7,9,5,"Core Hound","All","Normal","A",7
+"CS2_203",2,2,1,"Ironbeak Owl","All","Battlecry","A",2
+"CS2_213",6,5,2,"Reckless Rocketeer","All","Charge","Charge",4
+"CS2_221",5,4,6,"Spiteful Smith","All","Enrage","A",5
+"CS2_222",7,6,6,"Stormwind Champion","All","Aura","A",6
+"CS2_226",5,4,4,"Frostwolf Warlord","All","Battlecry","A",4
+"CS2_227",5,7,6,"Venture Co. Mercenary","All","Aura","A",7
+"CS2_232",7,8,8,"Ironbark Protector","Druid","Taunt","Taunt",7
+"CS2_235",1,1,3,"Northshire Cleric","Priest","HealTarget","A",2
+"CS2_237",5,3,2,"Starving Buzzard","Hunter","Normal","A",3
+"DS1_055",5,4,5,"Darkscale Healer","All","Battlecry","A",5
+"DS1_070",4,4,3,"Houndmaster","Hunter","Battlecry","A",4
+"DS1_175",1,1,1,"Timber Wolf","Hunter","Aura","A",1
+"DS1_178",5,2,5,"Tundra Rhino","Hunter","Normal","A",4
+"EX1_001",1,1,2,"Lightwarden","All","Normal","A",2
+"EX1_002",6,4,5,"The Black Knight","All","Battlecry","A",5
+"EX1_004",1,2,1,"Young Priestess","All","Normal","A",2
+"EX1_005",3,4,2,"Big Game Hunter","All","Battlecry","A",3
+"EX1_006",3,0,3,"Alarm-o-Bot","All","Normal","A",2
+"EX1_007",3,1,3,"Acolyte of Pain","All","Normal","A",2
+"EX1_008",1,1,1,"Argent Squire","All","Divine Shield","Divine Shield",1
+"EX1_009",1,1,1,"Angry Chicken","All","Enrage","A",1
+"EX1_010",1,2,1,"Worgen Infiltrator","All","Stealth","Stealth",2
+"EX1_011",1,2,1,"Voodoo Doctor","All","Battlecry","A",2
+"EX1_012",2,1,1,"Bloodmage Thalnos","All","Deathrattle","A",1
+"EX1_014",3,5,5,"King Mukla","All","Battlecry","A",5
+"EX1_015",2,1,1,"Novice Engineer","All","Battlecry","A",1
+"EX1_016",6,5,5,"Sylvanas Windrunner","All","Deathrattle","A",5
+"EX1_017",3,4,2,"Jungle Panther","All","Stealth","Stealth",3
+"EX1_019",3,3,2,"Shattered Sun Cleric","All","Battlecry","A",3
+"EX1_020",3,3,1,"Scarlet Crusader","All","Divine Shield","Divine Shield",2
+"EX1_021",3,2,3,"Thrallmar Farseer","All","Windfury","Windfury",3
+"EX1_023",4,3,3,"Silvermoon Guardian","All","Divine Shield","Divine Shield",3
+"EX1_025",4,2,4,"Dragonling Mechanic","All","Battlecry","A",3
+"EX1_028",5,5,5,"Stranglethorn Tiger","All","Stealth","Stealth",5
+"EX1_029",1,2,1,"Leper Gnome","All","Deathrattle","A",2
+"EX1_032",6,4,5,"Sunwalker","All","Taunt","Taunt",5
+"EX1_033",6,4,5,"Windfury Harpy","All","Windfury","Windfury",5
+"EX1_043",4,4,1,"Twilight Drake","All","Battlecry","A",3
+"EX1_044",3,2,2,"Questing Adventurer","All","Normal","A",2
+"EX1_045",2,4,5,"Ancient Watcher","All","Normal","A",5
+"EX1_046",4,4,4,"Dark Iron Dwarf","All","Battlecry","A",4
+"EX1_048",4,4,3,"Spellbreaker","All","Battlecry","A",4
+"EX1_049",2,3,2,"Youthful Brewmaster","All","Battlecry","A",3
+"EX1_050",3,2,2,"Coldlight Oracle","All","Battlecry","A",2
+"EX1_055",2,1,3,"Mana Addict","All","Normal","A",2
+"EX1_057",4,5,4,"Ancient Brewmaster","All","Battlecry","A",5
+"EX1_058",2,2,3,"Sunfury Protector","All","Battlecry","A",3
+"EX1_059",2,2,2,"Crazed Alchemist","All","Battlecry","A",2
+"EX1_066",2,3,2,"Acidic Swamp Ooze","All","Battlecry","A",3
+"EX1_067",6,4,2,"Argent Commander","All","Charge","Charge",4
+"EX1_076",2,2,2,"Pint-Sized Summoner","All","Aura","A",2
+"EX1_080",1,1,2,"Secretkeeper","All","Normal","A",2
+"EX1_082",2,3,2,"Mad Bomber","All","Battlecry","A",3
+"EX1_083",3,3,3,"Tinkmaster Overspark","All","Battlecry","A",3
+"EX1_084",3,2,3,"Warsong Commander","Warrior","Aura","A",3
+"EX1_085",3,3,3,"Mind Control Tech","All","Battlecry","A",3
+"EX1_089",3,4,2,"Arcane Golem","All","Charge","Charge",4
+"EX1_091",6,4,5,"Cabal Shadow Priest","Priest","Battlecry","A",5
+"EX1_093",4,2,3,"Defender of Argus","All","Battlecry","A",3
+"EX1_095",6,4,4,"Gadgetzan Auctioneer","All","Normal","A",4
+"EX1_096",2,2,1,"Loot Hoarder","All","Deathrattle","A",2
+"EX1_097",5,4,4,"Abomination","All","Taunt","Taunt",4
+"EX1_100",2,0,4,"Lorewalker Cho","All","Normal","A",2
+"EX1_102",3,1,4,"Demolisher","All","Normal","A",3
+"EX1_103",3,2,3,"Coldlight Seer","All","Battlecry","A",3
+"EX1_110",6,4,5,"Cairne Bloodhoof","All","Deathrattle","A",5
+"EX1_112",6,6,6,"Gelbin Mekkatorque","All","Battlecry","A",6
+"EX1_116",5,6,2,"Leeroy Jenkins","All","Battlecry","A",5
+"EX1_131",2,2,2,"Defias Ringleader","Rogue","Combo","A",2
+"EX1_134",3,3,3,"SI:7 Agent","Rogue","Combo","A",3
+"EX1_162",2,2,2,"Dire Wolf Alpha","All","AdjacentBuff","A",2
+"EX1_165",5,4,4,"Druid of the Claw","Druid","Normal","A",5
+"EX1_166",4,2,4,"Keeper of the Grove","Druid","Normal","A",3
+"EX1_170",3,2,3,"Emperor Cobra","All","Poisonous","A",3
+"EX1_178",7,5,5,"Ancient of War","Druid","Normal","A",5
+"EX1_243",1,3,1,"Dust Devil","Shaman","Overload","Overload",1
+"EX1_249",7,7,5,"Baron Geddon","All","Normal","A",6
+"EX1_250",5,7,8,"Earth Elemental","Shaman","Taunt","Taunt",7
+"EX1_258",3,2,4,"Unbound Elemental","Shaman","Normal","A",2
+"EX1_274",4,3,3,"Ethereal Arcanist","Mage","Normal","A",3
+"EX1_283",6,5,5,"Frost Elemental","All","Battlecry","A",5
+"EX1_284",5,4,4,"Azure Drake","All","Spell Damage","A",4
+"EX1_298",7,8,8,"Ragnaros the Firelord","All","Normal","A",7
+"EX1_301",3,3,5,"Felguard","Warlock","Taunt","Taunt",4
+"EX1_304",3,3,3,"Void Terror","Warlock","Battlecry","A",3
+"EX1_306",2,4,3,"Succubus","Warlock","Battlecry","A",4
+"EX1_310",5,5,7,"Doomguard","Warlock","Charge","Charge",7
+"EX1_313",4,5,6,"Pit Lord","Warlock","Battlecry","A",6
+"EX1_315",4,0,4,"Summoning Portal","Warlock","Aura","A",2
+"EX1_319",1,3,2,"Flame Imp","Warlock","Battlecry","A",3
+"EX1_323",7,3,15,"Lord Jaraxxus","Warlock","Battlecry","A",7
+"EX1_335",4,0,5,"Lightspawn","Priest","Normal","A",3
+"EX1_341",2,0,5,"Lightwell","Priest","Normal","A",3
+"EX1_350",7,7,7,"Prophet Velen","Priest","Normal","A",7
+"EX1_362",2,2,2,"Argent Protector","Paladin","Battlecry","A",2
+"EX1_382",3,3,3,"Aldor Peacekeeper","Paladin","Battlecry","A",3
+"EX1_383",7,6,6,"Tirion Fordring","Paladin","Divine Shield","Divine Shield",6
+"EX1_390",3,2,3,"Tauren Warrior","All","Taunt","Taunt",3
+"EX1_393",2,2,3,"Amani Berserker","All","Enrage","A",3
+"EX1_396",4,1,7,"Mogu'shan Warden","All","Taunt","Taunt",4
+"EX1_398",4,3,3,"Arathi Weaponsmith","Warrior","Battlecry","A",3
+"EX1_399",5,2,7,"Gurubashi Berserker","All","Normal","A",5
+"EX1_402",2,1,4,"Armorsmith","Warrior","Normal","A",3
+"EX1_405",1,0,4,"Shieldbearer","All","Taunt","Taunt",2
+"EX1_412",3,3,3,"Raging Worgen","All","Enrage","A",3
+"EX1_414",7,4,9,"Grommash Hellscream","Warrior","Charge","Charge",7
+"EX1_506",2,2,1,"Murloc Tidehunter","All","Battlecry","A",2
+"EX1_507",3,3,3,"Murloc Warleader","All","Aura","A",3
+"EX1_508",1,1,1,"Grimscale Oracle","All","Normal","A",1
+"EX1_509",1,1,2,"Murloc Tidecaller","All","Normal","A",2
+"EX1_522",2,1,1,"Patient Assassin","Rogue","Stealth","Stealth",1
+"EX1_531",2,2,2,"Scavenging Hyena","Hunter","Normal","A",2
+"EX1_534",6,6,5,"Savannah Highmane","Hunter","Deathrattle","A",6
+"EX1_543",7,8,8,"King Krush","Hunter","Charge","Charge",7
+"EX1_556",3,2,3,"Harvest Golem","All","Deathrattle","A",3
+"EX1_557",2,0,4,"Nat Pagle","All","Normal","A",2
+"EX1_558",5,5,4,"Harrison Jones","All","Battlecry","A",5
+"EX1_559",7,5,7,"Archmage Antonidas","Mage","Normal","A",6
+"EX1_560",7,8,8,"Nozdormu","All","Normal","A",7
+"EX1_561",7,8,8,"Alexstrasza","All","Battlecry","A",7
+"EX1_562",7,8,8,"Onyxia","All","Battlecry","A",7
+"EX1_563",7,4,12,"Malygos","All","Spell Damage","A",7
+"EX1_564",5,3,3,"Faceless Manipulator","All","Battlecry","A",3
+"EX1_565",2,0,3,"Flametongue Totem","Shaman","AdjacentBuff","A",2
+"EX1_572",7,4,12,"Ysera","All","Normal","A",7
+"EX1_573",7,5,8,"Cenarius","Druid","Normal","A",7
+"EX1_575",3,0,3,"Mana Tide Totem","Shaman","Normal","A",2
+"EX1_577",6,9,7,"The Beast","All","Deathrattle","A",7
+"EX1_582",3,1,4,"Dalaran Mage","All","Spell Damage","A",3
+"EX1_583",6,5,4,"Priestess of Elune","All","Battlecry","A",5
+"EX1_584",4,2,5,"Ancient Mage","All","Battlecry","A",4
+"EX1_586",7,8,8,"Sea Giant","All","Normal","A",7
+"EX1_587",4,3,3,"Windspeaker","Shaman","Battlecry","A",3
+"EX1_590",3,3,3,"Blood Knight","All","Battlecry","A",3
+"EX1_591",4,3,5,"Auchenai Soulpriest","Priest","Aura","A",4
+"EX1_593",5,4,4,"Nightblade","All","Battlecry","A",4
+"EX1_595",4,4,2,"Cult Master","All","Normal","A",3
+"EX1_597",3,1,5,"Imp Master","All","Normal","A",3
+"EX1_603",2,2,2,"Cruel Taskmaster","Warrior","Battlecry","A",2
+"EX1_604",3,2,4,"Frothing Berserker","Warrior","Normal","A",3
+"EX1_608",2,3,2,"Sorcerer's Apprentice","Mage","Aura","A",3
+"EX1_612",3,4,3,"Kirin Tor Mage","Mage","Battlecry","A",4
+"EX1_613",3,2,2,"Edwin VanCleef","Rogue","Combo","A",2
+"EX1_614",6,7,5,"Illidan Stormrage","All","Normal","A",6
+"EX1_616",2,2,2,"Mana Wraith","All","Aura","A",2
+"EX1_623",6,6,6,"Temple Enforcer","Priest","Battlecry","A",6
+"FP1_001",1,2,3,"Zombie Chow","All","Deathrattle","A",3
+"FP1_002",2,1,2,"Haunted Creeper","All","Deathrattle","A",2
+"FP1_003",2,1,2,"Echoing Ooze","All","Battlecry","A",2
+"FP1_004",2,2,2,"Mad Scientist","All","Deathrattle","A",2
+"FP1_005",3,2,2,"Shade of Naxxramas","All","Stealth","Stealth",2
+"FP1_007",2,0,2,"Nerubian Egg","All","Deathrattle","A",1
+"FP1_008",5,4,6,"Spectral Knight","All","Normal","A",5
+"FP1_009",3,2,8,"Deathlord","All","Taunt","Taunt",5
+"FP1_010",6,2,8,"Maexxna","All","Poisonous","A",5
+"FP1_011",1,1,1,"Webspinner","Hunter","Deathrattle","A",1
+"FP1_012",5,3,5,"Sludge Belcher","All","Taunt","Taunt",4
+"FP1_013",7,6,8,"Kel'Thuzad","All","Normal","A",7
+"FP1_014",5,7,4,"Stalagg","All","Deathrattle","A",6
+"FP1_015",5,4,7,"Feugen","All","Deathrattle","A",6
+"FP1_016",4,3,5,"Wailing Soul","All","Battlecry","A",4
+"FP1_017",2,1,4,"Nerub'ar Weblord","All","Aura","A",3
+"FP1_022",4,3,4,"Voidcaller","Warlock","Deathrattle","A",4
+"FP1_023",3,3,4,"Dark Cultist","Priest","Deathrattle","A",4
+"FP1_024",2,1,3,"Unstable Ghoul","All","Taunt","Taunt",2
+"FP1_026",4,5,5,"Anub'ar Ambusher","Rogue","Deathrattle","A",5
+"FP1_027",3,1,4,"Stoneskin Gargoyle","All","Normal","A",3
+"FP1_028",1,1,2,"Undertaker","All","Normal","A",2
+"FP1_029",3,4,4,"Dancing Swords","All","Deathrattle","A",4
+"FP1_030",5,5,5,"Loatheb","All","Battlecry","A",5
+"FP1_031",4,1,7,"Baron Rivendare","All","Aura","A",4
+"GVG_002",2,2,3,"Snowchugger","Mage","Freeze","A",3
+"GVG_004",4,5,4,"Goblin Blastmage","Mage","Battlecry","A",5
+"GVG_006",2,2,3,"Mechwarper","All","Aura","A",3
+"GVG_007",7,7,7,"Flame Leviathan","Mage","Normal","A",7
+"GVG_009",1,2,1,"Shadowbomber","Priest","Battlecry","A",2
+"GVG_011",2,3,2,"Shrinkmeister","Priest","Battlecry","A",3
+"GVG_013",1,1,2,"Cogmaster","All","Aura","A",2
+"GVG_014",5,6,2,"Vol'jin","Priest","Battlecry","A",4
+"GVG_016",5,8,8,"Fel Reaver","All","Normal","A",7
+"GVG_018",2,1,4,"Mistress of Pain","Warlock","Normal","A",3
+"GVG_020",4,3,5,"Fel Cannon","Warlock","Normal","A",4
+"GVG_021",7,9,7,"Mal'Ganis","Warlock","Aura","A",7
+"GVG_023",2,3,2,"Goblin Auto-Barber","Rogue","Battlecry","A",3
+"GVG_025",2,4,1,"One-eyed Cheat","Rogue","Normal","A",3
+"GVG_027",3,2,2,"Iron Sensei","Rogue","Normal","A",2
+"GVG_028",6,5,8,"Trade Prince Gallywix","Rogue","Normal","A",7
+"GVG_030",2,2,2,"Anodized Robo Cub","Druid","Taunt","Taunt",2
+"GVG_032",3,2,4,"Grove Tender","Druid","Normal","A",3
+"GVG_034",6,7,6,"Mech-Bear-Cat","Druid","Normal","A",7
+"GVG_035",7,9,7,"Malorne","Druid","Deathrattle","A",7
+"GVG_037",2,3,2,"Whirling Zap-o-matic","Shaman","Windfury","Windfury",3
+"GVG_039",2,0,3,"Vitality Totem","Shaman","Normal","A",2
+"GVG_040",4,2,5,"Siltfin Spiritwalker","Shaman","Overload","Overload",3
+"GVG_042",7,7,7,"Neptulon","Shaman","Battlecry","A",7
+"GVG_044",3,3,4,"Spider Tank","All","Normal","A",4
+"GVG_046",5,2,6,"King of Beasts","Hunter","Battlecry","A",4
+"GVG_048",3,3,3,"Metaltooth Leaper","Hunter","Battlecry","A",3
+"GVG_049",7,6,9,"Gahz'rilla","Hunter","Normal","A",7
+"GVG_051",1,1,3,"Warbot","Warrior","Enrage","A",2
+"GVG_053",6,5,5,"Shieldmaiden","Warrior","Battlecry","A",5
+"GVG_055",4,2,5,"Screwjank Clunker","Warrior","Battlecry","A",4
+"GVG_056",6,6,5,"Iron Juggernaut","Warrior","Battlecry","A",6
+"GVG_058",2,2,2,"Shielded Minibot","Paladin","Divine Shield","Divine Shield",2
+"GVG_060",5,2,5,"Quartermaster","Paladin","Battlecry","A",4
+"GVG_062",5,6,3,"Cobalt Guardian","Paladin","Normal","A",5
+"GVG_063",5,1,7,"Bolvar Fordragon","Paladin","Normal","A",4
+"GVG_064",2,3,2,"Puddlestomper","All","Normal","A",3
+"GVG_065",3,4,4,"Ogre Brute","All","Normal","A",4
+"GVG_066",4,5,4,"Dunemaul Shaman","Shaman","Windfury","Windfury",4
+"GVG_067",2,2,3,"Stonesplinter Trogg","All","Normal","A",3
+"GVG_068",4,3,5,"Burly Rockjaw Trogg","All","Normal","A",4
+"GVG_069",5,3,3,"Antique Healbot","All","Battlecry","A",3
+"GVG_070",5,7,4,"Salty Dog","All","Normal","A",6
+"GVG_071",4,5,4,"Lost Tallstrider","All","Normal","A",5
+"GVG_072",2,2,3,"Shadowboxer","Priest","Normal","A",3
+"GVG_074",4,4,3,"Kezan Mystic","All","Battlecry","A",4
+"GVG_075",2,2,3,"Ship's Cannon","All","Normal","A",3
+"GVG_076",2,1,1,"Explosive Sheep","All","Deathrattle","A",1
+"GVG_077",6,9,9,"Anima Golem","Warlock","Normal","A",7
+"GVG_078",4,4,5,"Mechanical Yeti","All","Deathrattle","A",5
+"GVG_079",7,7,7,"Force-Tank MAX","All","Divine Shield","Divine Shield",7
+"GVG_080",5,4,4,"Druid of the Fang","Druid","Battlecry","A",4
+"GVG_081",2,2,3,"Gilblin Stalker","All","Stealth","Stealth",3
+"GVG_082",1,2,1,"Clockwork Gnome","All","Deathrattle","A",2
+"GVG_083",5,5,5,"Upgraded Repair Bot","Priest","Battlecry","A",5
+"GVG_084",3,1,4,"Flying Machine","All","Windfury","Windfury",3
+"GVG_085",2,1,2,"Annoy-o-Tron","All","Taunt","Taunt",2
+"GVG_086",5,5,5,"Siege Engine","Warrior","Normal","A",5
+"GVG_087",2,2,3,"Steamwheedle Sniper","Hunter","Normal","A",3
+"GVG_088",5,6,6,"Ogre Ninja","Rogue","Stealth","Stealth",6
+"GVG_089",3,2,4,"Illuminator","All","Normal","A",3
+"GVG_090",5,5,4,"Madder Bomber","All","Battlecry","A",5
+"GVG_091",4,2,5,"Arcane Nullifier X-21","All","Taunt","Taunt",4
+"GVG_092",3,3,2,"Gnomish Experimenter","All","Battlecry","A",3
+"GVG_094",4,1,4,"Jeeves","All","Normal","A",3
+"GVG_095",3,2,4,"Goblin Sapper","All","Aura","A",3
+"GVG_096",4,4,3,"Piloted Shredder","All","Deathrattle","A",4
+"GVG_097",3,2,3,"Lil' Exorcist","All","Taunt","Taunt",3
+"GVG_098",3,1,4,"Gnomeregan Infantry","All","Charge","Charge",3
+"GVG_099",5,3,3,"Bomb Lobber","All","Battlecry","A",3
+"GVG_100",5,4,4,"Floating Watcher","Warlock","Normal","A",4
+"GVG_101",3,4,3,"Scarlet Purifier","Paladin","Battlecry","A",4
+"GVG_102",3,3,3,"Tinkertown Technician","All","Battlecry","A",3
+"GVG_103",2,1,2,"Micro Machine","All","Normal","A",2
+"GVG_104",3,2,3,"Hobgoblin","All","Normal","A",3
+"GVG_105",6,6,4,"Piloted Sky Golem","All","Deathrattle","A",5
+"GVG_106",5,1,5,"Junkbot","All","Normal","A",3
+"GVG_107",4,3,2,"Enhance-o Mechano","All","Battlecry","A",3
+"GVG_108",2,3,2,"Recombobulator","All","Battlecry","A",3
+"GVG_109",4,4,1,"Mini-Mage","All","Spell Damage","A",3
+"GVG_110",7,7,7,"Dr. Boom","All","Battlecry","A",7
+"GVG_111",5,4,5,"Mimiron's Head","All","Normal","A",5
+"GVG_112",6,7,6,"Mogor the Ogre","All","Normal","A",7
+"GVG_113",7,6,9,"Foe Reaper 4000","All","Normal","A",7
+"GVG_114",7,5,7,"Sneed's Old Shredder","All","Deathrattle","A",6
+"GVG_115",6,5,7,"Toshley","All","Battlecry","A",6
+"GVG_116",7,9,7,"Mekgineer Thermaplugg","All","Normal","A",7
+"GVG_117",6,3,6,"Gazlowe","All","Normal","A",5
+"GVG_118",7,6,6,"Troggzor the Earthinator","All","Normal","A",6
+"GVG_119",5,3,4,"Blingtron 3000","All","Battlecry","A",4
+"GVG_120",5,6,3,"Hemet Nesingwary","All","Battlecry","A",5
+"GVG_122",4,2,5,"Wee Spellstopper","Mage","Aura","A",4
+"GVG_123",3,3,3,"Soot Spewer","Mage","Spell Damage","A",3
+"LOE_006",2,1,2,"Museum Curator","Priest","Battlecry","A",2
+"LOE_009",7,7,7,"Obsidian Destroyer","Warrior","Normal","A",7
+"LOE_010",1,2,1,"Pit Snake","Rogue","Poisonous","A",2
+"LOE_011",6,4,6,"Reno Jackson","All","Battlecry","A",5
+"LOE_012",4,5,4,"Tomb Pillager","Rogue","Deathrattle","A",5
+"LOE_016",4,2,6,"Rumbling Elemental","Shaman","Normal","A",4
+"LOE_017",4,3,4,"Keeper of Uldaman","Paladin","Battlecry","A",4
+"LOE_018",1,1,3,"Tunnel Trogg","Shaman","Normal","A",1
+"LOE_019",3,3,4,"Unearthed Raptor","Rogue","Battlecry","A",4
+"LOE_020",3,2,4,"Desert Camel","Hunter","Battlecry","A",3
+"LOE_022",3,3,4,"Fierce Monkey","Warrior","Taunt","Taunt",4
+"LOE_023",2,2,2,"Dark Peddler","Warlock","Battlecry","A",2
+"LOE_029",2,1,1,"Jeweled Scarab","All","Battlecry","A",1
+"LOE_038",5,5,5,"Naga Sea Witch","All","Aura","A",5
+"LOE_039",4,3,4,"Gorillabot A-3","All","Battlecry","A",4
+"LOE_046",2,3,2,"Huge Toad","All","Deathrattle","A",3
+"LOE_047",4,3,3,"Tomb Spider","All","Battlecry","A",3
+"LOE_050",3,3,2,"Mounted Raptor","Druid","Deathrattle","A",3
+"LOE_051",4,4,4,"Jungle Moonkin","Druid","Spell Damage","A",4
+"LOE_053",5,4,6,"Djinni of Zephyrs","All","Normal","A",5
+"LOE_061",5,4,4,"Anubisath Sentinel","All","Deathrattle","A",4
+"LOE_073",7,8,8,"Fossilized Devilsaur","All","Battlecry","A",7
+"LOE_076",1,1,3,"Sir Finley Mrrgglton","All","Battlecry","A",2
+"LOE_077",3,2,4,"Brann Bronzebeard","All","Aura","A",3
+"LOE_079",4,3,5,"Elise Starseeker","All","Battlecry","A",4
+"LOE_086",5,0,6,"Summoning Stone","All","Normal","A",3
+"LOE_089",6,2,6,"Wobbling Runts","All","Deathrattle","A",4
+"LOE_092",7,7,8,"Arch-Thief Rafaam","All","Battlecry","A",7
+"LOE_107",4,7,7,"Eerie Statue","All","Normal","A",7
+"LOE_110",4,7,4,"Ancient Shade","All","Battlecry","A",6
+"LOE_116",1,1,1,"Reliquary Seeker","Warlock","Battlecry","A",1
+"LOE_119",4,4,4,"Animated Armor","Mage","Normal","A",4
+"NEW1_005",6,5,3,"Kidnapper","Rogue","Combo","A",4
+"NEW1_008",7,5,5,"Ancient of Lore","Druid","Normal","A",5
+"NEW1_010",7,3,5,"Al'Akir the Windlord","Shaman","Charge","Charge",5
+"NEW1_011",4,4,3,"Kor'kron Elite","Warrior","Charge","Charge",4
+"NEW1_012",1,1,3,"Mana Wyrm","Mage","Normal","A",2
+"NEW1_014",4,4,4,"Master of Disguise","Rogue","Battlecry","A",4
+"NEW1_017",1,1,2,"Hungry Crab","All","Battlecry","A",2
+"NEW1_018",2,2,3,"Bloodsail Raider","All","Battlecry","A",3
+"NEW1_019",2,3,2,"Knife Juggler","All","Normal","A",3
+"NEW1_020",2,3,2,"Wild Pyromancer","All","Normal","A",3
+"NEW1_021",2,0,7,"Doomsayer","All","Normal","A",4
+"NEW1_022",4,3,3,"Dread Corsair","All","Taunt","Taunt",3
+"NEW1_023",2,3,2,"Faerie Dragon","All","Normal","A",3
+"NEW1_024",5,5,4,"Captain Greenskin","All","Battlecry","A",5
+"NEW1_025",1,1,2,"Bloodsail Corsair","All","Battlecry","A",2
+"NEW1_026",4,3,5,"Violet Teacher","All","Normal","A",4
+"NEW1_027",3,3,3,"Southsea Captain","All","Aura","A",3
+"NEW1_029",2,4,4,"Millhouse Manastorm","All","Battlecry","A",4
+"NEW1_030",7,12,12,"Deathwing","All","Battlecry","A",7
+"NEW1_037",2,1,3,"Master Swordsmith","All","Normal","A",2
+"NEW1_038",7,7,7,"Gruul","All","Normal","A",7
+"NEW1_040",6,4,4,"Hogger","All","Normal","A",4
+"NEW1_041",5,3,5,"Stampeding Kodo","All","Battlecry","A",4
+"OE_003",5,6,3,"Ethereal Conjurer","Mage","Battlecry","A",5
+"PRO_001",5,5,5,"Elite Tauren Chieftain","All","Battlecry","A",5
+"tt_004",3,2,3,"Flesheating Ghoul","All","Normal","A",3
