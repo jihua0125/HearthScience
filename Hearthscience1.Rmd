@@ -9,8 +9,7 @@ output: html_document
 Some of our team members are loyal fans of the popular free online card game, Hearthstone: Heroes of Warcraft, which was released worldwide by Blizzard on 2014 with more than 40 million registered Hearthstone accounts by November 2015.
 
 The main element of the game Hearthstone are cards, which consist of a list of features including cost, attack (number of damages can be made to the opponent per turn),health (number of damages that can bear before being destroyed) and other special abilities. Here is an example of the card: 
-
-<img src="card.png" align="center" height="400" width="300" margin="0 auto" />
+<img src="card.png" align="center" height="400" width="350" margin="0 auto" />
 
 Before every game starts, each of the two players will choose 1 hero mode among the 9 and then select 30 different cards over 700 cards to build his/her own deck depending on the mode. Each turn, the player will draw one card randomly from the 30 cards and one more mana crystal (money). The player can choose the cards to use among all those in hand that cost up to the mana crystals he/she has by that turn. The game ends when one player is attacked to death (lose all 30 units of health) or he/she concedes, and the other player will win. 
 
@@ -1029,20 +1028,16 @@ minions<-read.csv("minions.csv",sep="\t")
 weapons<-read.csv("weapons.csv",sep="\t")
 spells<-read.csv("spells.csv",sep="\t")
 cards<-rbind(minions,weapons,spells)
-# load("D:/HSPH/BIO 260/final/data/minions_text.RData")
+load("D:/HSPH/BIO 260/final/data/minions_text.RData")
 
 classes<-c("druid","hunter","mage","paladin","priest","rogue","shaman","warlock","warrior")
 decks<-list()
 heroDeckLists<-list()
-
-
 for(i in 1:9){
   filename<-paste(classes[i],"decks.csv",sep="")
   heroDeckLists[[i]]<-read.csv(filename,sep="\t")
   decks[[i]]<-heroDeckLists[[i]]%>%gather(deckId,cardCounts,2:(length(heroDeckLists[[i]])-1))
 }
-
-
 
 ###warlock deck
 warlockDeckCost<-decks[[8]]%>%filter(cardCounts!=0)%>%
@@ -1173,7 +1168,7 @@ From the histogram we can see warlock is quite different from other heros, the d
 Let's have a look at the correlation between the cards within warlock decks.
 ```{r,warning=F,error=F}
 data<-read.csv("correlation.csv")
-
+colnames(data)<-gsub("\\."," ",colnames(data))
 #warlockDecks<-heroDeckLists[[8]]
 #rownames(warlockDecks)<-t(warlockDecks[,1])
 #data<-warlockDecks%>%select(-cardNames)
@@ -1206,9 +1201,16 @@ From the principle components analysis, we can see the top 2 principle component
 
 ```{r,warning=F,error=F}
 
-pcaData <-pc$x[,1:2]
+pcaData <-pc$x[,1:9]
 pca1 <-pc$x[,1]
 pca2 <-pc$x[,2]
+pca3<- pc$x[,3]
+pca4 <-pc$x[,4]
+pca5 <-pc$x[,5]
+pca6<- pc$x[,6]
+pca7 <-pc$x[,7]
+pca8 <-pc$x[,8]
+pca9<- pc$x[,9]
 
 wss <- (nrow(pcaData)-1)*sum(apply(pcaData,2,var))
 for (i in 2:20) wss[i] <- sum(kmeans(pcaData,centers=i)$withinss)
@@ -1217,19 +1219,24 @@ plot(1:20, wss, type="b", xlab="Number of Clusters",
 
 
 kmeans.cluster<-kmeans(pcaData, centers=4)
-pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, Cluster=factor(kmeans.cluster$cluster))
+pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, PCA3=pca3,PCA4=pca4,PCA5=pca5,PCA6=pca6,PCA7=pca7,PCA8=pca8,PCA9=pca9, Cluster=factor(kmeans.cluster$cluster))
 pc.df%>%ggplot(aes(x=PCA1, y=PCA2, label=ID, color=Cluster))+geom_jitter()+
   geom_text_repel(aes(PCA1, PCA2, label=ID),data = filter(pc.df,PCA1 < -2.5 | PCA1 >2.5| PCA2 < -1.5 | PCA2>1.5))
 
-pc.df%>%group_by(Cluster)%>%summarize(n())
+total.df<-pc.df%>%left_join(cards,by=c("ID"="name"))
+total.df%>%ggplot(aes(x=PCA1, y=PCA2, label=cost, color=Cluster))+geom_jitter()+geom_text_repel()
 
+pc.df%>%group_by(Cluster)%>%summarize(n())
+```
+#look at 4 clusters
+In the above codes, we have tried to use Kmeans clustering to distinguish different type of decks. By the FOM plots, we found that 4 is the balanced point, so we made a 4 centroid clustering. Let's pick one deck to see if this clustering make sense.
+```{r,warning=F,error=F}
+deck<-heroDeckLists[[8]]%>%filter(deckId=="60")%>%left_join(pc.df,by=c("cardNames"="ID"))
+deck[,c(1,13)]%>%kable
 ```
 
-#look at 4 clusters
 ```{r warning= F, error=F, eval=F}
-kmeans.cluster<-kmeans(pcaData, centers=4)
-pc.df<-data.frame(ID=names(pca1),PCA1=pca1, PCA2=pca2, 
-                  Cluster=factor(kmeans.cluster$cluster))
+
 ### seperate data set
 fullcluster<-pc.df%>%select(-PCA1,-PCA2)
 cluster1<-fullcluster%>%filter(Cluster=="1")%>%select(-Cluster)
@@ -1325,7 +1332,25 @@ p4+ theme(axis.text.y = element_text(vjust = 1,
                                      size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
                                                                                              size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
 ```
+Let's have a look at the card frequency distribution.
+```{r,warning=F,error=F}
+freqTable<-heroDeckLists[[8]]%>%tbl_df()%>%
+  mutate(cardTotalCounts=rowSums(heroDeckLists[[8]][,2:length(heroDeckLists[[8]])]))%>%
+  dplyr::select(cardNames,cardTotalCounts)
+total.df<-total.df%>%left_join(freqTable,by=c("ID"="cardNames"))
+total.df%>%dplyr::select(ID,cardTotalCounts,Cluster)%>%filter(complete.cases(.))%>%
+  ggplot(aes(Cluster,cardTotalCounts))+geom_point()
 
+```
+From the above plots, we can see that the cards in cluster 3 and 4 are more frequent appear in decks.This helps us to select the core cards of a deck. A core card should neither appear too much, which makes it look like panacea; nor appear too little, which means it has fewer interaction with other cards.
+```{r,warning=F,error=F}
+coreTable<-total.df%>%filter(type=="Minion")%>%dplyr::select(ID,cardTotalCounts,Cluster,cost)%>%filter(complete.cases(.))%>%
+  filter(cardTotalCounts<90&cardTotalCounts>60)
+
+coreTable%>%group_by(Cluster)%>%summarize(n())
+
+```
+Now, in each cluster, we have several numbers of core cards. But 6 and 7 core cards are a bit too many. So let's do a simulation of how numbers of core cards affect the probability of getting all the core cards after drawing certain amount of cards.
 #### Number of Draw cards
 For each deck, there are several "core" cards that can have the greatest effect when they are used together. We will usually put 2 cards for each component of core cards, and we want to get at least one for every component as early as possible.
 
@@ -1495,5 +1520,7 @@ defensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
         scale_y_continuous(breaks=seq(0,1,0.1))
 
 ```
+
+#######ADD explaination here.
 
 
