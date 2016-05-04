@@ -47,7 +47,7 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 ## Related Work:
 
 
-##library
+## Library
 Here are the libraries we have used in our project.
 ```{r, warning= F, error=F,message=F}
 library(rjson)
@@ -80,7 +80,8 @@ library(VGAM)
 
 We have two types of data: 1) basic card information (attack/health/cost/description of cards) and 2) frequently used decks from top players. 
 
-* __Basic card information:__ We collected card data from Hearthstone's API: http://hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
+### Basic Card information
+* We collected card data from Hearthstone's API: http://hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
 
 ```{r eval=F, warning=F, error=F}
 ## Data wrangling from json to RData:
@@ -201,14 +202,14 @@ colnames(minions_text)
 save(minions_text, file = "minions_text.RData")
 ```
 
-## Exploratory Analysis
+#### Exploratory Analysis
 ```{r warning= F, error=F}
 theme_set(theme_bw(base_size = 16))
 #setwd("/Users/Scarlett/Desktop/final")
 load("minions_text.RData")
 data<-minions_text
 ```
-distribution of Cost
+##### Distribution of Cost
 ```{r warning= F, error=F}
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
@@ -226,9 +227,9 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 ggplot(data, aes(factor(cost)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for cost")+xlab("cost")
 ```
 
-Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
+Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck.
 
-distribution of attack
+##### Distribution of attack
 ```{r warning= F, error=F}
 Attack<-data%>%arrange(attack)
 Attack<-unique(Attack%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
@@ -236,7 +237,7 @@ Attack<-unique(Attack%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(at
 ggplot(data, aes(factor(attack)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for attack")+xlab("attack")
 ```
 
-distribution of health
+##### Distribution of health
 ```{r warning= F, error=F}
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
@@ -244,7 +245,7 @@ Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(he
 ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health")
 ```
 
-distribution of mechanics 
+##### Distribution of mechanics 
 ```{r warning= F, error=F}
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
@@ -252,7 +253,7 @@ Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%
 ggplot(data, aes(factor(mechanics)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for mechanics")+xlab("mechanics")
 ```
 
-*distribution of each mechanics
+##### Distribution of each mechanics
 ```{r}
 qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in mechanics group")+xlab("Rarity")+ylab("cost")
 
@@ -262,7 +263,7 @@ qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+the
 ```
 
 
-distribution of cardSet
+##### Distribution of cardSet
 ```{r warning= F, error=F}
 cs<-data%>%arrange(cardSet)
 cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
@@ -274,7 +275,7 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 qplot(data$cardSet,xlab="cardSet",main="Histogram for CardSet distribution")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-*distribution of each CardSet
+##### Distribution of each CardSet
 ```{r}
 qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in CardSet group")+xlab("Rarity")+ylab("cost")
 
@@ -283,7 +284,7 @@ qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme
 qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in CardSet group")+xlab("Rarity")+ylab("attack")
 ```
 
-distribution of rarity
+##### Distribution of rarity
 ```{r warning= F, error=F}
 rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
 #pie chart
@@ -294,7 +295,7 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 qplot(data$rarity,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-*distribution for each rarity
+##### Distribution for each rarity
 ```{r}
 qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in Rarity group")+xlab("Rarity")+ylab("cost")
 
@@ -303,13 +304,91 @@ qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(
 qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in Rarity group")+xlab("Rarity")+ylab("attack")
 ```
 
+### Frequently used decks from top players
+Instead of looking at the card information alone, we are trying to consider how one card interacts with others. We are using the built-up decks from top players of Hearthstone from the following website:
+<http://www.hearthstonetopdecks.com/>
+A typical deck looks like this: ![deck][deck.png]
+
+#### Data Wrangling
+```{r warning= F, error=F, eval=F}
+classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
+removeList<-c(9,6,10,10,4,7,10,7,7)
+baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/"
+
+
+totalInfoDeckList<-list()
+
+heroDeckLists<-list()
+
+for(k in 1:length(classes)){
+  class<-classes[k]
+  classBaseURL<-paste(baseURL,class,"page/",sep="")
+  allDecks<-list()
+  for (j in 1:5){
+    tableURL<-paste(classBaseURL,j,sep="")
+    tables<-as.data.frame(readHTMLTable(tableURL))
+    deckNames<-lapply(tables[,2],as.character)
+    deckNames<-unlist(deckNames)
+    
+    for(i in 1:length(deckNames)){
+      urlName<-tolower(gsub("\\s","-",gsub("[^\\w \\s]+","",deckNames[i],perl = TRUE),perl = TRUE))
+      
+      testURL<-paste("http://www.hearthstonetopdecks.com/decks/",urlName,sep="")
+      tryCatch(webpage<-read_html(testURL),error=function(e){return(i)})
+      
+      cardNames<-webpage%>%
+        html_nodes(".card-name")%>%
+        html_text()
+      
+      cardCounts<-webpage%>%
+        html_nodes(".card-count")%>%
+        html_text()%>%
+        as.numeric()
+      
+      deckId<-(j-1)*25+i
+      
+      deck<-cbind(cardNames,cardCounts,rep(deckId,length(cardNames)))
+      
+      allDecks[[deckId]]<-deck
+    }
+  }
+  largerTable<-data.frame()
+  
+  for (i in removeList[k]:125){
+    largerTable<-rbind(largerTable,allDecks[[i]])
+  }
+  
+  largerTable<-largerTable%>%spread(key=V3,value=cardCounts)
+  
+  for (i in 2:length(largerTable)){
+    largerTable[,i]<-as.numeric(as.character(largerTable[,i]))
+  }
+  
+  largerTable[is.na(largerTable)]<-0
+  
+  heroDeckLists[[k]]<-largerTable
+  
+}
+
+for(i in 1:9){
+  totalInfoDeckList[[i]]<-heroDeckLists[[i]]%>%select(c(1,length(heroDeckLists[[i]])))
+}
+
+for(i in 1:9){
+  totalInfoDeckList[[i]]<-totalInfoDeckList[[i]]%>%left_join(cards,by=c("cardNames"="name"))
+}
+decks<-list()
+for(i in 1:9){
+  decks[[i]]<-heroDeckLists[[i]]%>%gather(deckId,cardCounts,2:(length(heroDeckLists[[i]])-1))
+}
+```
+
 ## Final Analysis:
 
 ### Card Value Analysis 
 >__1. What are the "true" values of individual cards? Are there any properties the Blizard company used to assign values (cost) of these cards? Is there any card undervalued/overvalued by the company?__
 
 ```{r, fig.width= 8}
-
 load("minions_text.RData")
 ## cost vs attack+health:
 minions_text %>% ggplot(aes(cost)) + stat_bin(aes(y = ..count..), bins = 50 , position='dodge')
@@ -629,33 +708,19 @@ final %>% filter(value != cost1) %>%
 
 From the above plot, we can see that after adjusting for the claimed features (health, attack, charge, overload) of cards, some of the cards were overvalued (resid = estimated cost - assigned < 0) and some of them were undervalued (resid > 0). Cards that are __Battlecry__ (cards that launch certain descriptive effects when cards are played), __Normal__ (cards that do not have any special effects), and __Deathrattle__ (cards that launch certain descriptive effects when cards are dead) are more frequently over- or under-valued. 
 
-#### Model validation: Blizard's adjustment of card values:
-<img src="revalued1.png" align="center" height="400" width="350" margin="0 auto" />
-<img src="revalued2.png" align="center" height="400" width="350" margin="0 auto" />
-<img src="revalued3.png" align="center" height="400" width="350" margin="0 auto" />
-<img src="revalued4.png" align="center" height="400" width="350" margin="0 auto" />
-
-Blizard company just annouced some adjustments of values of the following cards:
-Since we only focused on the valuation of minions cards (cards that can stay on the stage and have attack and health), this model can also be applied to minions:
-
-```{r}
-new_assigned_cards = c("Knife Juggler", "Gig Game Hunter", "Force of Nature", 
-  "Molten Giant", "Arcane Golem", "Blade Flurry", 
-  "Keeper of the Grove", "Ancient of Lore", "Master of Disquise", 
-  "Hunter's Mark", "Ironbeak Owl", "Leper Gnome")
-
-final %>% filter(name %in% new_assigned_cards)
-```
-# Ji, can you write some comments here? 
 
 ### Simulation
->__2. What is the balance between small cost cards and big cost cards? __
+>__2. What is the balance between low-cost cost cards and high-cost cards? __
+
 Assumptions:
+
 1. Players will not use the card with cost 0 in the earlier several turns.
+
 2. Cost can roughly represent the value of the card, thus we can maximum the cost of all 30 cards to maximum the value.
+
 3. We focus on the first 5 turns.
 
-First, create decks with all reasonable combinations of small cards (1-5) and others.
+First, create decks with all reasonable combinations of small cards (cost 1-5) and others.
 
 ```{r}
 decks <- expand.grid(n1=0:6, n2=0:6, n3=0:6, n4=0:6, n5=0:6)
@@ -722,92 +787,14 @@ decks.constrain %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = mi
 
 ```
 
-
+The simulation results show that to have the probability of using card to be above 0.5 by the second turn, above 0.9 by the third turn, and above 0.95 by the fourth turn, and to have at least 10 high-cost cards, we need to have at least 2 cards with no more than 2 cost, 6 cards with no more than 3 cost, and 7 cards with no more than 4 cost.
 
 
 ### Deck Analysis
 >__3. Are there any "core" combination of cards?__
-Instead of looking at the card information alone, we are trying to consider how one card interacts with others. We are using the built-up decks from top players of Hearthstone from the following website:
-<http://www.hearthstonetopdecks.com/>
-A typical deck looks like this: ![deck][deck.png]
+#### Look into the deck-specific features
 
-#### Data Wrangling
-```{r warning= F, error=F, eval=F}
-classes<-c("druid/","hunter/","mage/","paladin/","priest/","rogue/","shaman/","warlock/","warrior/")
-removeList<-c(9,6,10,10,4,7,10,7,7)
-baseURL<-"http://www.hearthstonetopdecks.com/deck-category/class/"
-
-
-totalInfoDeckList<-list()
-
-heroDeckLists<-list()
-
-for(k in 1:length(classes)){
-  class<-classes[k]
-  classBaseURL<-paste(baseURL,class,"page/",sep="")
-  allDecks<-list()
-  for (j in 1:5){
-    tableURL<-paste(classBaseURL,j,sep="")
-    tables<-as.data.frame(readHTMLTable(tableURL))
-    deckNames<-lapply(tables[,2],as.character)
-    deckNames<-unlist(deckNames)
-    
-    for(i in 1:length(deckNames)){
-      urlName<-tolower(gsub("\\s","-",gsub("[^\\w \\s]+","",deckNames[i],perl = TRUE),perl = TRUE))
-      
-      testURL<-paste("http://www.hearthstonetopdecks.com/decks/",urlName,sep="")
-      tryCatch(webpage<-read_html(testURL),error=function(e){return(i)})
-      
-      cardNames<-webpage%>%
-        html_nodes(".card-name")%>%
-        html_text()
-      
-      cardCounts<-webpage%>%
-        html_nodes(".card-count")%>%
-        html_text()%>%
-        as.numeric()
-      
-      deckId<-(j-1)*25+i
-      
-      deck<-cbind(cardNames,cardCounts,rep(deckId,length(cardNames)))
-      
-      allDecks[[deckId]]<-deck
-    }
-  }
-  largerTable<-data.frame()
-  
-  for (i in removeList[k]:125){
-    largerTable<-rbind(largerTable,allDecks[[i]])
-  }
-  
-  largerTable<-largerTable%>%spread(key=V3,value=cardCounts)
-  
-  for (i in 2:length(largerTable)){
-    largerTable[,i]<-as.numeric(as.character(largerTable[,i]))
-  }
-  
-  largerTable[is.na(largerTable)]<-0
-  
-  heroDeckLists[[k]]<-largerTable
-  
-}
-
-for(i in 1:9){
-  totalInfoDeckList[[i]]<-heroDeckLists[[i]]%>%select(c(1,length(heroDeckLists[[i]])))
-}
-
-for(i in 1:9){
-  totalInfoDeckList[[i]]<-totalInfoDeckList[[i]]%>%left_join(cards,by=c("cardNames"="name"))
-}
-decks<-list()
-for(i in 1:9){
-  decks[[i]]<-heroDeckLists[[i]]%>%gather(deckId,cardCounts,2:(length(heroDeckLists[[i]])-1))
-}
-```
-
-#### Deeper look into the deck information
-
-From our empirical knowledge, we know that each deck has its own strategy to win the game, such as aggro, control, midrange, face, etc. These strategies are highly related to the average cost of all the minions inside the deck. 
+From our empirical knowledge, we know that each deck has its own strategy to win the game, depending on the hero mode and the play tempo (fast/slow). The strategies include aggro, control, midrange, face, etc. These strategies are highly related to the average cost of all the minions inside the deck. 
 
 ```{r,warning=F,error=F}
 minions<-read.csv("minions.csv",sep="\t")
@@ -1014,8 +1001,11 @@ total.df%>%ggplot(aes(x=PCA1, y=PCA2, label=cost, color=Cluster))+geom_jitter()+
 
 pc.df%>%group_by(Cluster)%>%summarize(n())
 ```
-#look at 4 clusters
-In the above codes, we have tried to use Kmeans clustering to distinguish different type of decks. By the FOM plots, we found that 4 is the balanced point, so we made a 4 centroid clustering. Let's pick one deck to see if this clustering make sense.
+
+#### Clustering of cards
+
+In the above, we have tried to use Kmeans clustering to distinguish different type of decks. By the FOM plots, we found that 4 is the balanced point, so we made a 4 centroid clustering. Let's pick one deck to see if this clustering make sense.
+
 ```{r,warning=F,error=F}
 deck<-heroDeckLists[[8]]%>%select(cardNames,X60)%>%
   filter(X60!=0)%>%
@@ -1120,7 +1110,8 @@ p4+ theme(axis.text.y = element_text(vjust = 1,
                                      size = 10, hjust = 1))+theme(axis.text.x = element_text(angle = 45, vjust = 1, 
                                                                                              size = 10, hjust = 1))+scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0))+theme(legend.background=element_rect(),legend.margin=unit(1,"cm"))
 ```
-Let's have a look at the card frequency distribution.
+
+Let's look at the card frequency distribution.
 ```{r,warning=F,error=F}
 freqTable<-heroDeckLists[[8]]%>%tbl_df()%>%
   mutate(cardTotalCounts=rowSums(heroDeckLists[[8]][,2:length(heroDeckLists[[8]])]))%>%
@@ -1130,7 +1121,9 @@ total.df%>%dplyr::select(ID,cardTotalCounts,Cluster)%>%filter(complete.cases(.))
   ggplot(aes(Cluster,cardTotalCounts))+geom_point()
 
 ```
+
 From the above plots, we can see that the cards in cluster 1 and 4 are more frequent appear in decks.This helps us to select the core cards of a deck. A core card should neither appear too much, which makes it look like panacea; nor appear too little, which means it has fewer interaction with other cards.
+
 ```{r,warning=F,error=F}
 coreTable<-total.df%>%filter(type=="Minion")%>%dplyr::select(ID,cardTotalCounts,Cluster,cost)%>%filter(complete.cases(.))%>%
   filter(cardTotalCounts<90&cardTotalCounts>60)
@@ -1138,7 +1131,10 @@ coreTable<-total.df%>%filter(type=="Minion")%>%dplyr::select(ID,cardTotalCounts,
 coreTable%>%group_by(Cluster)%>%summarize(n())
 
 ```
+
 Now, in each cluster, we have several numbers of core cards. But 6 and 7 core cards are a bit too many. So let's do a simulation of how numbers of core cards affect the probability of getting all the core cards after drawing certain amount of cards.
+
+
 #### Number of Draw cards
 For each deck, there are several "core" cards that can have the greatest effect when they are used together. We will usually put 2 cards for each component of core cards, and we want to get at least one for every component as early as possible.
 
@@ -1407,7 +1403,29 @@ zooDeck<-read.csv("zooDeck.csv",header = TRUE,sep=",")
 zooDeck[,2:3]%>%kable
 ```
 
-#### Real-time evaluation of zooDeck:
+## Validation
+
+### Card Value Model Validation: Blizard's adjustment of card values:
+<img src="revalued1.png" align="center" height="400" width="350" margin="0 auto" />
+<img src="revalued2.png" align="center" height="400" width="350" margin="0 auto" />
+<img src="revalued3.png" align="center" height="400" width="350" margin="0 auto" />
+<img src="revalued4.png" align="center" height="400" width="350" margin="0 auto" />
+
+Blizard company just annouced some adjustments of values of the following cards:
+Since we only focused on the valuation of minions cards (cards that can stay on the stage and have attack and health), this model can also be applied to minions:
+
+```{r}
+new_assigned_cards = c("Knife Juggler", "Gig Game Hunter", "Force of Nature", 
+  "Molten Giant", "Arcane Golem", "Blade Flurry", 
+  "Keeper of the Grove", "Ancient of Lore", "Master of Disquise", 
+  "Hunter's Mark", "Ironbeak Owl", "Leper Gnome")
+
+final %>% filter(name %in% new_assigned_cards)
+```
+# Ji, can you write some comments here? 
+
+
+### Real-time evaluation of zooDeck:
 Generally speaking, our established deck performed pretty well in __players vs. computer__ games. 
 
 __Players vs. Computer__
