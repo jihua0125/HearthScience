@@ -241,7 +241,7 @@ distribution of health
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #histogram
-ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health"))
+ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health")
 ```
 
 distribution of mechanics 
@@ -249,7 +249,7 @@ distribution of mechanics
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
 #histogram
-ggplot(data, aes(factor(mechanics))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for mechanics")+xlab("mechanics"))
+ggplot(data, aes(factor(mechanics)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for mechanics")+xlab("mechanics")
 ```
 
 *distribution of each mechanics
@@ -476,7 +476,7 @@ model2 = RMSE(test2$cost1, test2$value)
 rmse_results =  bind_rows(rmse_results, data_frame(method = "X: attplusheal", RMSE = model2))
 ```
 
-It seemed like the univariate __attack+health__ worked well in the model, since my testing the model in our testing set, the RMSE decreased. Also, we considered a model which include __attack__ and __health__ separately:
+It seemed like the univariate __attack+health__ worked well in the model, as we testing the model in our testing set, the RMSE decreased. We also considered a model which include __attack__ and __health__ separately:
 
 ```{r}
 ## X: attack, health
@@ -512,6 +512,7 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health",
                                      RMSE = model3))
 rmse_results
 ```
+This model seems to be even better since it allows the effect of health and attack to be different on the value of cost. We therefore chose to go with this model and try to adjust for additional effect imerged from card features. Since Hearthstone cards have descriptions on them and they are sometimes not quantifiable, we distinguished features that are easily quantifiable into categories. We ended up categorizing cards into __Charge__(cards can attack immediately once they were put on the stage), __Divine Shield__(cards have a protective shield that can protect them from reducing health during their first attack), __Overload__(specific cards for Shamman that can cause dramatic decrease in health at very early stage, but playing overload cards we limit the amount of mana players can use in the next round), __Taunt__(cards that can protect the hero, the opponent must attack taunts first before attacking the hero), __Stealth__(cards that are invisible and can not be attacked until their first attack), and __Windfury__(cards that can attack twice each turn). Cards that cannot be classified into these categories was then treated as normal cards and set to be reference group in the model.
 
 ```{r}
 ## X: attack, health, mechanics(factors)

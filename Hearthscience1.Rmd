@@ -40,7 +40,7 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 >__4. Are we able to build a powerful deck (30 cards) for some heros?___
 
 * With all our analysis in previous stages, we aimed to build potentially powerful decks for certain heros.
-![flowchart](flowchart.png)
+<img src="flowchart.png" align="center" height="1000" width="800" margin="0 auto" />
 
 >__5. Test the deck we built (optional)___
 * We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning.
@@ -204,7 +204,7 @@ save(minions_text, file = "minions_text.RData")
 ## Exploratory Analysis
 ```{r warning= F, error=F}
 theme_set(theme_bw(base_size = 16))
-setwd("/Users/Scarlett/Desktop/final")
+# setwd("/Users/Scarlett/Desktop/final")
 load("minions_text.RData")
 data<-minions_text
 ```
@@ -241,7 +241,7 @@ distribution of health
 Health<-data%>%arrange(health)
 Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #histogram
-ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health"))
+ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health")
 ```
 
 distribution of mechanics 
@@ -249,7 +249,7 @@ distribution of mechanics
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
 #histogram
-ggplot(data, aes(factor(mechanics))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for mechanics")+xlab("mechanics"))
+ggplot(data, aes(factor(mechanics)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for mechanics")+xlab("mechanics")
 ```
 
 *distribution of each mechanics
