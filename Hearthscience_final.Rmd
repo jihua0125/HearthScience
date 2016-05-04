@@ -40,7 +40,7 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 >__4. Are we able to build a powerful deck (30 cards) for some heros?___
 
 * With all our analysis in previous stages, we aimed to build potentially powerful decks for certain heros.
-![flowchart](flowchart.png)
+<img src="flowchart.png" align="center" height="800" width="500" margin="0 auto" />
 
 >__5. Test the deck we built (optional)___
 * We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning.
@@ -512,85 +512,17 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health",
                                      RMSE = model3))
 rmse_results
 ```
-This model seems to be even better since it allows the effect of health and attack to be different on the value of cost. We therefore chose to go with this model and try to adjust for additional effect imerged from card features. Since Hearthstone cards have descriptions on them and they are sometimes not quantifiable, we distinguished features that are easily quantifiable into categories. We ended up categorizing cards into __Charge__(cards can attack immediately once they were put on the stage), __Divine Shield__(cards have a protective shield that can protect them from reducing health during their first attack), __Overload__(specific cards for Shamman that can cause dramatic decrease in health at very early stage, but playing overload cards we limit the amount of mana players can use in the next round), __Taunt__(cards that can protect the hero, the opponent must attack taunts first before attacking the hero), __Stealth__(cards that are invisible and can not be attacked until their first attack), and __Windfury__(cards that can attack twice each turn). Cards that cannot be classified into these categories was then treated as normal cards and set to be reference group in the model.
+This model seems to be even better since it allows the effect of health and attack to be different on the value of cost. We therefore chose to go with this model and try to adjust for additional effect imerged from card features. Since Hearthstone cards have descriptions on them and they are sometimes not quantifiable, we distinguished features that are easily quantifiable into categories. We ended up categorizing cards into __Charge__ (cards can attack immediately once they were put on the stage), __Divine Shield__ (cards have a protective shield that can protect them from reducing health during their first attack), __Overload__ (specific cards for Shamman that can cause dramatic decrease in health at very early stage, but playing overload cards we limit the amount of mana players can use in the next round), __Taunt__ (cards that can protect the hero, the opponent must attack taunts first before attacking the hero), __Stealth__ (cards that are invisible and can not be attacked until their first attack), and __Windfury__ (cards that can attack twice each turn). Cards that cannot be classified into these categories was then treated as normal cards and set to be reference group in the model.
 
 ```{r}
 ## X: attack, health, mechanics(factors)
 ## Y: cost
 
 fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + factor(mechanics1), cumulative(parallel = T, reverse = F), data = train)
-# summary(fitCL)
-
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-
-
-# To estimate the cost of cards based on attack, health, and charge:
-test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
-  mutate(value = 7) %>% 
-  group_by(cardId) %>%
-  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
-
-test3 = test %>%
-  select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
-  left_join(test3, by = "cardId")
-model3 = RMSE(test3$cost1, test3$value)
-rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, mechanics",  
-                                     RMSE = model3))
-rmse_results
-
-## X: attack, health, charge, and overload
-## Y: cost
-
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Overload, cumulative(parallel = T, reverse = F), data = train)
-# summary(fitCL)
-
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-
-
-# To estimate the cost of cards based on attack, health, charge and overload:
-test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
-  mutate(value = 7) %>% 
-  group_by(cardId) %>%
-  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
-
-test3 = test %>%
-  select(cost, cost1, attack, health, cardId, playerClass, mechanics) %>% 
-  left_join(test3, by = "cardId")
-model3 = RMSE(test3$cost1, test3$value)
-rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, overload",  
-                                     RMSE = model3))
-rmse_results
-
+summary(fitCL)
 ```
 
-
-We then considered a model which include some feature of the cards, and __Charge__ and __Overload__ were the only features that were significant:
+From the above output, we can see that after adjusting for health and attack, charge and overload are the two features that likely influenced the overall valuation model. We then considered a model which included 1) __Charge__, and 2) __Charge__ and __Overload__.
 
 ```{r}
 ## X: attack, health, charge
@@ -667,108 +599,7 @@ rmse_results
 
 ```
 
-```{r}
-## X: attack, health, charge, divine shield, taunt
-## Y: cost
-
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = train)
-# summary(fitCL)
-
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-
-# To estimate the cost of cards based on attack, health, charge, divine shield, and taunt:
-test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
-  mutate(value = 7) %>% 
-  group_by(cardId) %>%
-  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
-
-test3 = test %>%
-  select(cost, cost1, attack, health, mechanics, name, cardId) %>% 
-  left_join(test3, by = "cardId")
-model3 = RMSE(test3$cost1, test3$value)
-rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, divine shield, taunt",  
-                                     RMSE = model3))
-rmse_results
-```
-
-```{r}
-## X: attack, health, charge, overload
-## Y: cost
-
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Overload, cumulative(parallel = T, reverse = F), data = train)
-# summary(fitCL)
-
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-
-# To estimate the cost of cards based on attack, health, charge, overload:
-test3 = test %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Overload))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
-  mutate(value = 7) %>% 
-  group_by(cardId) %>%
-  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
-
-test3 = test %>%
-  select(cost, cost1, attack, health, mechanics, name, cardId) %>% 
-  left_join(test3, by = "cardId")
-model3 = RMSE(test3$cost1, test3$value)
-rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health, charge, overload",  
-                                     RMSE = model3))
-rmse_results
-```
-
-
-```{r}
-fitCL = vglm(cbind(Y1, Y2, Y3, Y4, Y5, Y6, Y7) ~ health + attack + Charge + Divine_Shield + Taunt, cumulative(parallel = T, reverse = F), data = minions_text1)
-summary(fitCL)
-
-for(i in 1: 6){
-  assign(paste("coef",i, sep = ""), as.data.frame((coef(fitCL, matrix = T)[,i])))
-}
-final = minions_text %>% mutate(p1 = as.numeric(exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef1[1,]+coef1[2,]*health+coef1[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)))) %>%
-  mutate(p2 = as.numeric(exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef2[1,]+coef2[2,]*health+coef2[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1) %>%
-  mutate(p3 = as.numeric(exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef3[1,]+coef3[2,]*health+coef3[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2) %>%
-  mutate(p4 = as.numeric(exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef4[1,]+coef4[2,]*health+coef4[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3) %>%
-  mutate(p5 = as.numeric(exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef5[1,]+coef5[2,]*health+coef5[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4) %>%
-  mutate(p6 = as.numeric(exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt)/(1+exp(coef6[1,]+coef6[2,]*health+coef6[3,]*attack+coef1[4,]*Charge+coef1[5,]*Divine_Shield+coef1[6,]*Taunt))) - p1 - p2 - p3 - p4 - p5) %>% mutate(p7 = 1 - p1 - p2 - p3 - p4 - p5 - p6) %>% 
-  mutate(value = 7) %>% 
-  group_by(cardId, cost1, attack, health, name, playerClass, mechanics) %>%
-  summarize(value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p1, 1, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p2, 2, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p3, 3, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p4, 4, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p5, 5, value),
-              value = ifelse(max(p1,p2,p3,p4,p5,p6,p7) == p6, 6, value))
-
-final %>% filter(value != cost1) %>%
-  mutate(resid = value - cost1) %>%
-  ggplot(aes(resid, group = mechanics, fill = mechanics)) + stat_bin(aes(y = ..count..), bins = 10 , position='dodge') 
-
-```
+We ended up using a model with the following covariates: health, attack, charge, overload:
 
 ```{r}
 final = minions_text1 %>% 
@@ -795,6 +626,27 @@ final %>% filter(value != cost1) %>%
   ggplot(aes(resid, group = mechanics, fill = mechanics)) + stat_bin(aes(y = ..count..), bins = 10 , position='dodge') 
 
 ```
+
+From the above plot, we can see that after adjusting for the claimed features (health, attack, charge, overload) of cards, some of the cards were overvalued (resid = estimated cost - assigned < 0) and some of them were undervalued (resid > 0). Cards that are __Battlecry__ (cards that launch certain descriptive effects when cards are played), __Normal__ (cards that do not have any special effects), and __Deathrattle__ (cards that launch certain descriptive effects when cards are dead) are more frequently over- or under-valued. 
+
+#### Model validation: Blizard's adjustment of card values:
+<img src="revalued1.png" align="center" height="400" width="350" margin="0 auto" />
+<img src="revalued2.png" align="center" height="400" width="350" margin="0 auto" />
+<img src="revalued3.png" align="center" height="400" width="350" margin="0 auto" />
+<img src="revalued4.png" align="center" height="400" width="350" margin="0 auto" />
+
+Blizard company just annouced some adjustments of values of the following cards:
+Since we only focused on the valuation of minions cards (cards that can stay on the stage and have attack and health), this model can also be applied to minions:
+
+```{r}
+new_assigned_cards = c("Knife Juggler", "Gig Game Hunter", "Force of Nature", 
+  "Molten Giant", "Arcane Golem", "Blade Flurry", 
+  "Keeper of the Grove", "Ancient of Lore", "Master of Disquise", 
+  "Hunter's Mark", "Ironbeak Owl", "Leper Gnome")
+
+final %>% filter(name %in% new_assigned_cards)
+```
+# Ji, can you write some comments here? 
 
 ### Simulation
 >__2. What is the balance between small cost cards and big cost cards? __
@@ -1554,3 +1406,43 @@ zooDeck<-read.csv("zooDeck.csv",header = TRUE,sep=",")
 
 zooDeck[,2:3]%>%kable
 ```
+
+#### Real-time evaluation of zooDeck:
+Generally speaking, our established deck performed pretty well in __players vs. computer__ games. 
+
+__Players vs. Computer__
+    Opponent  Hand   Results  Comments
+1   Warlock   first   W       @ 8  mana
+2   Warlock   first   W       @ 9  mana 
+3   Mage      second  W       @ 7  mana
+4   Mage      first   W       @ 7  mana
+5   Hunter    second  W       @ 7  mana
+6   Hunter    first   W       @ 7  mana
+7   Warrior   first   W       @ 7  mana
+8   Warrior   second  W       @ 8  mana
+9   Shaman    second  W       @ 9  mana
+10  Shaman    second  L       @ 8  mana
+11  Druid     second  W       @ 6  mana
+12  Druid     second  W       @ 6  mana 
+13  Priest    first   W       @ 8  mana
+14  Priest    second  W       @ 8  mana
+15  Rogue     first   W       @ 7  mana
+16  Rogue     first   W       @ 8  mana
+17  Paladin   second  W       @ 6  mana
+18  Paladin   first   L       @ 8  mana
+
+However, when the opponent is human (especially when they are top players that have better cards in hand), it is hard to tell the results..
+
+__Player vs. Player__
+    Opponent  Hand   Results  Comments
+1                     W       Opponent concede
+2                     L       @ 6  mana 
+3             second  W       @ 7  mana
+4   Hunter    first   L       @ 7  mana
+5   Paladin   second  L       @ 10 mana
+6   Paladin   first   L     
+7   Priest    first   L
+8   Druid     first   L       @ 7  mana
+9   Hunter    first   L       @ 10 mana
+10  Warlock   first   L       @ 5  mana
+11  Hunter    second  L       @ 6  mana
