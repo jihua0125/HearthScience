@@ -1411,38 +1411,68 @@ zooDeck[,2:3]%>%kable
 Generally speaking, our established deck performed pretty well in __players vs. computer__ games. 
 
 __Players vs. Computer__
+
     Opponent  Hand   Results  Comments
+    
 1   Warlock   first   W       @ 8  mana
+
 2   Warlock   first   W       @ 9  mana 
+
 3   Mage      second  W       @ 7  mana
+
 4   Mage      first   W       @ 7  mana
+
 5   Hunter    second  W       @ 7  mana
+
 6   Hunter    first   W       @ 7  mana
+
 7   Warrior   first   W       @ 7  mana
+
 8   Warrior   second  W       @ 8  mana
+
 9   Shaman    second  W       @ 9  mana
+
 10  Shaman    second  L       @ 8  mana
+
 11  Druid     second  W       @ 6  mana
+
 12  Druid     second  W       @ 6  mana 
+
 13  Priest    first   W       @ 8  mana
+
 14  Priest    second  W       @ 8  mana
+
 15  Rogue     first   W       @ 7  mana
+
 16  Rogue     first   W       @ 8  mana
+
 17  Paladin   second  W       @ 6  mana
+
 18  Paladin   first   L       @ 8  mana
 
 However, when the opponent is human (especially when they are top players that have better cards in hand), it is hard to tell the results..
 
 __Player vs. Player__
     Opponent  Hand   Results  Comments
+    
 1                     W       Opponent concede
+
 2                     L       @ 6  mana 
+
 3             second  W       @ 7  mana
+
 4   Hunter    first   L       @ 7  mana
+
 5   Paladin   second  L       @ 10 mana
+
 6   Paladin   first   L     
+
 7   Priest    first   L
+
 8   Druid     first   L       @ 7  mana
+
 9   Hunter    first   L       @ 10 mana
+
 10  Warlock   first   L       @ 5  mana
+
 11  Hunter    second  L       @ 6  mana
