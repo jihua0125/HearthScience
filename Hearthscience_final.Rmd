@@ -208,17 +208,18 @@ theme_set(theme_bw(base_size = 16))
 load("minions_text.RData")
 data<-minions_text
 ```
-distribution of Cost
+distribution of Cost:
+First, we want to see how costs of cards distributed across the card databases. A great portion of cards are 2 to 4 cost, and this is a right skewed distribution. From the above plots, we have found similar patterns in attack and health as in the cost distribution. These similar patterns give us a hint of using linear model to predict cost by attack and health. 
 ```{r warning= F, error=F}
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
-Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%mutate(n=n())%>%ungroup()%>%select(cost,n))
+Cost<-unique(data%>%filter(cost<=10)%>%group_by(cost)%>%dplyr::mutate(n=n())%>%ungroup()%>%select(cost,n))
 # 7 stands for higher than 7
 Cost1<-Cost%>%filter(cost<7)                       
 Cost2<-c(7,61)
 Cost<-rbind(Cost1,Cost2)
 
-Cost<-Cost%>%mutate(pos=cumsum(n)-n/2)
+Cost<-Cost%>%dplyr::mutate(pos=cumsum(n)-n/2)
 p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost")
 
@@ -226,11 +227,11 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 p1<-ggplot(data, aes(factor(cost)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for cost")+xlab("cost")
 ```
 
-Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
+Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 104% in total are most common in the deck
 
 distribution of attack
 ```{r warning= F, error=F}
-library(Rmisc)
+
 Attackk<-data%>%arrange(attack)
 Attack<-unique(Attackk%>%group_by(attack)%>%dplyr::mutate(n=n())%>%ungroup()%>%select(attack,n))
 #histogram
@@ -240,14 +241,14 @@ p2<-ggplot(data, aes(factor(attack)))+ geom_bar()+scale_fill_brewer()+ggtitle("H
 distribution of health
 ```{r warning= F, error=F}
 Health<-data%>%arrange(health)
-Health<-unique(Health%>%group_by(health)%>%dplyr::mutate(n=n())%>%ungroup()%>%select(health,n))
+Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
 #histogram
 p3<-ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health")+ theme(axis.text.x = element_text(angle = 0, hjust = 1))
 
-multiplot(p1,p2,p3,cols=3)
 ```
 
-distribution of mechanics 
+distribution of mechanics:
+In the whole card dataset, there are some confounders such as mechanism, rarity and card set, that might affect our assumption of linear relationship between cost, attack and health. Take mechanism as an example, we ploted the cost, attack and health distributions of under different mechanisms. We found the pattern of these three dimensions are similar across all these mechanisms. For all these three confounders, we found all the distributions have similar patterns.
 ```{r warning= F, error=F}
 Mechanics<-data%>%arrange(mechanics)
 Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%dplyr::mutate(n=n())%>%ungroup()%>%select(mechanics,n))
@@ -258,12 +259,12 @@ ggplot(data, aes(factor(mechanics)))+ geom_bar()+scale_fill_brewer()+ggtitle("Hi
 
 *distribution of each mechanics
 ```{r}
-p4<-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in mechanics")+xlab("Rarity")+ylab("cost")
+qplot(factor(data$mechanics),data$cost,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in mechanics")+ylab("cost")
 
-p5<-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in mechanics")+xlab("Rarity")+ylab("health")
+qplot(factor(data$mechanics),data$health,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in mechanics")+ylab("health")
 
-p6<-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in mechanics")+xlab("Rarity")+ylab("attack")
-multiplot(p4,p5,p6,cols=3)
+qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in mechanics")+ylab("attack")
+
 ```
 
 
@@ -272,7 +273,7 @@ distribution of cardSet
 cs<-data%>%arrange(cardSet)
 cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
 #pie chart
-cs<-cs%>%mutate(pos=cumsum(n)-n/2)
+cs<-cs%>%dplyr::mutate(pos=cumsum(n)-n/2)
 p<-cs%>%ggplot(aes(x=1,y=n,fill=factor(cardSet)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of cardSet")
 #histogram
@@ -282,12 +283,12 @@ qplot(data$cardSet,xlab="cardSet",main="Histogram for CardSet distribution")+the
 
 *distribution of each CardSet
 ```{r}
-p1<-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in CardSet")+xlab("Rarity")+ylab("cost")
+qplot(factor(data$cardSet),data$cost,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in CardSet")+ylab("cost")
 
-p2<-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in CardSet")+xlab("Rarity")+ylab("health")
+qplot(factor(data$cardSet),data$health,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in CardSet")+ylab("health")
 
-p3<-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in CardSet")+xlab("Rarity")+ylab("attack")
-multiplot(p1,p2,p3,cols=3)
+qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in CardSet")+ylab("attack")
+
 ```
 
 distribution of rarity
@@ -303,18 +304,19 @@ qplot(data$rarity,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x =
 
 *distribution for each rarity
 ```{r}
-p1<-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in Rarity")+xlab("Rarity")+ylab("cost")
+qplot(factor(data$rarity),data$cost,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in Rarity")+xlab("Rarity")+ylab("cost")
 
-p2<-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in Rarity")+xlab("Rarity")+ylab("health")
+qplot(factor(data$rarity),data$health,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in Rarity")+xlab("Rarity")+ylab("health")
 
-p3<-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in Rarity")+xlab("Rarity")+ylab("attack")
-multiplot(p1,p2,p3,cols=3)
+qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in Rarity")+xlab("Rarity")+ylab("attack")
+
 ```
 
 ### Frequently used decks from top players
 Instead of looking at the card information alone, we are trying to consider how one card interacts with others. We are using the built-up decks from top players of Hearthstone from the following website:
 <http://www.hearthstonetopdecks.com/>
-A typical deck looks like this: ![deck][deck.png]
+A typical deck looks like this: 
+<img src="revalued1.png" align="center" height="400" width="350" margin="0 auto" />
 
 #### Data Wrangling
 ```{r warning= F, error=F, eval=F}
@@ -717,15 +719,11 @@ From the above plot, we can see that after adjusting for the claimed features (h
 
 
 ### Simulation
->__2. What is the balance between low-cost cost cards and high-cost cards? __
-
-Assumptions:
-
-1. Players will not use the card with cost 0 in the earlier several turns.
-
-2. Cost can roughly represent the value of the card, thus we can maximum the cost of all 30 cards to maximum the value.
-
-3. We focus on the first 5 turns.
+>__2. What is the balance of choice between low cost cards and high cost cards? __
+Accoring to our previous model and our exprience with HearthStone, the higher the cost of a card, the more powerful it is. However, the higher the cost of a card, the less likely we can play in the first few rounds (due to limited mana in hand). Therefore, we intended to reach a balance on choosing low/high cost cards. To simulate this, we made the following assumptions:
+Assumption 1: Players will not play zero cost cards in the first few rounds. 
+Assumption 2: Cost can roughly represent the value of the card, thus we can maximize the cost of all 30 cards to maximize their values. 
+Assumption 3: We focus on the first 5 turns, since the card costs are mostly less than 6 (76.3% of cards).  
 
 First, create decks with all reasonable combinations of small cards (cost 1-5) and others.
 
@@ -1437,8 +1435,7 @@ zooDeck[,2:3]%>%kable
 <img src="revalued3.png" align="center" height="400" width="350" margin="0 auto" />
 <img src="revalued4.png" align="center" height="400" width="350" margin="0 auto" />
 
-Blizard company just annouced some adjustments of values of the following cards:
-Since we only focused on the valuation of minions cards (cards that can stay on the stage and have attack and health), this model can also be applied to minions:
+Blzzard has recently (four days ago) released an expansion package, which includes a series of new cards. However, the inforamtion of these cards have not been released by Blizard's API. Fortunately, they also adjusted 12 existing cards (7 of them are minions), which allowed us to validate our model. The results are shown below:
 
 ```{r}
 new_assigned_cards = c("Knife Juggler", "Gig Game Hunter", "Force of Nature", 
@@ -1448,7 +1445,7 @@ new_assigned_cards = c("Knife Juggler", "Gig Game Hunter", "Force of Nature",
 
 final %>% filter(name %in% new_assigned_cards)
 ```
-# Ji, can you write some comments here? 
+Our model predicted 3 out of these 7 cards correctly, in which they are underestimate (they are more powerful than the values they were assigned). After Blizard's adjustment, these cards become weakened. However, we also made wrong prediction on three cards: Ironbeak Owl, Keeper of Grove and Ancient of Lore. The first two cards have special ability with silence effect, which is not adjusted into our model since there are only three cards with this ability. The Ancient of Lore is also misvalued by our model, this is because it has the ability of Choice, and Choice is also a uncommon ability so it has too few cards for our model to predict. Also, in our model, we consider all the cards with more than 7 costs as 7 cost (be consistent with the categories in HearthStone game). So for Molten Giant, it has a special mechanism of changing costs according to the hero's health, which makes it have a changeable cost. This is not suitable for our model (we can only estimate minions with a fixed cost).
 
 
 
@@ -1463,41 +1460,41 @@ __Players vs. Computer__
 
     Opponent  Hand   Results  Comments
     
-1   Warlock   first   W       @ 8  mana
+1   Warlock   early   W       @ 8  mana
 
-2   Warlock   first   W       @ 9  mana 
+2   Warlock   early   W       @ 9  mana 
 
-3   Mage      second  W       @ 7  mana
+3   Mage      late  W       @ 7  mana
 
-4   Mage      first   W       @ 7  mana
+4   Mage      early   W       @ 7  mana
 
-5   Hunter    second  W       @ 7  mana
+5   Hunter    late  W       @ 7  mana
 
-6   Hunter    first   W       @ 7  mana
+6   Hunter    early   W       @ 7  mana
 
-7   Warrior   first   W       @ 7  mana
+7   Warrior   early   W       @ 7  mana
 
-8   Warrior   second  W       @ 8  mana
+8   Warrior   late  W       @ 8  mana
 
-9   Shaman    second  W       @ 9  mana
+9   Shaman    late  W       @ 9  mana
 
-10  Shaman    second  L       @ 8  mana
+10  Shaman    late  L       @ 8  mana
 
-11  Druid     second  W       @ 6  mana
+11  Druid     late  W       @ 6  mana
 
-12  Druid     second  W       @ 6  mana 
+12  Druid     late  W       @ 6  mana 
 
-13  Priest    first   W       @ 8  mana
+13  Priest    early   W       @ 8  mana
 
-14  Priest    second  W       @ 8  mana
+14  Priest    late  W       @ 8  mana
 
-15  Rogue     first   W       @ 7  mana
+15  Rogue     early   W       @ 7  mana
 
-16  Rogue     first   W       @ 8  mana
+16  Rogue     early   W       @ 8  mana
 
-17  Paladin   second  W       @ 6  mana
+17  Paladin   late  W       @ 6  mana
 
-18  Paladin   first   L       @ 8  mana
+18  Paladin   early   L       @ 8  mana
 
 However, when the opponent is human (especially when they are top players that have better cards in hand), it is hard to tell the results..
 
@@ -1508,20 +1505,20 @@ __Player vs. Player__
 
 2                     L       @ 6  mana 
 
-3             second  W       @ 7  mana
+3             late  W       @ 7  mana
 
-4   Hunter    first   L       @ 7  mana
+4   Hunter    early   L       @ 7  mana
 
-5   Paladin   second  L       @ 10 mana
+5   Paladin   late  L       @ 10 mana
 
-6   Paladin   first   L     
+6   Paladin   early   L     
 
-7   Priest    first   L
+7   Priest    early   L
 
-8   Druid     first   L       @ 7  mana
+8   Druid     early   L       @ 7  mana
 
-9   Hunter    first   L       @ 10 mana
+9   Hunter    early   L       @ 10 mana
 
-10  Warlock   first   L       @ 5  mana
+10  Warlock   early   L       @ 5  mana
 
-11  Hunter    second  L       @ 6  mana
+11  Hunter    late  L       @ 6  mana
