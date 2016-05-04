@@ -202,14 +202,13 @@ colnames(minions_text)
 save(minions_text, file = "minions_text.RData")
 ```
 
-#### Exploratory Analysis
+## Exploratory Analysis
 ```{r warning= F, error=F}
 theme_set(theme_bw(base_size = 16))
-#setwd("/Users/Scarlett/Desktop/final")
 load("minions_text.RData")
 data<-minions_text
 ```
-##### Distribution of Cost
+distribution of Cost
 ```{r warning= F, error=F}
 #remove costs that are "12" and "20" for these two cards are very special
 Cost<-data%>%dplyr::arrange(cost)
@@ -224,46 +223,51 @@ p<-Cost%>%ggplot(aes(x=1,y=n,fill=factor(cost)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of Card Cost")
 
 #histogram
-ggplot(data, aes(factor(cost)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for cost")+xlab("cost")
+p1<-ggplot(data, aes(factor(cost)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for cost")+xlab("cost")
 ```
 
-Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck.
+Conclusion: cards with cost "2","3","4" out of the 11 possible costs occupying around 54% in total are most common in the deck
 
-##### Distribution of attack
+distribution of attack
 ```{r warning= F, error=F}
-Attack<-data%>%arrange(attack)
-Attack<-unique(Attack%>%group_by(attack)%>%mutate(n=n())%>%ungroup()%>%select(attack,n))
+library(Rmisc)
+Attackk<-data%>%arrange(attack)
+Attack<-unique(Attackk%>%group_by(attack)%>%dplyr::mutate(n=n())%>%ungroup()%>%select(attack,n))
 #histogram
-ggplot(data, aes(factor(attack)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for attack")+xlab("attack")
+p2<-ggplot(data, aes(factor(attack)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for attack")+xlab("attack")
 ```
 
-##### Distribution of health
+distribution of health
 ```{r warning= F, error=F}
 Health<-data%>%arrange(health)
-Health<-unique(Health%>%group_by(health)%>%mutate(n=n())%>%ungroup()%>%select(health,n))
+Health<-unique(Health%>%group_by(health)%>%dplyr::mutate(n=n())%>%ungroup()%>%select(health,n))
 #histogram
-ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health")
+p3<-ggplot(data, aes(factor(health)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for health")+xlab("health")+ theme(axis.text.x = element_text(angle = 0, hjust = 1))
+
+multiplot(p1,p2,p3,cols=3)
 ```
 
-##### Distribution of mechanics 
+distribution of mechanics 
 ```{r warning= F, error=F}
 Mechanics<-data%>%arrange(mechanics)
-Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%mutate(n=n())%>%ungroup()%>%select(mechanics,n))
+Mechanics<-unique(Mechanics%>%group_by(mechanics)%>%dplyr::mutate(n=n())%>%ungroup()%>%select(mechanics,n))
 #histogram
-ggplot(data, aes(factor(mechanics)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for mechanics")+xlab("mechanics")
+ggplot(data, aes(factor(mechanics)))+ geom_bar()+scale_fill_brewer()+ggtitle("Histogram for mechanics")+xlab("mechanics")+ theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
 ```
 
-##### Distribution of each mechanics
+*distribution of each mechanics
 ```{r}
-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in mechanics group")+xlab("Rarity")+ylab("cost")
+p4<-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in mechanics")+xlab("Rarity")+ylab("cost")
 
-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in mechanics group")+xlab("Rarity")+ylab("health")
+p5<-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in mechanics")+xlab("Rarity")+ylab("health")
 
-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in mechanics group")+xlab("Rarity")+ylab("attack")
+p6<-qplot(factor(data$mechanics),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in mechanics")+xlab("Rarity")+ylab("attack")
+multiplot(p4,p5,p6,cols=3)
 ```
 
 
-##### Distribution of cardSet
+distribution of cardSet
 ```{r warning= F, error=F}
 cs<-data%>%arrange(cardSet)
 cs<-unique(cs%>%group_by(cardSet)%>%mutate(n=n())%>%ungroup()%>%select(cardSet,n))
@@ -273,18 +277,20 @@ p<-cs%>%ggplot(aes(x=1,y=n,fill=factor(cardSet)))
 p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/sum(n))))+coord_polar(theta="y")+ xlab('')+ylab('')+theme(axis.text=element_blank(),axis.ticks=element_blank(),panel.grid=element_blank())+ggtitle("Pie Chart of cardSet")
 #histogram
 qplot(data$cardSet,xlab="cardSet",main="Histogram for CardSet distribution")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
 ```
 
-##### Distribution of each CardSet
+*distribution of each CardSet
 ```{r}
-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in CardSet group")+xlab("Rarity")+ylab("cost")
+p1<-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in CardSet")+xlab("Rarity")+ylab("cost")
 
-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in CardSet group")+xlab("Rarity")+ylab("health")
+p2<-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in CardSet")+xlab("Rarity")+ylab("health")
 
-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in CardSet group")+xlab("Rarity")+ylab("attack")
+p3<-qplot(factor(data$cardSet),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in CardSet")+xlab("Rarity")+ylab("attack")
+multiplot(p1,p2,p3,cols=3)
 ```
 
-##### Distribution of rarity
+distribution of rarity
 ```{r warning= F, error=F}
 rr<-unique(data%>%group_by(rarity)%>%mutate(n=n())%>%ungroup()%>%select(rarity,n))
 #pie chart
@@ -295,13 +301,14 @@ p+geom_bar(stat="identity",width=1)+geom_text(aes(x=1.6,y=pos,label = percent(n/
 qplot(data$rarity,xlab="rarity",main="Histogram for rarity")+theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-##### Distribution for each rarity
+*distribution for each rarity
 ```{r}
-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in Rarity group")+xlab("Rarity")+ylab("cost")
+p1<-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for cost in Rarity")+xlab("Rarity")+ylab("cost")
 
-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in Rarity group")+xlab("Rarity")+ylab("health")
+p2<-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for health in Rarity")+xlab("Rarity")+ylab("health")
 
-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in Rarity group")+xlab("Rarity")+ylab("attack")
+p3<-qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(axis.text.x = element_text(angle = 45, hjust = 1,size=10))+ggtitle("Boxplots for Attack in Rarity")+xlab("Rarity")+ylab("attack")
+multiplot(p1,p2,p3,cols=3)
 ```
 
 ### Frequently used decks from top players
