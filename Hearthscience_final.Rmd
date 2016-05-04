@@ -780,14 +780,33 @@ decks <- read_csv(url)
 decks <- decks[,-1]
 
 # constrain on probability of using card
-decks.constrain <- decks %>% tbl_df %>% filter(p4>0.95, p2>0.5, p3>0.9, others>10) %>%
+# fast tempo
+decks.fast <- decks %>% tbl_df %>% filter(p4>0.99, p2>0.9, p3>0.95, others>10) %>%
         arrange(desc(sum)) 
 
-decks.constrain %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = min(n1+n2+n3+n4))
+decks.fast %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = min(n1+n2+n3+n4))
+
+# mid tempo
+decks.mid <- decks %>% tbl_df %>% filter(p4>0.95, p2>0.8, p3>0.9, others>10) %>%
+        arrange(desc(sum)) 
+
+decks.mid %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = min(n1+n2+n3+n4))
+
+# slow tempo
+decks.slow <- decks %>% tbl_df %>% filter(p4>0.95, p2>0.5, p3>0.8, others>10) %>%
+        arrange(desc(sum)) 
+
+decks.slow %>% summarize(min2 = min(n1+n2), min3 = min(n1+n2+n3), min4 = min(n1+n2+n3+n4))
 
 ```
 
-The simulation results show that to have the probability of using card to be above 0.5 by the second turn, above 0.9 by the third turn, and above 0.95 by the fourth turn, and to have at least 10 high-cost cards, we need to have at least 2 cards with no more than 2 cost, 6 cards with no more than 3 cost, and 7 cards with no more than 4 cost.
+The simulation results shows the number of low-cost cards required in all situations of different play mode (slow, mid and fast-tempo).
+
+In fast-tempo play mode, we need at least 7 cards with cost no more than 2, at least 9 cards with cost no more than 4.
+
+In mid-tempo play mode, we need at least 5 cards with cost no more than 5, at least 6 cards with cost no more than 3, and at least 7 cards with cost no more than 4.
+
+In slow-tempo play mode, we need at least 2 cards with cost no more than 2, at least 5 cards with cost no more than 3, and at least 7 cards with cost no more than 4.
 
 
 ### Deck Analysis
@@ -1423,6 +1442,11 @@ new_assigned_cards = c("Knife Juggler", "Gig Game Hunter", "Force of Nature",
 final %>% filter(name %in% new_assigned_cards)
 ```
 # Ji, can you write some comments here? 
+
+
+
+In this deck we built, we have 8 cards with cost 1, 6 cards with cost 2, 3 cards with cost 3, 2 cards with cost 4. It satisfy our simulation of fast-tempo play mode in which we need at least 7 cards with cost no more than 2, at least 9 cards with cost no more than 4. Thus we are supposed to be able to play the cards randomly drawn from the deck with high probabilities (at least 90% probability in the first 2 turns, 95% probability in the first 3 turns, and 99% probability in the first 4 turns). 
+
 
 
 ### Real-time evaluation of zooDeck:
