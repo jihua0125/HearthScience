@@ -1424,7 +1424,7 @@ zooDeck[,2:3]%>%kable
 
 ## Validation
 
-### Card Value Model Validation: Blizard's adjustment of card values:
+### Card Value Model Validation: Blizard's adjustment of card values
 <img src="revalued1.png" align="center" height="400" width="350" margin="0 auto" />
 <img src="revalued2.png" align="center" height="400" width="350" margin="0 auto" />
 <img src="revalued3.png" align="center" height="400" width="350" margin="0 auto" />
