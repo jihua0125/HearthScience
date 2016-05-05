@@ -83,7 +83,7 @@ library(VGAM)
 
 We have two types of data: 1) basic card information (attack/health/cost/description of cards) and 2) frequently used decks from top players. 
 
-### 1. Basic Card information
+### Basic Card information
 * We collected card data from Hearthstone's API: http://hearthstoneapi.com, Card.  It contains thorough card information of: card name, card set (Basic, Classic, Blackrock Mountain,  Goblins vs Gnomes,  Naxxramas,  Promotion,  The Grand Tournament,  The League of Explorers), card type (minions,  spells,  weapons), player class (Priest,  Hunter,  Warlock,  Shaman,  Warrior,  Mage,  Paladin,  Druid,  Rogue,  All), card description (text), 	mechanics of minions (Battlecry,  Taunt,  Normal,  HealTarget,  Charge,  Aura,  AdjacentBuff,  Spell Damage,  Freeze,  Enrage,  Divine Shield,  Stealth,  Overload,  Deathrattle,  Windfury,  Combo,  Poisonous,  Inspire), attack, health, and cost of cards. We have collected the json file using Python and transfer it into RData (and csv files) using R.
 
 ```{r eval=F, warning=F, error=F}
@@ -594,6 +594,7 @@ rmse_results = bind_rows(rmse_results,data_frame(method="X: attack, health",
                                      RMSE = model3))
 rmse_results
 ```
+
 This model seems to be even better since it allows the effect of health and attack to be different on the value of cost. We therefore chose to go with this model and try to adjust for additional effect imerged from card features. Since Hearthstone cards have descriptions on them and they are sometimes not quantifiable, we distinguished features that are easily quantifiable into categories. We ended up categorizing cards into __Charge__ (cards can attack immediately once they were put on the stage), __Divine Shield__ (cards have a protective shield that can protect them from reducing health during their first attack), __Overload__ (specific cards for Shamman that can cause dramatic decrease in health at very early stage, but playing overload cards we limit the amount of mana players can use in the next round), __Taunt__ (cards that can protect the hero, the opponent must attack taunts first before attacking the hero), __Stealth__ (cards that are invisible and can not be attacked until their first attack), and __Windfury__ (cards that can attack twice each turn). Cards that cannot be classified into these categories was then treated as normal cards and set to be reference group in the model.
 
 ```{r}
@@ -2908,13 +2909,13 @@ offensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
         ggtitle("Early hand") +
         scale_x_continuous(breaks=4:30) +
         scale_y_continuous(breaks=seq(0,1,0.1)) +
-        geom_vline(xintercept = 13) + 
+        geom_vline(xintercept = 13) + geom_vline(xintercept = 18) +
         geom_hline(yintercept = 0.5)
 defensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
         ggtitle("Late hand") +
         scale_x_continuous(breaks=5:30) +
         scale_y_continuous(breaks=seq(0,1,0.1)) +
-        geom_vline(xintercept = 14) +
+        geom_vline(xintercept = 14) + geom_vline(xintercept = 19) +
         geom_hline(yintercept = 0.5)
 
 ```
