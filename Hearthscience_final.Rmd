@@ -44,7 +44,34 @@ We aimed to simulate the possibilities of playing a card in the first 5 turns.
 
 >__5. Test the deck we built (optional)___
 * We can test our model by simulating games using the deck and strategy we developed, and calculate its percentage of winning.
+
 ## Related Work:
+Since HearthStone is a very popular game, there are some similar work inspiring us.
+1. How to appraise Hearthstone card values: https://www.elie.net/blog/hearthstone/how-to-appraise-hearthstone-card-values
+
+2. HearthSim: https://hearthsim.info
+However, what they did is just use very few card and use regular linear model.To improve the model, we are trying to use more cards and include more varables into our model.
+
+The following links are the data source we use.
+Data Source
+1. http://www.hearthstonetopdecks.com
+
+2. http://hearthstoneapi.com
+
+##erminology of HearthStone:
+Card: A token can be played in the game.
+
+Deck: a combination of 30 cards in which one normal card can have two duplicates, and one legendary card can appear only once.
+
+Minion: a type of card that can summon a "monster" fight for you. 
+
+Tempo: mosty define by the costs of the cards in the deck. The more low-cost cards, the faster the pace/tempo.
+
+Early Hand: the player who play first.
+
+Late Hand: the player who acts later.
+
+<img src="game.jpg" align="center" height="400" width="350" margin="0 auto" />
 
 
 ## Library
@@ -315,7 +342,7 @@ qplot(factor(data$rarity),data$attack,geom="boxplot")+scale_fill_brewer()+theme(
 Instead of looking at the card information alone, we are trying to consider how one card interacts with others. We are using the built-up decks from top players of Hearthstone from the following website:
 <http://www.hearthstonetopdecks.com/>
 A typical deck looks like this: 
-<img src="revalued1.png" align="center" height="400" width="350" margin="0 auto" />
+<img src="deck.png" align="center" height="400" width="350" margin="0 auto" />
 
 #### Data Wrangling
 ```{r warning= F, error=F, eval=F}
@@ -946,22 +973,12 @@ warriorDeckCost%>%select(deckId,aveCost)%>%distinct()%>%
   ggplot(aes(x=aveCost))+geom_histogram(binwidth = 0.5)+ggtitle("Warrior deck distribution")
 
 
-###summary
-druidDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-hunterDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-mageDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-paladinDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-priestDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-rogueDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-shamanDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-warlockDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
-warriorDeckCost%>%select(deckId,aveCost)%>%distinct()%>%summary()%>%kable
 
 ```
 From the histogram we can see warlock is quite different from other heros, the distribution of the costs of decks has double peaks, while others are more likely following a normal distribution. This finding gives us a suggestion to explore data furtherly.
 
 #### Explore Card Interactions within Warlock Decks
-Let's have a look at the correlation between the cards within warlock decks.
+We have looked at the correlation between the cards within warlock decks. We calculated the correlations between each cards. 
 ```{r,warning=F,error=F}
 data<-read.csv("correlation.csv")
 colnames(data)<-gsub("\\."," ",colnames(data))
@@ -971,7 +988,7 @@ colnames(data)<-gsub("\\."," ",colnames(data))
 
 #calculate correlation matrix
 corMatrix<-cor(x=data)
-hClust<-hclust(dist(data),method="complete")
+hClust<-hclust(dist(t(data)),method="complete")
 plot(hClust,cex=0.6)
 
 pc<-prcomp(corMatrix)
@@ -993,7 +1010,7 @@ ggcorr(cormat,hjust = 0.3, size = 1, color = "grey50")
 
 ```
 
-From the principle components analysis, we can see the top 2 principle components have explained 2/3 of the variance between cards. So here, we are going to use the first 2 pcs to do the following analysisto keep the scale of problem small enough.
+From the principle components analysis, we can see the top 2 principle components have explained 2/3 of the variance between cards and the top 9 can explain 91% of the variance. So here, we are going to use the first 9 principle components to do the following analysis to keep the scale of problem acceptable and avoid overfitting.
 
 ```{r,warning=F,error=F}
 
@@ -1027,7 +1044,7 @@ pc.df%>%group_by(Cluster)%>%summarize(n())
 
 #### Clustering of cards
 
-In the above, we have tried to use Kmeans clustering to distinguish different type of decks. By the FOM plots, we found that 4 is the balanced point, so we made a 4 centroid clustering. Let's pick one deck to see if this clustering make sense.
+In the above, we have tried to use Kmeans clustering to distinguish different type of decks. By the FOM plots, we found that 4 is the balanced point, so we made a 4 centroid clustering. We randomly pick one deck to see if the clusters make sense. We can see in the following table that most of the cards fall into the same clusters.
 
 ```{r,warning=F,error=F}
 deck<-heroDeckLists[[8]]%>%select(cardNames,X60)%>%
@@ -1035,24 +1052,24 @@ deck<-heroDeckLists[[8]]%>%select(cardNames,X60)%>%
   left_join(pc.df,by=c("cardNames"="ID"))
 deck[,c(1,12)]%>%kable
 ```
-
-```{r warning= F, error=F, eval=F}
+Also, we made the following correlation heatmap to see the correlations inside the clusters.
+```{r warning= F, error=F}
 
 ### seperate data set
-fullcluster<-pc.df%>%select(-PCA1,-PCA2)
+fullcluster<-pc.df%>%select(-PCA1,-PCA2,-PCA3,-PCA4,-PCA5,-PCA6,-PCA7,-PCA8,-PCA9)
 cluster1<-fullcluster%>%filter(Cluster=="1")%>%select(-Cluster)
 cluster2<-fullcluster%>%filter(Cluster=="2")%>%select(-Cluster)
 cluster3<-fullcluster%>%filter(Cluster=="3")%>%select(-Cluster)
 cluster4<-fullcluster%>%filter(Cluster=="4")%>%select(-Cluster)
 #conver the rownames to first column "ID"
-ID<-rownames(data)
-rownames(data)<-NULL
-data<-cbind(ID,data)
+ID<-rownames(fullcluster)
+#rownames(data)<-NULL
+dat<-as.data.frame(cbind(ID,t(data)))
 #create 4 dataset by "ID"
-dataset1<-dplyr::right_join(data,cluster1,by="ID")
-dataset2<-dplyr::right_join(data,cluster2,by="ID")
-dataset3<-dplyr::right_join(data,cluster3,by="ID")
-dataset4<-dplyr::right_join(data,cluster4,by="ID")
+dataset1<-dplyr::right_join(dat,cluster1,by="ID")
+dataset2<-dplyr::right_join(dat,cluster2,by="ID")
+dataset3<-dplyr::right_join(dat,cluster3,by="ID")
+dataset4<-dplyr::right_join(dat,cluster4,by="ID")
 
 #convert the first column to rownames
 rownames(dataset1)<-dataset1$ID
@@ -1063,24 +1080,15 @@ dataset1<-dataset1[,-1]
 dataset2<-dataset2[,-1]
 dataset3<-dataset3[,-1]
 dataset4<-dataset4[,-1]
-data1.t<-t(dataset1)
-data2.t<-t(dataset2)
-data3.t<-t(dataset3)
-data4.t<-t(dataset4)
+data1.t<-t(data.matrix(dataset1))
+data2.t<-t(data.matrix(dataset2))
+data3.t<-t(data.matrix(dataset3))
+data4.t<-t(data.matrix(dataset4))
 #correlation within the first dataset
 cormat1<-round(cor(data1.t),2)
 cormat2<-round(cor(data2.t),2)
 cormat3<-round(cor(data3.t),2)
 cormat4<-round(cor(data4.t),2)
-# HC of the first dataset
-#hClust1<-hclust(dist(dataset1),method="complete")
-#hClust2<-hclust(dist(dataset2),method="complete")
-#hClust3<-hclust(dist(dataset3),method="complete")
-#hClust4<-hclust(dist(dataset4),method="complete")
-#plot(hClust1,cex=0.6)
-#plot(hClust2,cex=0.6)
-#plot(hClust3,cex=0.6)
-#plot(hClust4,cex=0.6)
 
 #correlation matrix 
 melted_cormat1 <- melt(cormat1)
@@ -1145,7 +1153,7 @@ total.df%>%dplyr::select(ID,cardTotalCounts,Cluster)%>%filter(complete.cases(.))
 
 ```
 
-From the above plots, we can see that the cards in cluster 1 and 4 are more frequent appear in decks.This helps us to select the core cards of a deck. A core card should neither appear too much, which makes it look like panacea; nor appear too little, which means it has fewer interaction with other cards.
+From the above plots, we can see that the cards in cluster 1 and 3 are more frequent appear in decks. This helps us to select the core cards of a deck. A core card should neither appear too much, which makes it look like panacea; nor appear too little, which means it has fewer interaction with other cards.
 
 ```{r,warning=F,error=F}
 coreTable<-total.df%>%filter(type=="Minion")%>%dplyr::select(ID,cardTotalCounts,Cluster,cost)%>%filter(complete.cases(.))%>%
@@ -1385,7 +1393,8 @@ defensive %>% ggplot(aes(card,prob)) + geom_line(aes(color=n_core)) +
 
 ```
 
-
+After we selected the candidates of core cards, now we are trying to construct a deck from what we have. 
+According to our simulations above, we set a vertical line at Turn 10. At that point the curves of probablity of collecting all k (k=2,3,4...) core cards are seperate. Considering Warlock's hero ability (draw one card by 2 self-damages), at Turn 10, the total cards the player might draw are from 13 to 18. We assume that the core cards are determinant to winning a game, which means that if the player collect all these cards, he will win. So if we set the cutoffs as 0.5, which means half of the games can collect all these core cards. We can see that 5 is the maxium number of core cards that satisifies our criteria. To reduce number of core cards, we used the evaluation of step 1. Here, we used the cards that are underestimated most as our core cards from the candidates. Then we calculated the distance of other cards to the center of these cards and pick the nearest cards to construct our deck.
 ```{r,warning=F,error=F,eval=F}
 coreTable<-coreTable%>%left_join(final,by=c("ID"="name"))
 coreTable<-coreTable%>%select(-cardId)
@@ -1419,12 +1428,14 @@ while(as.numeric(zooDeckAvailableNumber)>0){
 }
 
 ```
-
+Here is the deck we constructed finally.
 ```{r,warning=F,error=F}
 zooDeck<-read.csv("zooDeck.csv",header = TRUE,sep=",")
 
 zooDeck[,2:3]%>%kable
 ```
+
+In this deck we built, we have 8 cards with cost 1, 6 cards with cost 2, 3 cards with cost 3, 2 cards with cost 4. It satisfy our simulation of fast-tempo play mode in which we need at least 7 cards with cost no more than 2, at least 9 cards with cost no more than 4. Thus we are supposed to be able to play the cards randomly drawn from the deck with high probabilities (at least 90% probability in the first 2 turns, 95% probability in the first 3 turns, and 99% probability in the first 4 turns). 
 
 ## Validation
 
@@ -1448,76 +1459,19 @@ Our model predicted 3 out of these 7 cards correctly, in which they are underest
 
 
 
-In this deck we built, we have 8 cards with cost 1, 6 cards with cost 2, 3 cards with cost 3, 2 cards with cost 4. It satisfy our simulation of fast-tempo play mode in which we need at least 7 cards with cost no more than 2, at least 9 cards with cost no more than 4. Thus we are supposed to be able to play the cards randomly drawn from the deck with high probabilities (at least 90% probability in the first 2 turns, 95% probability in the first 3 turns, and 99% probability in the first 4 turns). 
-
-
-
 ### Real-time evaluation of zooDeck:
+After we built this deck, we tried to fight against AI first. The results are showed below.
 Generally speaking, our established deck performed pretty well in __players vs. computer__ games. 
+```{r,warning=F,error=F}
+read.csv("practice.csv",sep="\t",header=T)
 
-__Players vs. Computer__
+```
+After we played agint AI, we want to see the deck's performance in real games (Player vs. Player). We asked three different players to play with this deck for 5 games and record the results. The final results are showed below. The average winning rate is 53.3%. 
+```{r}
+read.csv("match.csv",sep="\t",header=T)
+```
 
-    Opponent  Hand   Results  Comments
-    
-1   Warlock   early   W       @ 8  mana
+####Special Thanks:
+Thanks to Ji's friends Chengqi and Chenchao for doing the test for us!
 
-2   Warlock   early   W       @ 9  mana 
 
-3   Mage      late  W       @ 7  mana
-
-4   Mage      early   W       @ 7  mana
-
-5   Hunter    late  W       @ 7  mana
-
-6   Hunter    early   W       @ 7  mana
-
-7   Warrior   early   W       @ 7  mana
-
-8   Warrior   late  W       @ 8  mana
-
-9   Shaman    late  W       @ 9  mana
-
-10  Shaman    late  L       @ 8  mana
-
-11  Druid     late  W       @ 6  mana
-
-12  Druid     late  W       @ 6  mana 
-
-13  Priest    early   W       @ 8  mana
-
-14  Priest    late  W       @ 8  mana
-
-15  Rogue     early   W       @ 7  mana
-
-16  Rogue     early   W       @ 8  mana
-
-17  Paladin   late  W       @ 6  mana
-
-18  Paladin   early   L       @ 8  mana
-
-However, when the opponent is human (especially when they are top players that have better cards in hand), it is hard to tell the results..
-
-__Player vs. Player__
-    Opponent  Hand   Results  Comments
-    
-1                     W       Opponent concede
-
-2                     L       @ 6  mana 
-
-3             late  W       @ 7  mana
-
-4   Hunter    early   L       @ 7  mana
-
-5   Paladin   late  L       @ 10 mana
-
-6   Paladin   early   L     
-
-7   Priest    early   L
-
-8   Druid     early   L       @ 7  mana
-
-9   Hunter    early   L       @ 10 mana
-
-10  Warlock   early   L       @ 5  mana
-
-11  Hunter    late  L       @ 6  mana
